@@ -12,6 +12,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import LinearProgress from '@mui/material/LinearProgress';
 
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
@@ -46,17 +49,38 @@ export default function SignInSide() {
         });
     }
 
+    // Tab Changed
+    const [userType, setUserType] = React.useState('Member');
+    const [tabIndex, setTabIndex] = React.useState(0);
+
     // Form Submit Event
     const handleSubmit = (event) => {
         event.preventDefault();
+        dispatch(checkLogin({ email: formData.userEmail, password: formData.userPassword }, userType));
+    };
 
-        dispatch(checkLogin({ email: formData.userEmail, password: formData.userPassword }));
+
+
+    const handleChangeUserType = (event, newTabIndex) => {
+        if (newTabIndex === 0) {
+            setUserType('Member');
+        }
+
+        if (newTabIndex === 1) {
+            setUserType('Trainer');
+        }
+
+        if (newTabIndex === 2) {
+            setUserType('Admin');
+        }
+        setTabIndex(newTabIndex);
+
     };
 
     return (
         <ThemeProvider theme={theme}>
             {loading && <LinearProgress color="secondary" />}
-            <Grid container component="main" mt={4} sx={{ height: '80vh' }}>
+            <Grid container component="main" mt={4} sx={{ height: '75vh' }}>
                 <Grid
                     item
                     xs={1}
@@ -73,17 +97,21 @@ export default function SignInSide() {
                 <Grid item xs={10} sm={8} md={4} component={Paper} elevation={4} square>
                     <Box
                         sx={{
-                            my: 8,
+                            my: 2,
                             mx: 4,
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
                         }}
                     >
-
+                        <Tabs value={tabIndex} onChange={handleChangeUserType} centered variant="fullWidth">
+                            <Tab label="Member" />
+                            <Tab label="Trainer" />
+                            <Tab label="Admin" />
+                        </Tabs>
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.default' }}>
                             <LockIcon />
-                        </Avatar>
+                        </Avatar>{userType}
                         <Typography component="h1" variant="h5">
                             Login
                         </Typography>
@@ -126,13 +154,7 @@ export default function SignInSide() {
                                         Forgot password?
                                     </Link>
                                 </Grid>
-                                <Grid item>
-                                    <Link href="#" variant="body2">
-                                        {"Don't have an account? Sign Up"}
-                                    </Link>
-                                </Grid>
                             </Grid>
-
                         </Box>
                     </Box>
                 </Grid>

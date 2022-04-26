@@ -2,21 +2,24 @@ import axios from 'axios';
 import * as constants from '../constants/userConstants';
 const { REACT_APP_BASE_URL } = process.env;
 
-export const checkLogin = (credential) => async (dispatch) => {
+export const checkLogin = (credential, usertype) => async (dispatch) => {
     try {
 
         dispatch({
             type: constants.NEW_LOGIN_REQUEST
         })
 
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
+        let requestURL = null;
+      
+        if (usertype === 'Member')
+            requestURL = REACT_APP_BASE_URL + 'api/Owner/Login';
+        else if (usertype === 'Trainer')
+            requestURL = REACT_APP_BASE_URL + 'api/Trainer/Login';
+        else if (usertype === 'Admin')
+            requestURL = REACT_APP_BASE_URL + 'api/Admin/Login';
 
         // Request
-        const { data } = await axios.post(REACT_APP_BASE_URL + 'Login', credential, config);
+        const { data } = await axios.post(requestURL, credential);
 
         // Set Token
         localStorage.setItem("token", data.token);
