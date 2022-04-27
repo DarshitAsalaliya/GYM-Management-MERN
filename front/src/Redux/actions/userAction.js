@@ -12,11 +12,11 @@ export const checkLogin = (credential, usertype) => async (dispatch) => {
         let requestURL = null;
       
         if (usertype === 'Member')
-            requestURL = REACT_APP_BASE_URL + 'api/Owner/Login';
+            requestURL = REACT_APP_BASE_URL + 'api/Member/Login';
         else if (usertype === 'Trainer')
             requestURL = REACT_APP_BASE_URL + 'api/Trainer/Login';
         else if (usertype === 'Admin')
-            requestURL = REACT_APP_BASE_URL + 'api/Admin/Login';
+            requestURL = REACT_APP_BASE_URL + 'api/Owner/Login';
 
         // Request
         const { data } = await axios.post(requestURL, credential);

@@ -111,9 +111,9 @@ export default function SignInSide() {
                         </Tabs>
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.default' }}>
                             <LockIcon />
-                        </Avatar>{userType}
+                        </Avatar>
                         <Typography component="h1" variant="h5">
-                            Login
+                        {userType} Login
                         </Typography>
 
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>

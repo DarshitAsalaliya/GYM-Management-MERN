@@ -2,6 +2,8 @@ import React from 'react'
 import { BrowserRouter, Route, Navigate, Routes } from 'react-router-dom';
 import DashboardLayout from './Components/Admin/DashboardLayout/DashboardLayout';
 import AdminProfile from './Components/Admin/AdminProfile';
+import ManageMembers from './Components/Admin/Member/ManageMembers';
+import AddMember from './Components/Admin/Member/AddMember';
 import HomeLayout from './Components/Home/HomeLayout/HomeLayout';
 import Login from './Components/Home/Login';
 import { useSelector } from 'react-redux';
@@ -30,6 +32,8 @@ function App() {
           </Route>
           <Route path='/Dashboard/Admin/' element={token ? <DashboardLayout /> : <Navigate to="/Login" replace />}>
             <Route path='AdminProfile' element={<AdminProfile />} />
+            <Route path='AddMember' element={<AddMember />} />
+            <Route path='ManageMembers' element={<ManageMembers />} />
           </Route>
           <Route path='*' element={<h1>Error 404 Page not Found !!</h1>} />
         </Routes>
