@@ -11,9 +11,12 @@ const upload = require('../middleware/multer');
 const MemberController = require('../controllers/MemberController');
 
 // Create GenerateToken
-router.post('/api/Member/Registration', [auth,upload.single('image')], MemberController.Registration);
+router.post('/api/Member/Registration', [auth, upload.single('image')], MemberController.Registration);
 
 // Login
 router.post('/api/Member/Login', MemberController.Login);
+
+// Get
+router.get('/api/Member/GetMemberList', auth, MemberController.GetAllMember);
 
 module.exports = router;

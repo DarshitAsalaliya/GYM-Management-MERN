@@ -24,20 +24,34 @@ exports.Registration = async (req, res) => {
             }
         });
 
-        // Save Trainer
-        const newTrainer = new MemberModel({ ...req.body, ownerprofileid: req.user.id, image: { public_id: uploadResult.public_id, image_url: uploadResult.secure_url } });
-        await newTrainer.save();
-        const token = await newTrainer.generateAuthToken();
+        // Save Member
+        const newMember = new MemberModel({ ...req.body, ownerprofileid: req.user.id, image: { public_id: uploadResult.public_id, image_url: uploadResult.secure_url } });
+        await newMember.save();
+        const token = await newMember.generateAuthToken();
 
-        return res.status(201).send({ newTrainer, token });
+        return res.status(201).send({ newMember, token });
     } catch (e) {
-        // Delete Uploaded File
-        fs.unlink('./public/memberimages/' + req.file.filename, (err) => { });
 
-        // Delete Uploaded File From Cloudinary
-        await cloudinary.v2.uploader.destroy('memberimages/' + req.file.filename);
+        try {
+            // Delete Uploaded File
+            fs.unlink('./public/memberimages/' + req.file.filename, (err) => {
+                if (err) {
+                    throw new Error(err.message);
+                }
+            });
 
-        return res.status(400).send({ error: e.message });
+            // Delete Uploaded File From Cloudinary
+            await cloudinary.v2.uploader.destroy('memberimages/' + req.file.filename);
+
+            return res.status(400).send({ error: e.message });
+        }
+        catch (er) {
+            return res.status(400).send({ error: er.message });
+        }
+
+
+
+
     }
 }
 
@@ -52,6 +66,22 @@ exports.Login = async (req, res) => {
         const user = await MemberModel.findByCredentials(req.body.email, req.body.password);
         const token = await user.generateAuthToken();
         return res.send({ user: await user.getPublicProfile(), token });
+    } catch (e) {
+        return res.status(400).send({ error: e.message });
+    }
+}
+
+// Get All Member
+exports.GetAllMember = async (req, res) => {
+    try {
+        const memberList = await MemberModel.find({ status: true });
+
+        // Check Topic Length
+        if (memberList.length === 0) {
+            return res.status(404).send({ error: "Member not found.." });
+        }
+
+        return res.status(200).send(memberList);
     } catch (e) {
         return res.status(400).send({ error: e.message });
     }

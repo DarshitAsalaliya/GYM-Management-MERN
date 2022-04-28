@@ -5,10 +5,8 @@ var path = require('path');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        if (req.url === '/CreatePost')
-            cb(null, './public/postimages');
-        else
-            cb(null, './public/userimages');
+        if (req.url === '/api/Member/Registration')
+            cb(null, './public/memberimages');
     },
     filename: function (req, file, cb) {
       //var uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname);
