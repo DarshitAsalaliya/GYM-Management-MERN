@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import { userReducer } from "./userReducer";
-import { memberReducer } from "./memberReducer";
+import { memberReducer,deleteMemberReducer,getMemberListReducer } from "./memberReducer";
 
 const reducers = combineReducers({
     user: userReducer,
-    member: memberReducer
+    member: memberReducer,
+    getmemberlist:getMemberListReducer,
+    deletemember:deleteMemberReducer
 })
 
 export default reducers;

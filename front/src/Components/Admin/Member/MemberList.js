@@ -1,7 +1,17 @@
 import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+
+// DeleteMember
+import DeleteMember from './DeleteMember';
+
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
+
+// Action
+import { getMemberList } from '../../../Redux/actions/memberAction';
+
+// Axios
 import axios from 'axios';
 const { REACT_APP_BASE_URL } = process.env;
 
@@ -10,25 +20,27 @@ export default function MemberList() {
 
     const [memberList, setMemberList] = useState([]);
 
-    const fetchData = async () => {
+    const dispatch = useDispatch();
+    const { data, getlistloading, getlisterror, getlistsuccess } = useSelector(state => state.getmemberlist);
 
-        const { data } = await axios.get(REACT_APP_BASE_URL + 'api/Member/GetMemberList');
+    const loadMemberList = async () => {
 
-        const filterData = data.map(function (obj) {
+        await dispatch(getMemberList());
+
+        const filterData = data?.map(function (obj) {
             obj['id'] = obj['_id'];
             delete obj['_id'];
             return obj;
         });
 
-        setMemberList(filterData);
-    }
+        data && setMemberList(filterData);
+    };
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        loadMemberList();
+    }, [data]);
 
-
-
+    console.log("list---", memberList)
     return (
         <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
             <DataGrid
@@ -44,10 +56,15 @@ export default function MemberList() {
                     { field: 'workouttime', headerName: 'Time', width: 150 },
                     { field: 'status', headerName: 'Status', width: 60 },
                     {
-                        field: 'doj', headerName: 'Joining Date', width: 200, valueFormatter: (params) => {
-                          
+                        field: 'doj', headerName: 'Joining Date', width: 120, valueFormatter: (params) => {
+
                             const valueFormatted = new Date(params.value).toLocaleDateString();
                             return `${valueFormatted}`;
+                        }
+                    },
+                    {
+                        field: "trainer", headerName: 'Trainer', width: 150, valueFormatter: (params) => {
+                            return params?.value[0].name;
                         }
                     },
                     {
@@ -55,11 +72,7 @@ export default function MemberList() {
                         headerName: 'Delete',
                         width: 85,
                         renderCell: (params) => (
-                            <strong>
-                                <Button variant="outlined" color='error'>
-                                    <DeleteIcon fontSize="small" />
-                                </Button>
-                            </strong>
+                            <DeleteMember id={params.value} />
                         ),
                     },
                 ]}

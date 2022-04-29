@@ -48,10 +48,6 @@ exports.Registration = async (req, res) => {
         catch (er) {
             return res.status(400).send({ error: er.message });
         }
-
-
-
-
     }
 }
 
@@ -74,7 +70,23 @@ exports.Login = async (req, res) => {
 // Get All Member
 exports.GetAllMember = async (req, res) => {
     try {
-        const memberList = await MemberModel.find({ status: true });
+
+        const memberList = await MemberModel.aggregate([
+            {
+                $match:
+                {
+                    'status': true
+                }
+            },
+            {
+                $lookup: {
+                    from: "TrainerProfile",
+                    localField: "trainerprofileid",
+                    foreignField: "_id",
+                    as: "trainer",
+                },
+            }
+        ])
 
         // Check Topic Length
         if (memberList.length === 0) {
@@ -83,6 +95,28 @@ exports.GetAllMember = async (req, res) => {
 
         return res.status(200).send(memberList);
     } catch (e) {
+        return res.status(400).send({ error: e.message });
+    }
+}
+
+// Delete Member
+exports.DeleteMember = async (req, res) => {
+    try {
+        const data = await MemberModel.findByIdAndDelete(req.params.id);
+
+        if (!data) {
+            return res.status(404).send({ error: "Member Not Found.." });
+        }
+
+        // Delete Uploaded File From Cloudinary
+        await cloudinary.v2.uploader.destroy('memberimages/' + data.image);
+
+        // Delete Uploaded Files From Local Folder
+        fs.unlink('./public/memberimages/' + data.image, (err) => { });
+
+        return res.status(200).send(data);
+    }
+    catch (e) {
         return res.status(400).send({ error: e.message });
     }
 }

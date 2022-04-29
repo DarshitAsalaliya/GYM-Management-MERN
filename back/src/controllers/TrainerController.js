@@ -56,3 +56,19 @@ exports.Login = async (req, res) => {
         return res.status(400).send({ error: e.message });
     }
 }
+
+// Get All Trainer
+exports.GetAllTrainer = async (req, res) => {
+    try {
+        const trainerList = await TrainerModel.find({ status: true });
+
+        // Check Topic Length
+        if (trainerList.length === 0) {
+            return res.status(404).send({ error: "Trainer not found.." });
+        }
+
+        return res.status(200).send(trainerList);
+    } catch (e) {
+        return res.status(400).send({ error: e.message });
+    }
+}

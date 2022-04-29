@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -35,6 +35,10 @@ import { registerMember } from '../../../Redux/actions/memberAction';
 
 // Snackbar
 import SnackbarMsg from './SnackbarMsg';
+
+// Axios
+import axios from 'axios';
+const { REACT_APP_BASE_URL } = process.env;
 
 const style = {
     position: 'absolute',
@@ -100,6 +104,8 @@ const IOSSwitch = styled((props) => (
     },
 }));
 
+
+
 export default function AddMember() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -126,21 +132,43 @@ export default function AddMember() {
             .min(6, 'Password is too short - should be 6 chars minimum.')
             .matches(/[a-zA-Z]/, 'Password should be contain letters and numbers.'),
         workouttype: Yup.string().required('Required'),
+        trainerprofileid: Yup.string().required('Required'),
         phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, 'Phone Should be 10 chars minimum.').max(12, 'To Long!').required('Required'),
         address: Yup.string().min(3, 'Too Short!').max(60, 'Too Long!'),
         fromtime: Yup.string().required('From Time is Required'),
         totime: Yup.string().required('To Time is Required'),
         dob: Yup.date().required('Date of Birth is Required'),
         doj: Yup.date().required('Date of Join is Required'),
-        height: Yup.number().positive().required('Height is Required'),
-        weight: Yup.number().positive().required('Weight is Required')
+        height: Yup.number().positive('Invalid'),
+        weight: Yup.number().positive('Invalid')
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (success) {
             setOpen(false);
         }
     }, [success]);
+
+    // Fetch Trainer List
+
+    const [trainerList, setTrainerList] = useState([]);
+
+    const fetchData = async () => {
+
+        const { data } = await axios.get(REACT_APP_BASE_URL + 'api/Trainer/GetTrainerList');
+
+        const filterData = data.map(function (obj) {
+            obj['id'] = obj['_id'];
+            delete obj['_id'];
+            return obj;
+        });
+
+        setTrainerList(filterData);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <div>
@@ -155,7 +183,7 @@ export default function AddMember() {
             >
                 <Box sx={style}>
                     <Formik
-                        initialValues={{ name: '', email: '', password: '', status: true, gender: 'male', workouttype: '', fromtime: '', totime: '', phone: '', address: '', problem: '', dob: '', doj: '', bloodgroup: '', height: 0, weight: 0, trainerprofileid: '6267a51d9bcaf0d772cbbd43' }}
+                        initialValues={{ name: '', email: '', password: '', status: true, gender: 'male', workouttype: '', fromtime: '', totime: '', phone: '', address: '', problem: '', dob: '', doj: '', bloodgroup: '', height: 0, weight: 0, trainerprofileid: '' }}
                         validationSchema={ValidationSchema}
                         onSubmit={(values, { setSubmitting }) => {
                             var formData = new FormData();
@@ -192,7 +220,7 @@ export default function AddMember() {
                                         <Grid container spacing={3} >
                                             <Grid item xs={10} md={8} sx={{ textAlign: 'left' }}>
                                                 <Typography variant="h5" gutterBottom component="div" >
-                                                    Register Member 
+                                                    Register Member
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={2} md={4} sx={{ textAlign: 'right' }}>
@@ -380,7 +408,26 @@ export default function AddMember() {
                                             helperText={errors.weight}
                                             sx={{ width: '100%' }} />
                                     </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <FormControl fullWidth size="small">
+                                            <InputLabel id="trainerprofileid">Trainer</InputLabel>
+                                            <Select
+                                                labelId="trainerprofileid"
+                                                id="demo-simple-select"
+                                                name="trainerprofileid"
+                                                label="Trainer"
+                                                error={errors.trainerprofileid && touched.trainerprofileid}
+                                                helperText={errors.trainerprofileid}
+                                                onChange={handleChange}
+                                                defaultValue=""
+                                            >
+                                                {trainerList.map((obj) => {
+                                                    return <MenuItem value={obj.id}>{obj.name}</MenuItem>
+                                                })}
 
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
                                     <Grid item xs={12} md={4}>
                                         <FormControl fullWidth size="small">
                                             <InputLabel id="bloodgroup">Blood Group</InputLabel>

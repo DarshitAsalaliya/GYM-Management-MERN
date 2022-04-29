@@ -6,6 +6,7 @@ import reducers from "./reducers/combineAllReducers";
 // For Track Redux
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+
 // Configure Store
 export const store = configureStore({
   reducer: reducers

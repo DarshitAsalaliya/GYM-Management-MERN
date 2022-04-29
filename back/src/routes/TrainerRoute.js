@@ -16,4 +16,7 @@ router.post('/api/Trainer/Registration', [auth,upload.single('image')], TrainerC
 // Login
 router.post('/api/Trainer/Login', TrainerController.Login);
 
+// Get
+router.get('/api/Trainer/GetTrainerList', auth, TrainerController.GetAllTrainer);
+
 module.exports = router;

@@ -19,4 +19,7 @@ router.post('/api/Member/Login', MemberController.Login);
 // Get
 router.get('/api/Member/GetMemberList', auth, MemberController.GetAllMember);
 
+// Delete
+router.delete('/api/Member/DeleteMember/:id', auth, MemberController.DeleteMember);
+
 module.exports = router;
