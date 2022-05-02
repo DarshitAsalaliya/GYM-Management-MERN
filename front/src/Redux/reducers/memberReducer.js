@@ -1,21 +1,25 @@
 import * as constants from '../constants/memberConstants';
 
-export const memberReducer = (state = {}, action) => {
+export const registerMemberReducer = (state = {}, action) => {
     switch (action.type) {
         case constants.NEW_MEMBER_REQUEST:
             return {
                 ...state,
-                loading: true
+                registerloading: true
             }
         case constants.NEW_MEMBER_SUCCESS:
             return {
                 ...state,
-                loading: false,
-                success: action.payload
+                registerloading: false,
+                registersuccess: action.payload
             }
         case constants.NEW_MEMBER_FAIL:
             return {
-                ...state, loading: false, error: action.payload
+                ...state, registerloading: false, registererror: action.payload
+            }
+        case constants.NEW_MEMBER_RESET:
+            return {
+                ...state, registerloading: false, registersuccess: false
             }
         default:
             return state
@@ -38,11 +42,37 @@ export const getMemberListReducer = (state = {}, action) => {
             }
         case constants.MEMBER_LIST_FAIL:
             return {
-                ...state, getlistloading: false, getlisterror: action.payload, getlistsuccess:false
+                ...state, getlistloading: false, getlisterror: action.payload, getlistsuccess: false
             }
         case constants.MEMBER_LIST_RESET:
             return {
                 ...state, getlistloading: false, getlistsuccess: false
+            }
+        default:
+            return state
+    }
+}
+
+export const updateMemberReducer = (state = {}, action) => {
+    switch (action.type) {
+        case constants.MEMBER_UPDATE_REQUEST:
+            return {
+                ...state,
+                updateloading: true
+            }
+        case constants.MEMBER_UPDATE_SUCCESS:
+            return {
+                ...state,
+                updateloading: false,
+                updatesuccess: action.payload
+            }
+        case constants.MEMBER_UPDATE_FAIL:
+            return {
+                ...state, updateloading: false, updateerror: action.payload
+            }
+        case constants.MEMBER_UPDATE_RESET:
+            return {
+                ...state, updateloading: false, updatesuccess: false
             }
         default:
             return state
@@ -59,16 +89,16 @@ export const deleteMemberReducer = (state = {}, action) => {
         case constants.MEMBER_DELETE_SUCCESS:
             return {
                 ...state,
-                loading: false,
+                deleteloading: false,
                 deletesuccess: action.payload
             }
         case constants.MEMBER_DELETE_FAIL:
             return {
-                ...state, loading: false, deleteerror: action.payload, deletesuccess: false
+                ...state, deleteloading: false, deleteerror: action.payload, deletesuccess: false
             }
         case constants.MEMBER_DELETE_RESET:
             return {
-                ...state, loading: false, deletesuccess: false
+                ...state, deleteloading: false, deletesuccess: false
             }
         default:
             return state

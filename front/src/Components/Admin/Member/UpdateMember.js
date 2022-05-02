@@ -22,6 +22,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import EditIcon from '@mui/icons-material/Edit';
 
 // Constants
 import * as constants from '../../../Redux/constants/memberConstants';
@@ -34,7 +35,7 @@ import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { registerMember, getMemberList } from '../../../Redux/actions/memberAction';
+import { updateMember, getMemberList } from '../../../Redux/actions/memberAction';
 
 // Snackbar
 import SnackbarMsg from './SnackbarMsg';
@@ -109,14 +110,14 @@ const IOSSwitch = styled((props) => (
 
 
 
-export default function AddMember() {
+export default function UpdateMember(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const dispatch = useDispatch();
 
-    const { registerloading, registererror, registersuccess } = useSelector(state => state.registermember);
+    const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatemember);
 
     const Input = styled('input')({
         display: 'none',
@@ -131,7 +132,6 @@ export default function AddMember() {
             .required('Required'),
         email: Yup.string().email('Invalid email').required('Required'),
         password: Yup.string()
-            .required('Required')
             .min(6, 'Password is too short - should be 6 chars minimum.')
             .matches(/[a-zA-Z]/, 'Password should be contain letters and numbers.'),
         workouttype: Yup.string().required('Required'),
@@ -147,10 +147,10 @@ export default function AddMember() {
     });
 
     useEffect(() => {
-        if (registersuccess) {
+        if (updatesuccess) {
             setOpen(false);
         }
-    }, [registersuccess]);
+    }, [updatesuccess]);
 
     // Fetch Trainer List
 
@@ -175,10 +175,10 @@ export default function AddMember() {
 
     return (
         <div>
-            {registererror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={registererror} severity="error" />}
+            {updateerror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={updateerror} severity="error" />}
 
-            <Button onClick={handleOpen} variant="outlined" startIcon={<AddIcon />}>
-                Add Member
+            <Button variant="outlined" color='primary' onClick={handleOpen}>
+                <EditIcon fontSize="small" />
             </Button>
             <Modal
                 open={open}
@@ -187,26 +187,31 @@ export default function AddMember() {
             >
                 <Box sx={style}>
                     <Formik
-                        initialValues={{ name: '', email: '', password: '', status: true, gender: 'male', workouttype: '', fromtime: '', totime: '', phone: '', address: '', problem: '', dob: '', doj: '', bloodgroup: '', height: 0, weight: 0, trainerprofileid: '' }}
+                        initialValues={{ name: props.dataforupdate.name, email: props.dataforupdate.email, password: '', status: props.dataforupdate.status, gender: props.dataforupdate.gender, workouttype: props.dataforupdate.workouttype, fromtime: props.dataforupdate.workouttime.slice(0, 5), totime: props.dataforupdate.workouttime.slice(9, 15), phone: props.dataforupdate.phone, address: props.dataforupdate.address, problem: props.dataforupdate.problem, dob: props.dataforupdate.dob.slice(0, 10), doj: props.dataforupdate.doj.slice(0, 10), bloodgroup: props.dataforupdate.bloodgroup, height: props.dataforupdate.height, weight: props.dataforupdate.weight, trainerprofileid: props.dataforupdate.trainerprofileid }}
                         validationSchema={ValidationSchema}
                         onSubmit={async (values, { setSubmitting }) => {
+                            
                             var formData = new FormData();
 
+                            console.log(values['file']);
+
                             for (var key in values) {
+
                                 if (key === 'file')
                                     formData.append('image', values[key]);
                                 else
                                     formData.append(key, values[key]);
+
                             }
 
                             formData.append("workouttime", values['fromtime'] + ' To ' + values['totime']);
 
-                            // Add
+                            // Update
                             await dispatch({
-                                type: constants.NEW_MEMBER_RESET
+                                type: constants.MEMBER_UPDATE_RESET
                             });
 
-                            await dispatch(registerMember(formData));
+                            await dispatch(updateMember(props.dataforupdate.editid, formData));
 
                             // Reset
                             await dispatch({
@@ -234,7 +239,7 @@ export default function AddMember() {
                                         <Grid container spacing={3} >
                                             <Grid item xs={10} md={8} sx={{ textAlign: 'left' }}>
                                                 <Typography variant="h5" gutterBottom component="div" >
-                                                    Register Member
+                                                    Update Member
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={2} md={4} sx={{ textAlign: 'right' }}>
@@ -300,11 +305,10 @@ export default function AddMember() {
                                     </Grid>
                                     <Grid item xs={12} md={4}>
                                         <FormControlLabel
-                                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked={values.status} />}
                                             label="Active"
                                             name="status"
                                             onChange={handleChange}
-                                            value={values.status}
                                             sx={{ width: '100%' }}
                                         />
                                     </Grid>
@@ -316,6 +320,7 @@ export default function AddMember() {
                                             name="gender"
                                             defaultValue="male"
                                             onChange={handleChange}
+                                            value={values.gender}
                                         >
                                             <FormControlLabel value="male" control={<Radio />} label="Male" />
                                             <FormControlLabel value="female" control={<Radio />} label="Female" Select />
@@ -330,6 +335,7 @@ export default function AddMember() {
                                                 id="demo-simple-select"
                                                 name="workouttype"
                                                 label="Workout Type"
+                                                value={values.workouttype}
                                                 onChange={handleChange}
                                                 error={errors.workouttype && touched.workouttype}
                                                 helperText={errors.workouttype}
@@ -346,8 +352,8 @@ export default function AddMember() {
                                             id="fromtime"
                                             type="time"
                                             onChange={handleChange}
-
                                             name="fromtime"
+                                            value={values.fromtime}
                                             variant="standard"
                                             error={errors.fromtime && touched.fromtime}
                                             helperText={errors.fromtime || 'From Time'}
@@ -359,6 +365,7 @@ export default function AddMember() {
                                             type="time"
                                             onChange={handleChange}
                                             name="totime"
+                                            value={values.totime}
                                             variant="standard"
                                             error={errors.totime && touched.totime}
                                             helperText={errors.totime || 'To Time'}
@@ -369,6 +376,7 @@ export default function AddMember() {
                                             id="phone"
                                             onChange={handleChange}
                                             name="phone"
+                                            value={values.phone}
                                             label="Phone"
                                             variant="standard"
                                             error={errors.phone && touched.phone}
@@ -382,6 +390,7 @@ export default function AddMember() {
                                             type="date"
                                             onChange={handleChange}
                                             name="dob"
+                                            value={values.dob}
                                             variant="standard"
                                             error={errors.dob && touched.dob}
                                             helperText={errors.dob || 'Date of Birth'}
@@ -393,6 +402,7 @@ export default function AddMember() {
                                             type="date"
                                             onChange={handleChange}
                                             name="doj"
+                                            value={values.doj}
                                             variant="standard"
                                             error={errors.doj && touched.doj}
                                             helperText={errors.doj || 'Date of Join'}
@@ -404,6 +414,7 @@ export default function AddMember() {
                                             type="number"
                                             onChange={handleChange}
                                             name="height"
+                                            value={values.height}
                                             label="Height"
                                             variant="standard"
                                             error={errors.height && touched.height}
@@ -416,6 +427,7 @@ export default function AddMember() {
                                             type="number"
                                             onChange={handleChange}
                                             name="weight"
+                                            value={values.weight}
                                             label="weight"
                                             variant="standard"
                                             error={errors.weight && touched.weight}
@@ -434,6 +446,7 @@ export default function AddMember() {
                                                 helperText={errors.trainerprofileid}
                                                 onChange={handleChange}
                                                 defaultValue=""
+                                                value={values.trainerprofileid}
                                             >
                                                 {trainerList.map((obj) => {
                                                     return <MenuItem value={obj.id}>{obj.name}</MenuItem>
@@ -452,6 +465,7 @@ export default function AddMember() {
                                                 label="Blood Group"
                                                 onChange={handleChange}
                                                 defaultValue=""
+                                                value={values.bloodgroup}
                                             >
                                                 <MenuItem value="O-">O-</MenuItem>
                                                 <MenuItem value="O+">O+</MenuItem>
@@ -469,6 +483,7 @@ export default function AddMember() {
                                             id="address"
                                             onChange={handleChange}
                                             name="address"
+                                            value={values.address}
                                             label="Address"
                                             variant="standard"
                                             error={errors.address && touched.address}
@@ -480,6 +495,7 @@ export default function AddMember() {
                                             id="problem"
                                             onChange={handleChange}
                                             name="problem"
+                                            value={values.problem}
                                             label="Any Problem"
                                             variant="standard"
                                             sx={{ width: '100%' }} />
@@ -489,8 +505,8 @@ export default function AddMember() {
 
                                     </Grid>
                                     <Grid item xs={12} md={4}>
-                                        <Button type="submit" variant="contained" color="success" startIcon={<CheckIcon />} disabled={isSubmitting} sx={{ width: '80%' }}>
-                                            Save
+                                        <Button type="submit" variant="contained" color="info" startIcon={<CheckIcon />} disabled={isSubmitting} sx={{ width: '80%' }}>
+                                            Update
                                         </Button>
                                     </Grid>
                                     <Grid item xs={12} md={4}>

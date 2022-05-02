@@ -12,38 +12,48 @@ const { checkParameters } = require('../middleware/utils');
 // Registration
 exports.Registration = async (req, res) => {
     try {
-        // Upload Image To Cloudinary
-        const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
-            folder: 'memberimages',
-            public_id: req.file.filename,
-            crop: "fit",
-            allowedFormats: ['jpg', 'jpeg', 'png']
-        }, (e) => {
-            if (e) {
-                throw new Error(e.message);
-            }
-        });
 
-        // Save Member
-        const newMember = new MemberModel({ ...req.body, ownerprofileid: req.user.id, image: { public_id: uploadResult.public_id, image_url: uploadResult.secure_url } });
-        await newMember.save();
-        const token = await newMember.generateAuthToken();
-
-        return res.status(201).send({ newMember, token });
-    } catch (e) {
-
-        try {
-            // Delete Uploaded File
-            fs.unlink('./public/memberimages/' + req.file.filename, (err) => {
-                if (err) {
-                    throw new Error(err.message);
+        if (req.file) {
+            // Upload Image To Cloudinary
+            const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
+                folder: 'memberimages',
+                public_id: req.file.filename,
+                crop: "fit",
+                allowedFormats: ['jpg', 'jpeg', 'png']
+            }, (e) => {
+                if (e) {
+                    throw new Error(e.message);
                 }
             });
+            // Save Member with Image
+            newMemberObj = new MemberModel({ ...req.body, ownerprofileid: req.user.id, image: { public_id: uploadResult.public_id, image_url: uploadResult.secure_url } });
+        }
+        else {
+            // Save Member
+            newMemberObj = new MemberModel({ ...req.body, ownerprofileid: req.user.id });
+        }
 
-            // Delete Uploaded File From Cloudinary
-            await cloudinary.v2.uploader.destroy('memberimages/' + req.file.filename);
+        const newMember = newMemberObj;
+        await newMember.save();
+        const token = await newMember.generateAuthToken();
+        return res.status(201).send({ newMember, token });
 
-            return res.status(400).send({ error: e.message });
+    } catch (e) {
+        try {
+            if (req.file) {
+
+                // Delete Uploaded File
+                fs.unlink('./public/memberimages/' + req.file.filename, (err) => {
+                    if (err) {
+                        throw new Error(err.message);
+                    }
+                });
+
+                // Delete Uploaded File From Cloudinary
+                await cloudinary.v2.uploader.destroy('memberimages/' + req.file.filename);
+
+                return res.status(400).send({ error: e.message });
+            }
         }
         catch (er) {
             return res.status(400).send({ error: er.message });
@@ -72,12 +82,12 @@ exports.GetAllMember = async (req, res) => {
     try {
 
         const memberList = await MemberModel.aggregate([
-            {
-                $match:
-                {
-                    'status': true
-                }
-            },
+            // {
+            //     $match:
+            //     {
+            //         'status': true
+            //     }
+            // },
             {
                 $lookup: {
                     from: "TrainerProfile",
@@ -96,6 +106,70 @@ exports.GetAllMember = async (req, res) => {
         return res.status(200).send(memberList);
     } catch (e) {
         return res.status(400).send({ error: e.message });
+    }
+}
+
+// Update Post
+exports.UpdateMember = async (req, res) => {
+    try {
+        const _id = req.params.id;
+
+        //Find Post For Update
+        const data = await MemberModel.findById(_id);
+
+        if (!data)
+            return res.status(404).send({ error: "Not Found.." });
+
+
+        if (req.file) {
+
+            // Delete Existing Image From Cloudinary
+            //await cloudinary.v2.uploader.destroy(data.image.public_id);
+
+            // Upload New Image To Cloudinary
+            const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
+                folder: 'memberimages',
+                public_id: req.file.filename,
+                crop: "fit",
+                allowedFormats: ['jpg', 'jpeg', 'png']
+            }, (e) => {
+                if (e) {
+                    throw new Error(e.message);
+                }
+            });
+
+            data.image = { public_id: uploadResult.public_id, image_url: uploadResult.secure_url };
+        }
+
+        Object.keys(req.body).forEach((update) => {
+            data[update] = req.body[update];
+        });
+
+        await data.save();
+
+        return res.status(200).send(data);
+
+    } catch (e) {
+
+        try {
+            if (req.file) {
+
+                // Delete Uploaded File
+                fs.unlink('./public/memberimages/' + req.file.filename, (err) => {
+                    if (err) {
+                        throw new Error(err.message);
+                    }
+                });
+
+                // Delete Uploaded File From Cloudinary
+                await cloudinary.v2.uploader.destroy('memberimages/' + req.file.filename);
+
+                return res.status(400).send({ error: e.message });
+            }
+        }
+        catch (er) {
+            return res.status(400).send({ error: er.message });
+        }
     }
 }
 

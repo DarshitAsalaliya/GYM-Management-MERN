@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 
+// Constants
+import * as constants from '../../../Redux/constants/memberConstants';
+
 // DeleteMember
 import DeleteMember from './DeleteMember';
 
@@ -13,37 +16,39 @@ import { getMemberList } from '../../../Redux/actions/memberAction';
 
 // Axios
 import axios from 'axios';
+import UpdateMember from './UpdateMember';
 const { REACT_APP_BASE_URL } = process.env;
-
 
 export default function MemberList() {
 
     const [memberList, setMemberList] = useState([]);
 
     const dispatch = useDispatch();
+
     const { data, getlistloading, getlisterror, getlistsuccess } = useSelector(state => state.getmemberlist);
+
+    useEffect(() => {
+
+        loadMemberList();
+
+    }, [getlistsuccess]);
 
     const loadMemberList = async () => {
 
         await dispatch(getMemberList());
 
         const filterData = data?.map(function (obj) {
-            obj['id'] = obj['_id'];
-            delete obj['_id'];
+            obj['editid'] = obj['_id'];
             return obj;
         });
 
         data && setMemberList(filterData);
     };
 
-    useEffect(() => {
-        loadMemberList();
-    }, [data]);
-
-    console.log("list---", memberList)
     return (
         <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
             <DataGrid
+                getRowId={(row) => row._id}
                 columns={[
                     {
                         field: 'name',
@@ -68,7 +73,15 @@ export default function MemberList() {
                         }
                     },
                     {
-                        field: 'id',
+                        field: 'editid',
+                        headerName: 'Edit',
+                        width: 85,
+                        renderCell: (params) => (
+                            <UpdateMember dataforupdate={memberList.find(obj => obj.editid === params.value)} />
+                        ),
+                    },
+                    {
+                        field: '_id',
                         headerName: 'Delete',
                         width: 85,
                         renderCell: (params) => (

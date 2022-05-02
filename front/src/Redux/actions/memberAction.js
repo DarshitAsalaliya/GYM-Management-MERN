@@ -43,18 +43,58 @@ export const getMemberList = () => async (dispatch) => {
         let requestURL = REACT_APP_BASE_URL + 'api/Member/GetMemberList/';
 
         // Request
-        const { data } = await axios.get(requestURL);
-
+        const { data,status } = await axios.get(requestURL);
+       
         dispatch({
             type: constants.MEMBER_LIST_SUCCESS,
             payload: data
         })
 
     } catch (error) {
-        
+        if(error.response.status===404)
+        {
+            dispatch({
+                type: constants.MEMBER_LIST_SUCCESS,
+                payload: []
+            })
+        }
+        else
+        {
+            dispatch({
+                type: constants.MEMBER_LIST_FAIL,
+                payload: error.response.data
+            })
+        }
+    }
+}
+
+export const updateMember = (id,formData) => async (dispatch) => {
+    try {
+
         dispatch({
-            type: constants.MEMBER_LIST_FAIL,
-            payload: error.message
+            type: constants.MEMBER_UPDATE_REQUEST
+        })
+        
+        let requestURL = REACT_APP_BASE_URL + 'api/Member/UpdateMember/'+id;
+
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
+        // Request
+        const { data } = await axios.patch(requestURL, formData, config);
+
+        dispatch({
+            type: constants.MEMBER_UPDATE_SUCCESS,
+            payload: true
+        })
+
+    } catch (error) {
+        dispatch({
+            type: constants.MEMBER_UPDATE_FAIL,
+            payload: error.response.data.error
         })
     }
 }
@@ -77,7 +117,7 @@ export const deleteMember = (id) => async (dispatch) => {
         })
 
     } catch (error) {
-        
+       
         dispatch({
             type: constants.MEMBER_DELETE_FAIL,
             payload: error.message

@@ -10,6 +10,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 // Snackbar
 import SnackbarMsg from './SnackbarMsg';
 
+// Constants
+import * as constants from '../../../Redux/constants/memberConstants';
+
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -30,9 +33,20 @@ export default function DeleteMember(props) {
         setOpen(true);
     };
 
-    const handleDelete = async() => {
+    const handleDelete = async () => {
+        
+        // Delete
+        await dispatch({
+            type: constants.MEMBER_DELETE_RESET
+        });
+        
         await dispatch(deleteMember(props.id));
-        await dispatch(getMemberList());
+
+        // Reset
+        await dispatch({
+            type: constants.MEMBER_LIST_RESET
+        });
+
         setOpen(false);
     };
 
