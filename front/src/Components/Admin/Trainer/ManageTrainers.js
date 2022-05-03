@@ -3,11 +3,10 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
-import AddMember from './AddMember';
-import MemberList from './MemberList';
+import AddTrainer from './AddTrainer';
+import TrainerList from './TrainerList';
 import SnackbarMsg from '../../Utils/SnackbarMsg';
 import Typography from '@mui/material/Typography';
-
 // Style
 import '../../Utils/GlobalStyle.css';
 
@@ -17,32 +16,32 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
 // Constants
-import * as constants from '../../../Redux/constants/memberConstants';
+import * as constants from '../../../Redux/constants/trainerConstants';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { registerMember, getMemberList } from '../../../Redux/actions/memberAction';
+import { registerTrainer, getTrainerList } from '../../../Redux/actions/trainerAction';
 
-export default function ManageMembers() {
+export default function ManageTrainers() {
 
     const dispatch = useDispatch();
-    const { registerloading, registererror, registersuccess } = useSelector(state => state.registermember);
-    const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatemember);
-    const { deleteloading, deleteerror, deletesuccess } = useSelector(state => state.deletemember);
+    const { registerloading, registererror, registersuccess } = useSelector(state => state.registertrainer);
+    const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatetrainer);
+    const { deleteloading, deleteerror, deletesuccess } = useSelector(state => state.deletetrainer);
 
     useEffect(() => {
         dispatch({
-            type: constants.NEW_MEMBER_RESET
+            type: constants.NEW_TRAINER_RESET
         });
 
         dispatch({
-            type: constants.MEMBER_UPDATE_RESET
+            type: constants.TRAINER_UPDATE_RESET
         });
 
         dispatch({
-            type: constants.MEMBER_DELETE_RESET
+            type: constants.TRAINER_DELETE_RESET
         });
     }, [dispatch]);
 
@@ -56,16 +55,17 @@ export default function ManageMembers() {
                 <Grid container spacing={2}>
                     <Grid item xs={6} md={8}>
                         <Typography variant="h6" component="div" className='moduleHeading'>
-                            Manage Member
+                            Manage Trainer
                         </Typography>
                     </Grid>
                     <Grid item xs={6} md={4} sx={{ textAlign: 'right' }}>
-                        <AddMember />
+                        <AddTrainer />
                     </Grid>
                 </Grid>
             </Box>
 
-            <MemberList />
+
+            <TrainerList />
         </>
     );
 }

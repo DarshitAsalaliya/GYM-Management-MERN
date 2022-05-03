@@ -29,12 +29,10 @@ export default function SignInSide() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { loading, error, success } = useSelector(state => state.user);
+    const { loading, error, isAuthenticated } = useSelector(state => state.userlogin);
 
-    useEffect(() => {
-        success && navigate("/Dashboard/Admin", { replace: true });
-    }, [success, navigate]);
-
+    
+   
     // Form Data State
     const [formData, setFormData] = useState({
         userEmail: '',
@@ -48,7 +46,7 @@ export default function SignInSide() {
             [e.target.name]: e.target.value
         });
     }
-   
+
     // Tab Changed
     const [userType, setUserType] = React.useState('Member');
     const [tabIndex, setTabIndex] = React.useState(0);
@@ -57,9 +55,11 @@ export default function SignInSide() {
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch(checkLogin({ email: formData.userEmail, password: formData.userPassword }, userType));
+
+        if (isAuthenticated && localStorage.getItem("token")) {
+            navigate("/Dashboard/Admin", { replace: true });
+        }
     };
-
-
 
     const handleChangeUserType = (event, newTabIndex) => {
         if (newTabIndex === 0) {
@@ -113,7 +113,7 @@ export default function SignInSide() {
                             <LockIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                        {userType} Login
+                            {userType} Login
                         </Typography>
 
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>

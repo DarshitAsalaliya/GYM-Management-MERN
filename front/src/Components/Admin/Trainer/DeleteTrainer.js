@@ -11,19 +11,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SnackbarMsg from '../../Utils/SnackbarMsg';
 
 // Constants
-import * as constants from '../../../Redux/constants/memberConstants';
+import * as constants from '../../../Redux/constants/trainerConstants';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { deleteMember, getMemberList } from '../../../Redux/actions/memberAction';
+import { deleteTrainer, getTrainerList } from '../../../Redux/actions/trainerAction';
 
 // Axios
 import axios from 'axios';
 const { REACT_APP_BASE_URL } = process.env;
 
-export default function DeleteMember(props) {
+export default function DeleteTrainer(props) {
 
     const [open, setOpen] = useState(false);
 
@@ -37,14 +37,14 @@ export default function DeleteMember(props) {
 
         // Delete Reset
         await dispatch({
-            type: constants.MEMBER_DELETE_RESET
+            type: constants.TRAINER_DELETE_RESET
         });
 
-        await dispatch(deleteMember(props.id));
+        await dispatch(deleteTrainer(props.id));
 
         // List Reset
         await dispatch({
-            type: constants.MEMBER_LIST_RESET
+            type: constants.TRAINER_LIST_RESET
         });
 
         setOpen(false);

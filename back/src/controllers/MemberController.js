@@ -109,7 +109,7 @@ exports.GetAllMember = async (req, res) => {
     }
 }
 
-// Update Post
+// Update Member
 exports.UpdateMember = async (req, res) => {
     try {
         const _id = req.params.id;
@@ -119,12 +119,11 @@ exports.UpdateMember = async (req, res) => {
 
         if (!data)
             return res.status(404).send({ error: "Not Found.." });
-
-
+        
         if (req.file) {
 
             // Delete Existing Image From Cloudinary
-            //await cloudinary.v2.uploader.destroy(data.image.public_id);
+               data.image.public_id && await cloudinary.v2.uploader.destroy(data.image.public_id);
 
             // Upload New Image To Cloudinary
             const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {

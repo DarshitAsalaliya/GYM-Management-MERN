@@ -19,57 +19,59 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 
+import '../../Utils/GlobalStyle.css';
+
 export default function DrawerMenuList() {
-    //   const [openMember, setOpenMember] = React.useState(true);
+  //   const [openMember, setOpenMember] = React.useState(true);
 
-    //   const handleClick = () => {
-    //     setOpenMember(!openMember);
-    //   };
+  //   const handleClick = () => {
+  //     setOpenMember(!openMember);
+  //   };
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return (
-        <List
-            sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-            component="nav"
-            aria-labelledby="nested-list-subheader"
-        >
-            <ListItemButton>
-                <ListItemIcon>
-                    <HomeIcon />
-                </ListItemIcon>
-                <ListItemText primary="Dashboard" />
-            </ListItemButton>
+  return (
+    <List
+      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+    >
+      <ListItemButton onClick={() => navigate("./", { replace: true })}>
+        <ListItemIcon>
+          <HomeIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" className='sideMenuTextStyle' />
+      </ListItemButton>
 
-            <ListItemButton onClick={() => navigate("./ManageMembers", { replace: true })}>
-                <ListItemIcon>
-                    <PersonIcon />
-                </ListItemIcon>
-                <ListItemText primary="Manage Members" />
-            </ListItemButton>
+      <ListItemButton onClick={() => navigate("./ManageMembers", { replace: true })}>
+        <ListItemIcon>
+          <PersonIcon />
+        </ListItemIcon>
+        <ListItemText primary="Manage Members" className='sideMenuTextStyle'/>
+      </ListItemButton>
 
-            <ListItemButton>
-                <ListItemIcon>
-                    <AccountBoxIcon />
-                </ListItemIcon>
-                <ListItemText primary="Manage Trainers" />
-            </ListItemButton>
+      <ListItemButton onClick={() => navigate("./ManageTrainers", { replace: true })}>
+        <ListItemIcon>
+          <AccountBoxIcon />
+        </ListItemIcon>
+        <ListItemText primary="Manage Trainers" className='sideMenuTextStyle'/>
+      </ListItemButton>
 
-            <ListItemButton>
-                <ListItemIcon>
-                    <CollectionsBookmarkIcon />
-                </ListItemIcon>
-                <ListItemText primary="Memberships" />
-            </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <CollectionsBookmarkIcon />
+        </ListItemIcon>
+        <ListItemText primary="Memberships" className='sideMenuTextStyle'/>
+      </ListItemButton>
 
-            <ListItemButton>
-                <ListItemIcon>
-                    <LibraryBooksIcon />
-                </ListItemIcon>
-                <ListItemText primary="Supplements" />
-            </ListItemButton>
+      <ListItemButton>
+        <ListItemIcon>
+          <LibraryBooksIcon />
+        </ListItemIcon>
+        <ListItemText primary="Supplements" className='sideMenuTextStyle'/>
+      </ListItemButton>
 
-            {/* <ListItemButton onClick={handleClick}>
+      {/* <ListItemButton onClick={handleClick}>
         <ListItemIcon>
           <PersonIcon />
         </ListItemIcon>
@@ -92,6 +94,6 @@ export default function DrawerMenuList() {
           </ListItemButton>
         </List>
       </Collapse> */}
-        </List>
-    );
+    </List>
+  );
 }

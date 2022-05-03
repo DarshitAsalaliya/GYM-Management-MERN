@@ -16,4 +16,7 @@ router.post('/api/Owner/Registration', upload.single('image'), OwnerController.R
 // Login
 router.post('/api/Owner/Login', OwnerController.Login);
 
+// Logout
+router.post('/api/Owner/Logout',auth, OwnerController.Logout);
+
 module.exports = router;

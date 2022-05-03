@@ -37,3 +37,35 @@ export const checkLogin = (credential, usertype) => async (dispatch) => {
         })
     }
 }
+
+export const userLogout = (usertype) => async (dispatch) => {
+    try {
+
+        let requestURL = null;
+      
+        if (usertype === 'Member')
+            requestURL = REACT_APP_BASE_URL + 'api/Member/Logout';
+        else if (usertype === 'Trainer')
+            requestURL = REACT_APP_BASE_URL + 'api/Trainer/Logout';
+        else if (usertype === 'Admin')
+            requestURL = REACT_APP_BASE_URL + 'api/Owner/Logout';
+
+        // Request
+        const { data } = await axios.post(requestURL);
+
+        dispatch({
+            type: constants.NEW_LOGOUT_SUCCESS,
+            payload: true
+        })
+
+        // Set Token
+        localStorage.removeItem("token");
+
+    } catch (error) {
+
+        dispatch({
+            type: constants.NEW_LOGOUT_FAIL,
+            payload: error.response.data.error
+        })
+    }
+}

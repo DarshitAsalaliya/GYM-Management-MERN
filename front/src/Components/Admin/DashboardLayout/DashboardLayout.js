@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -23,6 +23,15 @@ import DrawerMenuList from './DrawerMenuList';
 
 // Navbar
 import { useNavigate, Outlet } from 'react-router-dom';
+
+// Constants
+import * as constants from '../../../Redux/constants/userConstants';
+
+// Redux
+import { useSelector, useDispatch } from 'react-redux';
+
+// Action
+import { userLogout } from '../../../Redux/actions/userAction';
 
 const drawerWidth = 240;
 
@@ -93,8 +102,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function MiniDrawer() {
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
+  const { loading, error, isAuthenticated } = useSelector(state => state.userlogin);
+
   const theme = useTheme();
 
   const [open, setOpen] = React.useState(false);
@@ -111,6 +123,17 @@ export default function MiniDrawer() {
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleLogout = () => {
+    setAnchorEl(null);
+
+    dispatch(userLogout('Admin'));
+
+    if (!localStorage.getItem("token")) {
+      navigate("/Login", { replace: true });
+    }
+
   };
 
   const handleClose = () => {
@@ -136,7 +159,7 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Admin Dashboard
+            Hii Admin
           </Typography>
           <div>
             <IconButton
@@ -165,7 +188,7 @@ export default function MiniDrawer() {
               onClose={handleClose}
             >
               <MenuItem onClick={() => navigate("./AdminProfile", { replace: false })}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>
         </Toolbar>
@@ -183,7 +206,6 @@ export default function MiniDrawer() {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        {/* <AdminDashboard /> */}
         <Outlet />
       </Box>
 

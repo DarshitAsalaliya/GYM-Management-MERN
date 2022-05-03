@@ -4,7 +4,7 @@ const initialState = {
     token: localStorage.getItem('token') || ''
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userAuthReducer = (state = {}, action) => {
     switch (action.type) {
         case constants.NEW_LOGIN_REQUEST:
             return {
@@ -15,10 +15,23 @@ export const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                success: action.payload
+                isAuthenticated: action.payload
             }
         case constants.NEW_LOGIN_FAIL:
-            return { ...state, loading: false, error: action.payload }
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+                isAuthenticated: false
+            }
+        case constants.NEW_LOGOUT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isAuthenticated: false
+            }
+        case constants.NEW_LOGOUT_FAIL:
+            return { ...state, loading: false, error: action.payload, isAuthenticated: false }
         default:
             return state
     }

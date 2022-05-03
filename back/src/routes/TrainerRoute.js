@@ -19,4 +19,13 @@ router.post('/api/Trainer/Login', TrainerController.Login);
 // Get
 router.get('/api/Trainer/GetTrainerList', auth, TrainerController.GetAllTrainer);
 
+// Get Active Trainer
+router.get('/api/Trainer/GetActiveTrainerList', auth, TrainerController.GetAllActiveTrainer);
+
+// Update
+router.patch('/api/Trainer/UpdateTrainer/:id', [auth, upload.single('image')], TrainerController.UpdateTrainer);
+
+// Delete
+router.delete('/api/Trainer/DeleteTrainer/:id', auth, TrainerController.DeleteTrainer);
+
 module.exports = router;

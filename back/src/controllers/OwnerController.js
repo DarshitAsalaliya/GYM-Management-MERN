@@ -33,7 +33,7 @@ exports.Registration = async (req, res) => {
         return res.status(201).send({ newOwner, token });
     } catch (e) {
         // Delete Uploaded File
-        fs.unlink('./public/ownerimages/' + req.file.filename, (err) => { });
+        fs.unlink('./public/memberimages/' + req.file.filename, (err) => { });
 
         // Delete Uploaded File From Cloudinary
         await cloudinary.v2.uploader.destroy('ownerimages/' + req.file.filename);
@@ -55,5 +55,20 @@ exports.Login = async (req, res) => {
         return res.send({ user: await user.getPublicProfile(), token });
     } catch (e) {
         return res.status(400).send({ error: e.message });
+    }
+}
+
+// Logout
+exports.Logout = async (req, res) => {
+    try {
+        req.user.tokens = req.user.tokens.filter((obj) => {
+            return obj.token !== req.token;
+        });
+
+        await req.user.save();
+        return res.status(200).send();
+    }
+    catch (e) {
+        return res.status(500).send({ error: e.message });
     }
 }

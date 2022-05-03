@@ -22,7 +22,7 @@ export default function ForgotPassword() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { loading, error, success } = useSelector(state => state.user);
+    const { loading, error, success } = useSelector(state => state.userlogin);
 
     useEffect(() => {
         success && navigate("/Dashboard/Admin", { replace: true });

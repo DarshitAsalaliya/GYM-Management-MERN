@@ -3,13 +3,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import AddIcon from '@mui/icons-material/Add';
 import { Formik } from 'formik';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import CheckIcon from '@mui/icons-material/Check';
@@ -25,7 +22,7 @@ import InputLabel from '@mui/material/InputLabel';
 import EditIcon from '@mui/icons-material/Edit';
 
 // Constants
-import * as constants from '../../../Redux/constants/memberConstants';
+import * as constants from '../../../Redux/constants/trainerConstants';
 
 // Validator
 import validator from 'validator';
@@ -35,7 +32,7 @@ import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { updateMember, getMemberList } from '../../../Redux/actions/memberAction';
+import { updateTrainer, getTrainerList } from '../../../Redux/actions/trainerAction';
 
 // Snackbar
 import SnackbarMsg from '../../Utils/SnackbarMsg';
@@ -50,7 +47,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '80%',
-    height: '95%',
+    height: '85%',
     bgcolor: 'background.paper',
     boxShadow: 24,
     overflow: 'scroll',
@@ -108,16 +105,14 @@ const IOSSwitch = styled((props) => (
     },
 }));
 
-
-
-export default function UpdateMember(props) {
+export default function UpdateTrainer(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const dispatch = useDispatch();
 
-    const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatemember);
+    const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatetrainer);
 
     const Input = styled('input')({
         display: 'block',
@@ -134,12 +129,8 @@ export default function UpdateMember(props) {
         password: Yup.string()
             .min(6, 'Password is too short - should be 6 chars minimum.')
             .matches(/[a-zA-Z]/, 'Password should be contain letters and numbers.'),
-        workouttype: Yup.string().required('Required'),
-        trainerprofileid: Yup.string().required('Required'),
         phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, 'Phone Should be 10 chars minimum.').max(12, 'To Long!').required('Required'),
         address: Yup.string().min(3, 'Too Short!').max(60, 'Too Long!'),
-        fromtime: Yup.string().required('From Time is Required'),
-        totime: Yup.string().required('To Time is Required'),
         dob: Yup.date().required('Date of Birth is Required'),
         doj: Yup.date().required('Date of Join is Required'),
         height: Yup.number().positive('Invalid'),
@@ -151,27 +142,6 @@ export default function UpdateMember(props) {
             setOpen(false);
         }
     }, [updatesuccess]);
-
-    // Fetch Trainer List
-
-    const [trainerList, setTrainerList] = useState([]);
-
-    const fetchData = async () => {
-
-        const { data } = await axios.get(REACT_APP_BASE_URL + 'api/Trainer/GetActiveTrainerList');
-
-        const filterData = data.map(function (obj) {
-            obj['id'] = obj['_id'];
-            delete obj['_id'];
-            return obj;
-        });
-
-        setTrainerList(filterData);
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, []);
 
     return (
         <div>
@@ -187,10 +157,9 @@ export default function UpdateMember(props) {
             >
                 <Box sx={style}>
                     <Formik
-                        initialValues={{ name: props.dataforupdate.name, email: props.dataforupdate.email, password: '', status: props.dataforupdate.status, gender: props.dataforupdate.gender, workouttype: props.dataforupdate.workouttype, fromtime: props.dataforupdate.workouttime.slice(0, 5), totime: props.dataforupdate.workouttime.slice(9, 15), phone: props.dataforupdate.phone, address: props.dataforupdate.address, problem: props.dataforupdate.problem, dob: props.dataforupdate.dob.slice(0, 10), doj: props.dataforupdate.doj.slice(0, 10), bloodgroup: props.dataforupdate.bloodgroup, height: props.dataforupdate.height, weight: props.dataforupdate.weight, trainerprofileid: props.dataforupdate.trainerprofileid }}
+                        initialValues={{ name: props.dataforupdate.name, email: props.dataforupdate.email, password: '', status: props.dataforupdate.status, gender: props.dataforupdate.gender, phone: props.dataforupdate.phone, address: props.dataforupdate.address, dob: props.dataforupdate.dob.slice(0, 10), doj: props.dataforupdate.doj.slice(0, 10), bloodgroup: props.dataforupdate.bloodgroup, height: props.dataforupdate.height, weight: props.dataforupdate.weight, salary: props.dataforupdate.salary }}
                         validationSchema={ValidationSchema}
                         onSubmit={async (values, { setSubmitting }) => {
-
                             var formData = new FormData();
 
                             for (var key in values) {
@@ -202,18 +171,16 @@ export default function UpdateMember(props) {
                                 }
                             }
 
-                            formData.append("workouttime", values['fromtime'] + ' To ' + values['totime']);
-
                             // Update
                             await dispatch({
-                                type: constants.MEMBER_UPDATE_RESET
+                                type: constants.TRAINER_UPDATE_RESET
                             });
 
-                            await dispatch(updateMember(props.dataforupdate.editid, formData));
+                            await dispatch(updateTrainer(props.dataforupdate.editid, formData));
 
                             // Reset
                             await dispatch({
-                                type: constants.MEMBER_LIST_RESET
+                                type: constants.TRAINER_LIST_RESET
                             });
 
                             setSubmitting(false);
@@ -237,7 +204,7 @@ export default function UpdateMember(props) {
                                         <Grid container spacing={3} >
                                             <Grid item xs={10} md={8} sx={{ textAlign: 'left' }}>
                                                 <Typography variant="h6" gutterBottom component="div" >
-                                                    Update Member
+                                                    Update Trainer
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={2} md={4} sx={{ textAlign: 'right' }}>
@@ -326,50 +293,6 @@ export default function UpdateMember(props) {
                                         </RadioGroup>
                                     </Grid>
                                     <Grid item xs={12} md={4}>
-                                        <FormControl fullWidth size="small">
-                                            <InputLabel id="workouttype">Workout Type</InputLabel>
-                                            <Select
-                                                labelId="workouttype"
-                                                id="demo-simple-select"
-                                                name="workouttype"
-                                                label="Workout Type"
-                                                value={values.workouttype}
-                                                onChange={handleChange}
-                                                error={errors.workouttype && touched.workouttype}
-                                                helperText={errors.workouttype}
-                                                defaultValue=""
-                                            >
-                                                <MenuItem value="Weight Loss">Weight Loss</MenuItem>
-                                                <MenuItem value="Weight Gain">Weight Gain</MenuItem>
-                                                <MenuItem value="Both">Both</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12} md={4}>
-                                        <TextField
-                                            id="fromtime"
-                                            type="time"
-                                            onChange={handleChange}
-                                            name="fromtime"
-                                            value={values.fromtime}
-                                            variant="standard"
-                                            error={errors.fromtime && touched.fromtime}
-                                            helperText={errors.fromtime || 'From Time'}
-                                            sx={{ width: '100%' }} />
-                                    </Grid>
-                                    <Grid item xs={12} md={4}>
-                                        <TextField
-                                            id="totime"
-                                            type="time"
-                                            onChange={handleChange}
-                                            name="totime"
-                                            value={values.totime}
-                                            variant="standard"
-                                            error={errors.totime && touched.totime}
-                                            helperText={errors.totime || 'To Time'}
-                                            sx={{ width: '100%' }} />
-                                    </Grid>
-                                    <Grid item xs={12} md={4}>
                                         <TextField
                                             id="phone"
                                             onChange={handleChange}
@@ -434,27 +357,6 @@ export default function UpdateMember(props) {
                                     </Grid>
                                     <Grid item xs={12} md={4}>
                                         <FormControl fullWidth size="small">
-                                            <InputLabel id="trainerprofileid">Trainer</InputLabel>
-                                            <Select
-                                                labelId="trainerprofileid"
-                                                id="demo-simple-select"
-                                                name="trainerprofileid"
-                                                label="Trainer"
-                                                error={errors.trainerprofileid && touched.trainerprofileid}
-                                                helperText={errors.trainerprofileid}
-                                                onChange={handleChange}
-                                                defaultValue=""
-                                                value={values.trainerprofileid}
-                                            >
-                                                {trainerList.map((obj) => {
-                                                    return <MenuItem value={obj.id}>{obj.name}</MenuItem>
-                                                })}
-
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12} md={4}>
-                                        <FormControl fullWidth size="small">
                                             <InputLabel id="bloodgroup">Blood Group</InputLabel>
                                             <Select
                                                 labelId="bloodgroup"
@@ -478,6 +380,18 @@ export default function UpdateMember(props) {
                                     </Grid>
                                     <Grid item xs={12} md={4}>
                                         <TextField
+                                            id="salary"
+                                            type="number"
+                                            onChange={handleChange}
+                                            name="salary"
+                                            label="Salary"
+                                            variant="standard"
+                                            error={errors.salary && touched.salary}
+                                            helperText={errors.salary}
+                                            sx={{ width: '100%' }} />
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <TextField
                                             id="address"
                                             onChange={handleChange}
                                             name="address"
@@ -489,16 +403,8 @@ export default function UpdateMember(props) {
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={4}>
-                                        <TextField
-                                            id="problem"
-                                            onChange={handleChange}
-                                            name="problem"
-                                            value={values.problem}
-                                            label="Any Problem"
-                                            variant="standard"
-                                            sx={{ width: '100%' }} />
-                                    </Grid>
 
+                                    </Grid>
                                     <Grid item xs={12} md={4}>
 
                                     </Grid>

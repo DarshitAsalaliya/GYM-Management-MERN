@@ -22,10 +22,9 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import EditIcon from '@mui/icons-material/Edit';
 
 // Constants
-import * as constants from '../../../Redux/constants/memberConstants';
+import * as constants from '../../../Redux/constants/trainerConstants';
 
 // Validator
 import validator from 'validator';
@@ -35,7 +34,7 @@ import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { updateMember, getMemberList } from '../../../Redux/actions/memberAction';
+import { registerTrainer, getTrainerList } from '../../../Redux/actions/trainerAction';
 
 // Snackbar
 import SnackbarMsg from '../../Utils/SnackbarMsg';
@@ -50,7 +49,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '80%',
-    height: '95%',
+    height: '85%',
     bgcolor: 'background.paper',
     boxShadow: 24,
     overflow: 'scroll',
@@ -108,19 +107,17 @@ const IOSSwitch = styled((props) => (
     },
 }));
 
-
-
-export default function UpdateMember(props) {
+export default function AddTrainer() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const dispatch = useDispatch();
 
-    const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatemember);
+    const { registerloading, registererror, registersuccess } = useSelector(state => state.registertrainer);
 
     const Input = styled('input')({
-        display: 'block',
+        display: 'none',
     });
 
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
@@ -132,14 +129,11 @@ export default function UpdateMember(props) {
             .required('Required'),
         email: Yup.string().email('Invalid email').required('Required'),
         password: Yup.string()
+            .required('Required')
             .min(6, 'Password is too short - should be 6 chars minimum.')
             .matches(/[a-zA-Z]/, 'Password should be contain letters and numbers.'),
-        workouttype: Yup.string().required('Required'),
-        trainerprofileid: Yup.string().required('Required'),
         phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, 'Phone Should be 10 chars minimum.').max(12, 'To Long!').required('Required'),
         address: Yup.string().min(3, 'Too Short!').max(60, 'Too Long!'),
-        fromtime: Yup.string().required('From Time is Required'),
-        totime: Yup.string().required('To Time is Required'),
         dob: Yup.date().required('Date of Birth is Required'),
         doj: Yup.date().required('Date of Join is Required'),
         height: Yup.number().positive('Invalid'),
@@ -147,38 +141,17 @@ export default function UpdateMember(props) {
     });
 
     useEffect(() => {
-        if (updatesuccess) {
+        if (registersuccess) {
             setOpen(false);
         }
-    }, [updatesuccess]);
-
-    // Fetch Trainer List
-
-    const [trainerList, setTrainerList] = useState([]);
-
-    const fetchData = async () => {
-
-        const { data } = await axios.get(REACT_APP_BASE_URL + 'api/Trainer/GetActiveTrainerList');
-
-        const filterData = data.map(function (obj) {
-            obj['id'] = obj['_id'];
-            delete obj['_id'];
-            return obj;
-        });
-
-        setTrainerList(filterData);
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, []);
+    }, [registersuccess]);
 
     return (
         <div>
-            {updateerror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={updateerror} severity="error" />}
+            {registererror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={registererror} severity="error" />}
 
-            <Button variant="outlined" color='primary' onClick={handleOpen}>
-                <EditIcon fontSize="small" />
+            <Button onClick={handleOpen} variant="outlined" startIcon={<AddIcon />} size='small'>
+                Add Trainer
             </Button>
             <Modal
                 open={open}
@@ -187,33 +160,28 @@ export default function UpdateMember(props) {
             >
                 <Box sx={style}>
                     <Formik
-                        initialValues={{ name: props.dataforupdate.name, email: props.dataforupdate.email, password: '', status: props.dataforupdate.status, gender: props.dataforupdate.gender, workouttype: props.dataforupdate.workouttype, fromtime: props.dataforupdate.workouttime.slice(0, 5), totime: props.dataforupdate.workouttime.slice(9, 15), phone: props.dataforupdate.phone, address: props.dataforupdate.address, problem: props.dataforupdate.problem, dob: props.dataforupdate.dob.slice(0, 10), doj: props.dataforupdate.doj.slice(0, 10), bloodgroup: props.dataforupdate.bloodgroup, height: props.dataforupdate.height, weight: props.dataforupdate.weight, trainerprofileid: props.dataforupdate.trainerprofileid }}
+                        initialValues={{ name: '', email: '', password: '', status: true, gender: 'male', phone: '', address: '', dob: '', doj: '', bloodgroup: '', height: 0, weight: 0, salary: 0 }}
                         validationSchema={ValidationSchema}
                         onSubmit={async (values, { setSubmitting }) => {
-
                             var formData = new FormData();
 
                             for (var key in values) {
-                                if (values[key] !== '') {
-                                    if (key === 'file')
-                                        formData.append('image', values[key]);
-                                    else
-                                        formData.append(key, values[key]);
-                                }
+                                if (key === 'file')
+                                    formData.append('image', values[key]);
+                                else
+                                    formData.append(key, values[key]);
                             }
 
-                            formData.append("workouttime", values['fromtime'] + ' To ' + values['totime']);
-
-                            // Update
+                            // Add
                             await dispatch({
-                                type: constants.MEMBER_UPDATE_RESET
+                                type: constants.NEW_TRAINER_RESET
                             });
 
-                            await dispatch(updateMember(props.dataforupdate.editid, formData));
+                            await dispatch(registerTrainer(formData));
 
                             // Reset
                             await dispatch({
-                                type: constants.MEMBER_LIST_RESET
+                                type: constants.TRAINER_LIST_RESET
                             });
 
                             setSubmitting(false);
@@ -237,7 +205,7 @@ export default function UpdateMember(props) {
                                         <Grid container spacing={3} >
                                             <Grid item xs={10} md={8} sx={{ textAlign: 'left' }}>
                                                 <Typography variant="h6" gutterBottom component="div" >
-                                                    Update Member
+                                                    Register Trainer
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={2} md={4} sx={{ textAlign: 'right' }}>
@@ -296,17 +264,18 @@ export default function UpdateMember(props) {
                                             <Input accept="image/*" id="contained-button-file" name="image" type="file" onChange={(event) => {
                                                 setFieldValue("file", event.currentTarget.files[0]);
                                             }} />
-                                            {/* <Button variant="contained" component="span">
+                                            <Button variant="contained" component="span">
                                                 Upload Image
-                                            </Button> */}
+                                            </Button>
                                         </label>
                                     </Grid>
                                     <Grid item xs={12} md={4}>
                                         <FormControlLabel
-                                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked={values.status} />}
+                                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
                                             label="Active"
                                             name="status"
                                             onChange={handleChange}
+                                            value={values.status}
                                             sx={{ width: '100%' }}
                                         />
                                     </Grid>
@@ -318,63 +287,18 @@ export default function UpdateMember(props) {
                                             name="gender"
                                             defaultValue="male"
                                             onChange={handleChange}
-                                            value={values.gender}
                                         >
                                             <FormControlLabel value="male" control={<Radio />} label="Male" />
                                             <FormControlLabel value="female" control={<Radio />} label="Female" Select />
                                             <FormControlLabel value="other" control={<Radio />} label="Other" />
                                         </RadioGroup>
                                     </Grid>
-                                    <Grid item xs={12} md={4}>
-                                        <FormControl fullWidth size="small">
-                                            <InputLabel id="workouttype">Workout Type</InputLabel>
-                                            <Select
-                                                labelId="workouttype"
-                                                id="demo-simple-select"
-                                                name="workouttype"
-                                                label="Workout Type"
-                                                value={values.workouttype}
-                                                onChange={handleChange}
-                                                error={errors.workouttype && touched.workouttype}
-                                                helperText={errors.workouttype}
-                                                defaultValue=""
-                                            >
-                                                <MenuItem value="Weight Loss">Weight Loss</MenuItem>
-                                                <MenuItem value="Weight Gain">Weight Gain</MenuItem>
-                                                <MenuItem value="Both">Both</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item xs={12} md={4}>
-                                        <TextField
-                                            id="fromtime"
-                                            type="time"
-                                            onChange={handleChange}
-                                            name="fromtime"
-                                            value={values.fromtime}
-                                            variant="standard"
-                                            error={errors.fromtime && touched.fromtime}
-                                            helperText={errors.fromtime || 'From Time'}
-                                            sx={{ width: '100%' }} />
-                                    </Grid>
-                                    <Grid item xs={12} md={4}>
-                                        <TextField
-                                            id="totime"
-                                            type="time"
-                                            onChange={handleChange}
-                                            name="totime"
-                                            value={values.totime}
-                                            variant="standard"
-                                            error={errors.totime && touched.totime}
-                                            helperText={errors.totime || 'To Time'}
-                                            sx={{ width: '100%' }} />
-                                    </Grid>
+
                                     <Grid item xs={12} md={4}>
                                         <TextField
                                             id="phone"
                                             onChange={handleChange}
                                             name="phone"
-                                            value={values.phone}
                                             label="Phone"
                                             variant="standard"
                                             error={errors.phone && touched.phone}
@@ -388,7 +312,6 @@ export default function UpdateMember(props) {
                                             type="date"
                                             onChange={handleChange}
                                             name="dob"
-                                            value={values.dob}
                                             variant="standard"
                                             error={errors.dob && touched.dob}
                                             helperText={errors.dob || 'Date of Birth'}
@@ -400,7 +323,6 @@ export default function UpdateMember(props) {
                                             type="date"
                                             onChange={handleChange}
                                             name="doj"
-                                            value={values.doj}
                                             variant="standard"
                                             error={errors.doj && touched.doj}
                                             helperText={errors.doj || 'Date of Join'}
@@ -412,7 +334,6 @@ export default function UpdateMember(props) {
                                             type="number"
                                             onChange={handleChange}
                                             name="height"
-                                            value={values.height}
                                             label="Height"
                                             variant="standard"
                                             error={errors.height && touched.height}
@@ -425,33 +346,11 @@ export default function UpdateMember(props) {
                                             type="number"
                                             onChange={handleChange}
                                             name="weight"
-                                            value={values.weight}
                                             label="weight"
                                             variant="standard"
                                             error={errors.weight && touched.weight}
                                             helperText={errors.weight}
                                             sx={{ width: '100%' }} />
-                                    </Grid>
-                                    <Grid item xs={12} md={4}>
-                                        <FormControl fullWidth size="small">
-                                            <InputLabel id="trainerprofileid">Trainer</InputLabel>
-                                            <Select
-                                                labelId="trainerprofileid"
-                                                id="demo-simple-select"
-                                                name="trainerprofileid"
-                                                label="Trainer"
-                                                error={errors.trainerprofileid && touched.trainerprofileid}
-                                                helperText={errors.trainerprofileid}
-                                                onChange={handleChange}
-                                                defaultValue=""
-                                                value={values.trainerprofileid}
-                                            >
-                                                {trainerList.map((obj) => {
-                                                    return <MenuItem value={obj.id}>{obj.name}</MenuItem>
-                                                })}
-
-                                            </Select>
-                                        </FormControl>
                                     </Grid>
                                     <Grid item xs={12} md={4}>
                                         <FormControl fullWidth size="small">
@@ -463,7 +362,6 @@ export default function UpdateMember(props) {
                                                 label="Blood Group"
                                                 onChange={handleChange}
                                                 defaultValue=""
-                                                value={values.bloodgroup}
                                             >
                                                 <MenuItem value="O-">O-</MenuItem>
                                                 <MenuItem value="O+">O+</MenuItem>
@@ -478,10 +376,21 @@ export default function UpdateMember(props) {
                                     </Grid>
                                     <Grid item xs={12} md={4}>
                                         <TextField
+                                            id="salary"
+                                            type="number"
+                                            onChange={handleChange}
+                                            name="salary"
+                                            label="Salary"
+                                            variant="standard"
+                                            error={errors.salary && touched.salary}
+                                            helperText={errors.salary}
+                                            sx={{ width: '100%' }} />
+                                    </Grid>
+                                    <Grid item xs={12} md={4}>
+                                        <TextField
                                             id="address"
                                             onChange={handleChange}
                                             name="address"
-                                            value={values.address}
                                             label="Address"
                                             variant="standard"
                                             error={errors.address && touched.address}
@@ -489,22 +398,14 @@ export default function UpdateMember(props) {
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={4}>
-                                        <TextField
-                                            id="problem"
-                                            onChange={handleChange}
-                                            name="problem"
-                                            value={values.problem}
-                                            label="Any Problem"
-                                            variant="standard"
-                                            sx={{ width: '100%' }} />
-                                    </Grid>
 
+                                    </Grid>
                                     <Grid item xs={12} md={4}>
 
                                     </Grid>
                                     <Grid item xs={12} md={4}>
-                                        <Button type="submit" variant="contained" color="info" startIcon={<CheckIcon />} disabled={isSubmitting} sx={{ width: '80%' }}>
-                                            Update
+                                        <Button type="submit" variant="contained" color="success" startIcon={<CheckIcon />} disabled={isSubmitting} sx={{ width: '80%' }}>
+                                            Save
                                         </Button>
                                     </Grid>
                                     <Grid item xs={12} md={4}>

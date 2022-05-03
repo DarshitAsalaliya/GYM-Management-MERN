@@ -37,7 +37,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { registerMember, getMemberList } from '../../../Redux/actions/memberAction';
 
 // Snackbar
-import SnackbarMsg from './SnackbarMsg';
+import SnackbarMsg from '../../Utils/SnackbarMsg';
 
 // Axios
 import axios from 'axios';
@@ -49,7 +49,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '80%',
-    height: '90%',
+    height: '95%',
     bgcolor: 'background.paper',
     boxShadow: 24,
     overflow: 'scroll',
@@ -158,7 +158,7 @@ export default function AddMember() {
 
     const fetchData = async () => {
 
-        const { data } = await axios.get(REACT_APP_BASE_URL + 'api/Trainer/GetTrainerList');
+        const { data } = await axios.get(REACT_APP_BASE_URL + 'api/Trainer/GetActiveTrainerList');
 
         const filterData = data.map(function (obj) {
             obj['id'] = obj['_id'];
@@ -172,12 +172,12 @@ export default function AddMember() {
     useEffect(() => {
         fetchData();
     }, []);
-
+    
     return (
         <div>
             {registererror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={registererror} severity="error" />}
 
-            <Button onClick={handleOpen} variant="outlined" startIcon={<AddIcon />}>
+            <Button onClick={handleOpen} variant="outlined" startIcon={<AddIcon />} size='small'>
                 Add Member
             </Button>
             <Modal
@@ -233,12 +233,12 @@ export default function AddMember() {
                                     <Grid item xs={12} md={12}>
                                         <Grid container spacing={3} >
                                             <Grid item xs={10} md={8} sx={{ textAlign: 'left' }}>
-                                                <Typography variant="h5" gutterBottom component="div" >
+                                                <Typography variant="h6" gutterBottom component="div" >
                                                     Register Member
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={2} md={4} sx={{ textAlign: 'right' }}>
-                                                <Button type="submit" variant="outlined" color="error" onClick={handleClose} size='small'><ClearIcon />
+                                                <Button type="submit" color="error" onClick={handleClose} size='small'><ClearIcon />
                                                 </Button>
                                             </Grid>
                                         </Grid>
@@ -436,7 +436,7 @@ export default function AddMember() {
                                                 defaultValue=""
                                             >
                                                 {trainerList.map((obj) => {
-                                                    return <MenuItem value={obj.id}>{obj.name}</MenuItem>
+                                                    return <MenuItem value={obj.id} key={obj.id}>{obj.name}</MenuItem>
                                                 })}
 
                                             </Select>
