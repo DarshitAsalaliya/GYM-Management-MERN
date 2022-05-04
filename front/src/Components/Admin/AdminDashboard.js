@@ -17,7 +17,6 @@ export default function AdminDashboard() {
   return (
 
     <>
-
       <Box sx={{ width: '100%' }}>
         <Grid container spacing={2}>
           <Grid item xs={6} md={8}>
@@ -32,7 +31,7 @@ export default function AdminDashboard() {
 
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={6} md={3} >
-            <Item elevation={0} sx={{ backgroundColor: '#FFF1D7' }}>
+            <Item elevation={0} sx={{ backgroundColor: '#D1E9FC' }}>
 
               <Typography variant="caption" display="block" gutterBottom>
                 Total Members
@@ -44,7 +43,7 @@ export default function AdminDashboard() {
             </Item>
           </Grid>
           <Grid item xs={6} md={3}>
-            <Item elevation={0} sx={{ backgroundColor: '#FFEEE7' }}>
+            <Item elevation={0} sx={{ backgroundColor: '#D0F2FF' }}>
 
               <Typography variant="caption" display="block" gutterBottom>
                 Total Trainers
@@ -56,7 +55,7 @@ export default function AdminDashboard() {
             </Item>
           </Grid>
           <Grid item xs={6} md={3}>
-            <Item elevation={0} sx={{ backgroundColor: '#F1FCEB' }}>
+            <Item elevation={0} sx={{ backgroundColor: '#FFF7CD' }}>
 
               <Typography variant="caption" display="block" gutterBottom>
                 Total Memberships
@@ -68,7 +67,7 @@ export default function AdminDashboard() {
             </Item>
           </Grid>
           <Grid item xs={6} md={3}>
-            <Item elevation={0} sx={{ backgroundColor: '#FFF1D7' }}>
+            <Item elevation={0} sx={{ backgroundColor: '#FFE7D9' }}>
 
               <Typography variant="caption" display="block" gutterBottom>
                 Total Supplements

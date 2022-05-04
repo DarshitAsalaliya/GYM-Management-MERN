@@ -19,7 +19,7 @@ export const registerMemberReducer = (state = {}, action) => {
             }
         case constants.NEW_MEMBER_RESET:
             return {
-                ...state, registerloading: false, registersuccess: false
+                ...state, registerloading: false, registersuccess: false, registererror: false
             }
         default:
             return state
@@ -46,7 +46,7 @@ export const getMemberListReducer = (state = {}, action) => {
             }
         case constants.MEMBER_LIST_RESET:
             return {
-                ...state, getlistloading: false, getlistsuccess: false
+                ...state, getlistloading: false, getlistsuccess: false, getlisterror: false
             }
         default:
             return state
@@ -72,7 +72,7 @@ export const updateMemberReducer = (state = {}, action) => {
             }
         case constants.MEMBER_UPDATE_RESET:
             return {
-                ...state, updateloading: false, updatesuccess: false
+                ...state, updateloading: false, updatesuccess: false, updateerror: false
             }
         default:
             return state
@@ -98,7 +98,7 @@ export const deleteMemberReducer = (state = {}, action) => {
             }
         case constants.MEMBER_DELETE_RESET:
             return {
-                ...state, deleteloading: false, deletesuccess: false
+                ...state, deleteloading: false, deletesuccess: false, deleteerror: false
             }
         default:
             return state

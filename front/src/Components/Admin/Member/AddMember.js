@@ -172,7 +172,7 @@ export default function AddMember() {
     useEffect(() => {
         fetchData();
     }, []);
-    
+
     return (
         <div>
             {registererror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={registererror} severity="error" />}

@@ -7,16 +7,15 @@ const supplementSchema = new mongoose.Schema({
         minlength: [3, 'Your Supplement name must be longer than 2 characters'],
         trim: true
     },
-    images: [
-        {
-            public_id: {
-                type: String
-            },
-            image_url: {
-                type: String
-            }
+    image:
+    {
+        public_id: {
+            type: String
+        },
+        image_url: {
+            type: String
         }
-    ],
+    },
     price: {
         type: Number,
         default: 0

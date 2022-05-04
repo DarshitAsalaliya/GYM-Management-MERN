@@ -1,24 +1,24 @@
-import * as constants from '../constants/trainerConstants';
+import * as constants from '../constants/membershipConstants';
 
-export const registerTrainerReducer = (state = {}, action) => {
+export const createMembershipReducer = (state = {}, action) => {
     switch (action.type) {
-        case constants.NEW_TRAINER_REQUEST:
+        case constants.NEW_MEMBERSHIP_REQUEST:
             return {
                 ...state,
                 registerloading: true
             }
-        case constants.NEW_TRAINER_SUCCESS:
+        case constants.NEW_MEMBERSHIP_SUCCESS:
             return {
                 ...state,
                 registerloading: false,
                 registereddata:action.payload,
                 registersuccess: true
             }
-        case constants.NEW_TRAINER_FAIL:
+        case constants.NEW_MEMBERSHIP_FAIL:
             return {
                 ...state, registerloading: false, registererror: action.payload
             }
-        case constants.NEW_TRAINER_RESET:
+        case constants.NEW_MEMBERSHIP_RESET:
             return {
                 ...state, registerloading: false, registersuccess: false, registererror: false
             }
@@ -27,25 +27,25 @@ export const registerTrainerReducer = (state = {}, action) => {
     }
 }
 
-export const getTrainerListReducer = (state = {}, action) => {
+export const getMembershipListReducer = (state = {}, action) => {
     switch (action.type) {
-        case constants.TRAINER_LIST_REQUEST:
+        case constants.MEMBERSHIP_LIST_REQUEST:
             return {
                 ...state,
                 getlistloading: true
             }
-        case constants.TRAINER_LIST_SUCCESS:
+        case constants.MEMBERSHIP_LIST_SUCCESS:
             return {
                 ...state,
                 getlistloading: false,
                 data: action.payload,
                 getlistsuccess: true
             }
-        case constants.TRAINER_LIST_FAIL:
+        case constants.MEMBERSHIP_LIST_FAIL:
             return {
                 ...state, getlistloading: false, getlisterror: action.payload, getlistsuccess: false
             }
-        case constants.TRAINER_LIST_RESET:
+        case constants.MEMBERSHIP_LIST_RESET:
             return {
                 ...state, getlistloading: false, getlistsuccess: false, getlisterror: false
             }
@@ -54,25 +54,25 @@ export const getTrainerListReducer = (state = {}, action) => {
     }
 }
 
-export const updateTrainerReducer = (state = {}, action) => {
+export const updateMembershipReducer = (state = {}, action) => {
     switch (action.type) {
-        case constants.TRAINER_UPDATE_REQUEST:
+        case constants.MEMBERSHIP_UPDATE_REQUEST:
             return {
                 ...state,
                 updateloading: true
             }
-        case constants.TRAINER_UPDATE_SUCCESS:
+        case constants.MEMBERSHIP_UPDATE_SUCCESS:
             return {
                 ...state,
                 updateloading: false,
                 updateddata:action.payload,
                 updatesuccess: true
             }
-        case constants.TRAINER_UPDATE_FAIL:
+        case constants.MEMBERSHIP_UPDATE_FAIL:
             return {
                 ...state, updateloading: false, updateerror: action.payload
             }
-        case constants.TRAINER_UPDATE_RESET:
+        case constants.MEMBERSHIP_UPDATE_RESET:
             return {
                 ...state, updateloading: false, updatesuccess: false, updateerror:false
             }
@@ -81,25 +81,25 @@ export const updateTrainerReducer = (state = {}, action) => {
     }
 }
 
-export const deleteTrainerReducer = (state = {}, action) => {
+export const deleteMembershipReducer = (state = {}, action) => {
     switch (action.type) {
-        case constants.TRAINER_DELETE_REQUEST:
+        case constants.MEMBERSHIP_DELETE_REQUEST:
             return {
                 ...state,
                 deleteloading: true
             }
-        case constants.TRAINER_DELETE_SUCCESS:
+        case constants.MEMBERSHIP_DELETE_SUCCESS:
             return {
                 ...state,
                 deleteloading: false,
                 deleteddata:action.payload,
                 deletesuccess: true
             }
-        case constants.TRAINER_DELETE_FAIL:
+        case constants.MEMBERSHIP_DELETE_FAIL:
             return {
                 ...state, deleteloading: false, deleteerror: action.payload, deletesuccess: false
             }
-        case constants.TRAINER_DELETE_RESET:
+        case constants.MEMBERSHIP_DELETE_RESET:
             return {
                 ...state, deleteloading: false, deletesuccess: false, deleteerror:false
             }

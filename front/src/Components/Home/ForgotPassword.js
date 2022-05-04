@@ -11,7 +11,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import LinearProgress from '@mui/material/LinearProgress';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { useNavigate } from "react-router-dom";
 
@@ -20,9 +20,8 @@ const theme = createTheme();
 export default function ForgotPassword() {
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const { loading, error, success } = useSelector(state => state.userlogin);
+  
+    const { loading, error, success } = useSelector(state => state.userauth);
 
     useEffect(() => {
         success && navigate("/Dashboard/Admin", { replace: true });

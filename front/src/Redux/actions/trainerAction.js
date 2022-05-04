@@ -22,7 +22,7 @@ export const registerTrainer = (formData) => async (dispatch) => {
 
         dispatch({
             type: constants.NEW_TRAINER_SUCCESS,
-            payload: true
+            payload: data
         })
 
     } catch (error) {
@@ -88,7 +88,7 @@ export const updateTrainer = (id,formData) => async (dispatch) => {
 
         dispatch({
             type: constants.TRAINER_UPDATE_SUCCESS,
-            payload: true
+            payload: data
         })
 
     } catch (error) {
@@ -113,7 +113,7 @@ export const deleteTrainer = (id) => async (dispatch) => {
 
         dispatch({
             type: constants.TRAINER_DELETE_SUCCESS,
-            payload: true
+            payload: data
         })
 
     } catch (error) {

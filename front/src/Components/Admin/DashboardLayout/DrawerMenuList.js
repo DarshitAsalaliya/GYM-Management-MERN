@@ -57,7 +57,7 @@ export default function DrawerMenuList() {
         <ListItemText primary="Manage Trainers" className='sideMenuTextStyle'/>
       </ListItemButton>
 
-      <ListItemButton>
+      <ListItemButton onClick={() => navigate("./ManageMemberships", { replace: true })}>
         <ListItemIcon>
           <CollectionsBookmarkIcon />
         </ListItemIcon>

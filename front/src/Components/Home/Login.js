@@ -29,10 +29,14 @@ export default function SignInSide() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { loading, error, isAuthenticated } = useSelector(state => state.userlogin);
+    const { loading, error, isAuthenticated } = useSelector(state => state.userauth);
 
-    
-   
+    useEffect(() => {
+        if (isAuthenticated && localStorage.getItem("token")) {
+            navigate("/Dashboard/Admin", { replace: true });
+        }
+    }, [isAuthenticated, navigate]);
+
     // Form Data State
     const [formData, setFormData] = useState({
         userEmail: '',
@@ -56,9 +60,7 @@ export default function SignInSide() {
         event.preventDefault();
         dispatch(checkLogin({ email: formData.userEmail, password: formData.userPassword }, userType));
 
-        if (isAuthenticated && localStorage.getItem("token")) {
-            navigate("/Dashboard/Admin", { replace: true });
-        }
+
     };
 
     const handleChangeUserType = (event, newTabIndex) => {
@@ -115,7 +117,6 @@ export default function SignInSide() {
                         <Typography component="h1" variant="h5">
                             {userType} Login
                         </Typography>
-
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                             {error && <Alert severity="error">Invalid User!</Alert>}
                             <TextField

@@ -5,6 +5,8 @@ import Avatar from '@mui/material/Avatar';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import PersonIcon from '@mui/icons-material/Person';
 import Chip from '@mui/material/Chip';
+import BoyIcon from '@mui/icons-material/Boy';
+import GirlIcon from '@mui/icons-material/Girl';
 
 // Constants
 import * as constants from '../../../Redux/constants/trainerConstants';
@@ -70,8 +72,21 @@ export default function TrainerList() {
                         description: 'Trainer Name',
                         width: 200
                     },
+                    {
+                        field: 'email',
+                        headerName: 'Email',
+                        description: 'Email',
+                        width: 240
+                    },
                     { field: 'phone', headerName: 'Contact', width: 120 },
-                    { field: 'gender', headerName: 'Gender', width: 100 },
+                    {
+                        field: 'gender', headerName: 'Gender', width: 80,
+                        renderCell: (params) => (
+
+                            params.value === 'male' ? <BoyIcon/>  : <GirlIcon />
+
+                        ),
+                    },
                     {
                         field: 'status',
                         headerName: 'Status',
@@ -89,6 +104,14 @@ export default function TrainerList() {
                             return `${valueFormatted}`;
                         }
                     },
+                    {
+                        field: 'dob', headerName: 'Birth Date', width: 120, valueFormatter: (params) => {
+
+                            const valueFormatted = new Date(params.value).toLocaleDateString();
+                            return `${valueFormatted}`;
+                        }
+                    },
+                    { field: 'bloodgroup', headerName: 'Blood', width: 60 },
                     {
                         field: 'editid',
                         headerName: 'Edit',

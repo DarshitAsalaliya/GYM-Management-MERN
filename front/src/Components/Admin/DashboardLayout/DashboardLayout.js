@@ -15,17 +15,11 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
-// Dashboard
-import AdminDashboard from '../AdminDashboard';
-
 // Drawer Menu
 import DrawerMenuList from './DrawerMenuList';
 
 // Navbar
 import { useNavigate, Outlet } from 'react-router-dom';
-
-// Constants
-import * as constants from '../../../Redux/constants/userConstants';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -105,13 +99,19 @@ export default function MiniDrawer() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, isAuthenticated } = useSelector(state => state.userlogin);
+  const { isAuthenticated } = useSelector(state => state.userauth);
 
   const theme = useTheme();
 
   const [open, setOpen] = React.useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  useEffect(() => {
+    if (!isAuthenticated && !localStorage.getItem("token")) {
+      navigate("/Login", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -127,13 +127,7 @@ export default function MiniDrawer() {
 
   const handleLogout = () => {
     setAnchorEl(null);
-
     dispatch(userLogout('Admin'));
-
-    if (!localStorage.getItem("token")) {
-      navigate("/Login", { replace: true });
-    }
-
   };
 
   const handleClose = () => {

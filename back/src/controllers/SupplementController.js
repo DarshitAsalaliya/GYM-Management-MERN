@@ -12,47 +12,117 @@ const { checkParameters } = require('../middleware/utils');
 // Create New Supplement
 exports.CreateSupplement = async (req, res) => {
     try {
-        //Map through images and create a promise array using cloudinary upload function
-        let multiplePicturePromise = req.files.map((data) => {
-            return cloudinary.v2.uploader.upload(data.path, {
+       
+        if (req.file) {
+           
+            // Upload Image To Cloudinary
+            const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
                 folder: 'supplementimages',
-                public_id: data.filename,
+                public_id: req.file.filename,
                 crop: "fit",
                 allowedFormats: ['jpg', 'jpeg', 'png']
-            }, (err) => {
-                if (err) {
-                    throw new Error(err.message);
+            }, (e) => {
+                if (e) {
+                    throw new Error(e.message);
                 }
             });
+            // Save Member with Image
+            newSupplementObj = new SupplementModel({ ...req.body, ownerprofileid: req.user.id, image: { public_id: uploadResult.public_id, image_url: uploadResult.secure_url } });
         }
-        );
+        else {
+            // Save Member
+            newSupplementObj = new SupplementModel({ ...req.body, ownerprofileid: req.user.id });
+        }
 
-        // Await all the cloudinary upload functions in promise.all
-        let imageResponses = await Promise.all(multiplePicturePromise);
-
-        const newSupplement = new SupplementModel({ ...req.body, ownerprofileid: req.user._id, images: imageResponses.map((data) => { return { public_id: data.public_id, image_url: data.secure_url } }) });
+        const newSupplement = newSupplementObj;
         await newSupplement.save();
 
         return res.status(201).send(newSupplement);
 
     } catch (e) {
 
-        // Delete Uploaded Files
-        req.files.forEach((data) => {
-            fs.unlink('./public/supplementimages/' + data.filename, (err) => { });
+        try {
+            if (req.file) {
+
+                // Delete Uploaded File
+                fs.unlink('./public/memberimages/' + req.file.filename, (err) => {
+                    if (err) {
+                        throw new Error(err.message);
+                    }
+                });
+
+                // Delete Uploaded File From Cloudinary
+                await cloudinary.v2.uploader.destroy('supplementimages/' + req.file.filename);
+
+                return res.status(400).send({ error: e.message });
+            }
+        }
+        catch (er) {
+            return res.status(400).send({ error: er.message });
+        }
+    }
+}
+
+// Update Supplement
+exports.UpdateSupplement = async (req, res) => {
+    try {
+        const _id = req.params.id;
+
+        //Find Post For Update
+        const data = await SupplementModel.findById(_id);
+
+        if (!data)
+            return res.status(404).send({ error: "Not Found.." });
+
+        if (req.file) {
+
+            // Delete Existing Image From Cloudinary
+            data.image.public_id && await cloudinary.v2.uploader.destroy(data.image.public_id);
+
+            // Upload New Image To Cloudinary
+            const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
+                folder: 'supplementimages',
+                public_id: req.file.filename,
+                crop: "fit",
+                allowedFormats: ['jpg', 'jpeg', 'png']
+            }, (e) => {
+                if (e) {
+                    throw new Error(e.message);
+                }
+            });
+
+            data.image = { public_id: uploadResult.public_id, image_url: uploadResult.secure_url };
+        }
+
+        Object.keys(req.body).forEach((update) => {
+            data[update] = req.body[update];
         });
 
-        // Delete Uploaded File From Cloudinary        
-        //Map through images and create a promise array using cloudinary upload function
-        let deleteMultiplePicturePromise = req.files.map((data) => {
-            return cloudinary.v2.uploader.destroy('supplementimages/' + data.filename);
+        await data.save();
+
+        return res.status(200).send(data);
+
+    } catch (e) {
+
+        try {
+            if (req.file) {
+
+                // Delete Uploaded File
+                fs.unlink('./public/memberimages/' + req.file.filename, (err) => {
+                    if (err) {
+                        throw new Error(err.message);
+                    }
+                });
+
+                // Delete Uploaded File From Cloudinary
+                await cloudinary.v2.uploader.destroy('supplementimages/' + req.file.filename);
+
+                return res.status(400).send({ error: e.message });
+            }
         }
-        );
-
-        // Await all the cloudinary upload functions in promise.all
-        let imageResponses = await Promise.all(deleteMultiplePicturePromise);
-
-        return res.status(400).send({ error: e.message });
+        catch (er) {
+            return res.status(400).send({ error: er.message });
+        }
     }
 }
 
@@ -65,23 +135,31 @@ exports.DeleteSupplement = async (req, res) => {
             return res.status(404).send({ error: "Supplement Not Found.." });
         }
 
-        //Map through images and create a promise array using cloudinary upload function
-        let multiplePicturePromise = data.images.map((d) => {
-            return cloudinary.v2.uploader.destroy(d.public_id);
-        }
-        );
-
-        // Await all the cloudinary upload functions in promise.all
-        let imageResponses = await Promise.all(multiplePicturePromise);
+        // Delete Uploaded File From Cloudinary
+        await cloudinary.v2.uploader.destroy('supplementimages/' + data.image);
 
         // Delete Uploaded Files From Local Folder
-        data.images.forEach((d) => {
-            fs.unlink('./public/' + d.public_id, (err) => { });
-        });
+        fs.unlink('./public/memberimages/' + data.image, (err) => { });
 
         return res.status(200).send(data);
     }
     catch (e) {
+        return res.status(400).send({ error: e.message });
+    }
+}
+
+// Get All Supplements
+exports.GetAllSupplement = async (req, res) => {
+    try {
+        const SupplementList = await SupplementModel.find({ status: true });
+
+        // Check Supplement Length
+        if (SupplementList.length === 0) {
+            return res.status(404).send({ error: "Supplement not found.." });
+        }
+
+        return res.status(200).send(SupplementList);
+    } catch (e) {
         return res.status(400).send({ error: e.message });
     }
 }

@@ -19,4 +19,7 @@ router.post('/api/Owner/Login', OwnerController.Login);
 // Logout
 router.post('/api/Owner/Logout',auth, OwnerController.Logout);
 
+// Get Profile
+router.get('/api/Owner/me',auth, OwnerController.AdminProfile);
+
 module.exports = router;

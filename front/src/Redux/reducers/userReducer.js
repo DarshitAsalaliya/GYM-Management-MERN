@@ -1,9 +1,5 @@
 import * as constants from '../constants/userConstants';
 
-const initialState = {
-    token: localStorage.getItem('token') || ''
-};
-
 export const userAuthReducer = (state = {}, action) => {
     switch (action.type) {
         case constants.NEW_LOGIN_REQUEST:
@@ -15,7 +11,7 @@ export const userAuthReducer = (state = {}, action) => {
             return {
                 ...state,
                 loading: false,
-                isAuthenticated: action.payload
+                isAuthenticated: true
             }
         case constants.NEW_LOGIN_FAIL:
             return {
@@ -32,6 +28,34 @@ export const userAuthReducer = (state = {}, action) => {
             }
         case constants.NEW_LOGOUT_FAIL:
             return { ...state, loading: false, error: action.payload, isAuthenticated: false }
+        default:
+            return state
+    }
+}
+
+export const getLoggedUserDataReducer = (state = {}, action) => {
+    switch (action.type) {
+        case constants.LOGGED_USERDATA_REQUEST:
+            return {
+                ...state,
+                getdataloading: true
+            }
+        case constants.LOGGED_USERDATA_SUCCESS:
+            return {
+                ...state,
+                getdataloading: false,
+                userdata: action.payload,
+                getdatasuccess: true
+            }
+        case constants.LOGGED_USERDATA_FAIL:
+            return {
+                ...state,
+                getdataloading: false,
+                getdataerror: action.payload,
+                getdatasuccess: false
+            }
+        case constants.LOGGED_USERDATA_RESET:
+            return { ...state, getdataloading: false, getdataerror: false, getdatasuccess: false }
         default:
             return state
     }

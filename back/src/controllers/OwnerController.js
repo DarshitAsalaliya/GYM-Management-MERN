@@ -72,3 +72,23 @@ exports.Logout = async (req, res) => {
         return res.status(500).send({ error: e.message });
     }
 }
+
+exports.AdminProfile = async (req, res) => {
+    const _id = req.user.id;
+    try {
+        const data = await OwnerModel.findById(_id);
+
+        if (!data) {
+            return res.status(404).send('Not Found..');
+        }
+
+        const newObject = data.toObject();
+
+        delete newObject.password;
+        delete newObject.tokens;
+
+        res.status(200).send(newObject);
+    } catch (e) {
+        res.status(500).send({ error: e.message });
+    }
+};

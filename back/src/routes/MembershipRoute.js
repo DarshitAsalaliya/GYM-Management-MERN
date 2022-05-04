@@ -7,10 +7,16 @@ const auth = require('../middleware/auth');
 // Import From Controller
 const MembershipController = require('../controllers/MembershipController');
 
-// Create Topic
+// Create Membership
 router.post('/api/Membership/CreateMembership', auth, MembershipController.CreateMembership);
 
-// Get All Topic
-router.get('/api/Membership/GetAllMembership', auth, MembershipController.GetAllMembership);
+// Get All Membership
+router.get('/api/Membership/GetMembershipList', auth, MembershipController.GetMembershipList);
+
+// Update Membership
+router.patch('/api/Membership/UpdateMembership/:id', auth, MembershipController.UpdateMembership);
+
+// Delete Membership
+router.delete('/api/Membership/DeleteMembership/:id', auth, MembershipController.DeleteMembership);
 
 module.exports = router;

@@ -10,7 +10,7 @@ export const checkLogin = (credential, usertype) => async (dispatch) => {
         })
 
         let requestURL = null;
-      
+
         if (usertype === 'Member')
             requestURL = REACT_APP_BASE_URL + 'api/Member/Login';
         else if (usertype === 'Trainer')
@@ -30,7 +30,6 @@ export const checkLogin = (credential, usertype) => async (dispatch) => {
         })
 
     } catch (error) {
-
         dispatch({
             type: constants.NEW_LOGIN_FAIL,
             payload: error.response.data.error
@@ -42,7 +41,7 @@ export const userLogout = (usertype) => async (dispatch) => {
     try {
 
         let requestURL = null;
-      
+
         if (usertype === 'Member')
             requestURL = REACT_APP_BASE_URL + 'api/Member/Logout';
         else if (usertype === 'Trainer')
@@ -55,7 +54,7 @@ export const userLogout = (usertype) => async (dispatch) => {
 
         dispatch({
             type: constants.NEW_LOGOUT_SUCCESS,
-            payload: true
+            payload: data
         })
 
         // Set Token
@@ -65,6 +64,39 @@ export const userLogout = (usertype) => async (dispatch) => {
 
         dispatch({
             type: constants.NEW_LOGOUT_FAIL,
+            payload: error.response.data.error
+        })
+    }
+}
+
+export const getLoggedUserData = (usertype) => async (dispatch) => {
+    try {
+
+        dispatch({
+            type: constants.LOGGED_USERDATA_REQUEST
+        })
+
+        let requestURL = null;
+
+        if (usertype === 'Member')
+            requestURL = REACT_APP_BASE_URL + 'api/Member/Logout';
+        else if (usertype === 'Trainer')
+            requestURL = REACT_APP_BASE_URL + 'api/Trainer/Logout';
+        else if (usertype === 'Admin')
+            requestURL = REACT_APP_BASE_URL + 'api/Owner/me';
+
+        // Request
+        const { data } = await axios.get(requestURL);
+
+        dispatch({
+            type: constants.LOGGED_USERDATA_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+
+        dispatch({
+            type: constants.LOGGED_USERDATA_FAIL,
             payload: error.response.data.error
         })
     }

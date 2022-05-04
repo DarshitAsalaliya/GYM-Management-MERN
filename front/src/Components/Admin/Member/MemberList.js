@@ -5,6 +5,9 @@ import Avatar from '@mui/material/Avatar';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import PersonIcon from '@mui/icons-material/Person';
 import Chip from '@mui/material/Chip';
+import BoyIcon from '@mui/icons-material/Boy';
+import GirlIcon from '@mui/icons-material/Girl';
+
 // Constants
 import * as constants from '../../../Redux/constants/memberConstants';
 
@@ -17,8 +20,6 @@ import { useSelector, useDispatch } from 'react-redux';
 // Action
 import { getMemberList } from '../../../Redux/actions/memberAction';
 
-// Axios
-import axios from 'axios';
 import UpdateMember from './UpdateMember';
 const { REACT_APP_BASE_URL } = process.env;
 
@@ -70,7 +71,14 @@ export default function MemberList() {
                         width: 200
                     },
                     { field: 'phone', headerName: 'Contact', width: 120 },
-                    { field: 'gender', headerName: 'Gender', width: 100 },
+                    {
+                        field: 'gender', headerName: 'Gender', width: 80,
+                        renderCell: (params) => (
+
+                            params.value === 'male' ? <BoyIcon /> : <GirlIcon />
+
+                        ),
+                    },
                     { field: 'workouttime', headerName: 'Time', width: 150 },
                     {
                         field: 'status',
@@ -78,10 +86,11 @@ export default function MemberList() {
                         width: 100,
                         renderCell: (params) => (
 
-                            params.value===true ? <Chip variant="outlined" color="success" size="small" label="Active" /> : <Chip variant="outlined" color="error" size="small" label="Inactive" />
+                            params.value === true ? <Chip variant="outlined" color="success" size="small" label="Active" /> : <Chip variant="outlined" color="error" size="small" label="Inactive" />
 
                         ),
                     },
+                    { field: 'workouttype', headerName: 'Workout Type', width: 120 },
                     {
                         field: 'doj', headerName: 'Joining Date', width: 120, valueFormatter: (params) => {
 
@@ -89,6 +98,14 @@ export default function MemberList() {
                             return `${valueFormatted}`;
                         }
                     },
+                    {
+                        field: 'dob', headerName: 'Birth Date', width: 120, valueFormatter: (params) => {
+
+                            const valueFormatted = new Date(params.value).toLocaleDateString();
+                            return `${valueFormatted}`;
+                        }
+                    },
+                    { field: 'bloodgroup', headerName: 'Blood', width: 60 },
                     {
                         field: "trainer", headerName: 'Trainer', width: 150, valueFormatter: (params) => {
                             return params?.value[0]?.name;
