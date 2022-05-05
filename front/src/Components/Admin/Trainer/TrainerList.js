@@ -54,6 +54,12 @@ export default function TrainerList() {
     return (
         <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
             <DataGrid
+                sx={{
+                    '.MuiDataGrid-columnHeaderTitle': {
+                        color: '#3c4854',
+                        fontWeight: 600,
+                    }
+                }}
                 getRowId={(row) => row._id}
                 columns={[
                     {
@@ -83,7 +89,7 @@ export default function TrainerList() {
                         field: 'gender', headerName: 'Gender', width: 80,
                         renderCell: (params) => (
 
-                            params.value === 'male' ? <BoyIcon/>  : <GirlIcon />
+                            params.value === 'male' ? <BoyIcon /> : <GirlIcon />
 
                         ),
                     },
@@ -93,7 +99,7 @@ export default function TrainerList() {
                         width: 100,
                         renderCell: (params) => (
 
-                            params.value===true ? <Chip variant="outlined" color="success" size="small" label="Active" /> : <Chip variant="outlined" color="error" size="small" label="Inactive" />
+                            params.value === true ? <Chip variant="outlined" color="success" size="small" label="Active" /> : <Chip variant="outlined" color="error" size="small" label="Inactive" />
 
                         ),
                     },

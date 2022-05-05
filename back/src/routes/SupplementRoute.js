@@ -20,6 +20,6 @@ router.delete('/api/Supplement/DeleteSupplement/:id', auth, SupplementController
 router.patch('/api/Supplement/UpdateSupplement/:id', [auth, upload.single('image')], SupplementController.UpdateSupplement);
 
 // Get All Supplement
-router.get('/api/Supplement/GetAllSupplement', auth, SupplementController.GetAllSupplement);
+router.get('/api/Supplement/GetSupplementList', auth, SupplementController.GetSupplementList);
 
 module.exports = router;

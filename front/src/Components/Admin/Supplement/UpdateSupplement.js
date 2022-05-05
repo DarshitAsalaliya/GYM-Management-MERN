@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import AddIcon from '@mui/icons-material/Add';
 import { Formik } from 'formik';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
@@ -12,14 +11,17 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-
+import Avatar from '@mui/material/Avatar';
+import { deepOrange, deepPurple } from '@mui/material/colors';
+import BoltIcon from '@mui/icons-material/Bolt';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
+import EditIcon from '@mui/icons-material/Edit';
 
 // Constants
-import * as constants from '../../../Redux/constants/membershipConstants';
+import * as constants from '../../../Redux/constants/supplementConstants';
 
 import * as Yup from 'yup';
 
@@ -27,7 +29,7 @@ import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { createMembership } from '../../../Redux/actions/membershipAction';
+import { updateSupplement } from '../../../Redux/actions/supplementAction';
 
 // Snackbar
 import SnackbarMsg from '../../Utils/SnackbarMsg';
@@ -38,12 +40,11 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '55%',
-    height: '80%',
+    height: '85%',
     bgcolor: 'background.paper',
     boxShadow: 24,
     overflow: 'scroll',
     p: 4,
-    
 };
 
 const IOSSwitch = styled((props) => (
@@ -97,36 +98,39 @@ const IOSSwitch = styled((props) => (
     },
 }));
 
-export default function AddMembership() {
+export default function UpdateSupplement(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const dispatch = useDispatch();
 
-    const { registererror, registersuccess } = useSelector(state => state.createmembership);
+    const { updateerror, updatesuccess } = useSelector(state => state.updatesupplement);
+
+    const Input = styled('input')({
+        display: 'block',
+    });
 
     const ValidationSchema = Yup.object().shape({
-        membershipname: Yup.string()
+        supplementname: Yup.string()
             .min(3, 'Too Short!')
             .max(50, 'Too Long!')
             .required('Required'),
-        duration: Yup.string().required('Required'),
-        amount: Yup.number().positive('Invalid')
+        price: Yup.number().positive('Invalid')
     });
 
     useEffect(() => {
-        if (registersuccess) {
+        if (updatesuccess) {
             setOpen(false);
         }
-    }, [registersuccess]);
+    }, [updatesuccess]);
 
     return (
         <div>
-            {registererror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={registererror} severity="error" />}
+            {updateerror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={updateerror} severity="error" />}
 
-            <Button onClick={handleOpen} variant="outlined" startIcon={<AddIcon />} size='small'>
-                Add Membership
+            <Button variant="outlined" color='primary' onClick={handleOpen}>
+                <EditIcon fontSize="small" />
             </Button>
             <Modal
                 open={open}
@@ -135,20 +139,29 @@ export default function AddMembership() {
             >
                 <Box sx={style}>
                     <Formik
-                        initialValues={{ membershipname: '', duration: '', amount: 0, description: '', status: true }}
+                        initialValues={{ supplementname: props.dataforupdate.supplementname, price: props.dataforupdate.price, description: props.dataforupdate.description, status: props.dataforupdate.status }}
                         validationSchema={ValidationSchema}
                         onSubmit={async (values, { setSubmitting }) => {
 
-                            // Add
+                            var formData = new FormData();
+
+                            for (var key in values) {
+                                if (key === 'file')
+                                    formData.append('image', values[key]);
+                                else
+                                    formData.append(key, values[key]);
+                            }
+
+                            // Update
                             await dispatch({
-                                type: constants.NEW_MEMBERSHIP_RESET
+                                type: constants.SUPPLEMENT_UPDATE_RESET
                             });
 
-                            await dispatch(createMembership(values));
+                            await dispatch(updateSupplement(props.dataforupdate.editid, formData));
 
                             // Reset
                             await dispatch({
-                                type: constants.MEMBERSHIP_LIST_RESET
+                                type: constants.SUPPLEMENT_LIST_RESET
                             });
 
                             setSubmitting(false);
@@ -161,6 +174,7 @@ export default function AddMembership() {
                             handleChange,
                             handleBlur,
                             handleSubmit,
+                            setFieldValue,
                             isSubmitting,
                             /* and other goodies */
                         }) => (
@@ -171,7 +185,7 @@ export default function AddMembership() {
                                         <Grid container spacing={3} >
                                             <Grid item xs={10} md={8} sx={{ textAlign: 'left' }}>
                                                 <Typography variant="h6" gutterBottom component="div" >
-                                                    Add Membership
+                                                    Update Supplement
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={2} md={4} sx={{ textAlign: 'right' }}>
@@ -180,62 +194,46 @@ export default function AddMembership() {
                                             </Grid>
                                         </Grid>
                                     </Grid>
+                                    <Grid item xs={12} md={12} sx={{ textAlign: 'left' }}>
+                                    {props.dataforupdate?.image?.image_url ? <Avatar src={props.dataforupdate.image.image_url} sx={{ width: 60, height: 60 }} /> : <Avatar sx={{ bgcolor: deepOrange[400] }}><BoltIcon /></Avatar>}
+                                        <label htmlFor="contained-button-file">
+                                            <Input accept="image/*" id="contained-button-file" name="image" type="file" onChange={(event) => {
+                                                setFieldValue("file", event.currentTarget.files[0]);
+                                            }} />
+                                            {/* <Button variant="contained" component="span">
+                                                Upload Image
+                                            </Button> */}
+                                        </label>
+                                    </Grid>
                                     <Grid item xs={12} md={12}>
                                         <TextField
-                                            id="membershipname"
+                                            id="supplementname"
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            value={values.membershipname}
-                                            name="membershipname"
-                                            label="Membership Name"
+                                            value={values.supplementname}
+                                            name="supplementname"
+                                            label="Supplement Name"
                                             variant="standard"
                                             autoComplete='off'
-                                            error={errors.membershipname && touched.membershipname}
-                                            helperText={errors.membershipname}
+                                            error={errors.supplementname && touched.supplementname}
+                                            helperText={errors.supplementname}
                                             sx={{ width: '100%' }} />
-
                                     </Grid>
-                                    <Grid item xs={12} md={12}>
-                                        <FormControl fullWidth size="small">
-                                            <InputLabel id="duration">Number of Month</InputLabel>
-                                            <Select
-                                                labelId="duration"
-                                                id="demo-simple-select"
-                                                name="duration"
-                                                label="Duration"
-                                                error={errors.duration && touched.duration}
-                                                helperText={errors.duration}
-                                                onChange={handleChange}
-                                                defaultValue=""
-                                            >
-                                                <MenuItem value="1">1</MenuItem>
-                                                <MenuItem value="2">2</MenuItem>
-                                                <MenuItem value="3">3</MenuItem>
-                                                <MenuItem value="4">4</MenuItem>
-                                                <MenuItem value="5">5</MenuItem>
-                                                <MenuItem value="6">6</MenuItem>
-                                                <MenuItem value="7">7</MenuItem>
-                                                <MenuItem value="8">8</MenuItem>
-                                                <MenuItem value="9">9</MenuItem>
-                                                <MenuItem value="10">10</MenuItem>
-                                                <MenuItem value="11">11</MenuItem>
-                                                <MenuItem value="12">12</MenuItem>
 
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
                                     <Grid item xs={12} md={12}>
                                         <TextField
-                                            id="amount"
+                                            id="price"
                                             type="number"
                                             onChange={handleChange}
-                                            name="amount"
+                                            name="price"
                                             label="Amount"
                                             variant="standard"
-                                            error={errors.amount && touched.amount}
-                                            helperText={errors.amount}
+                                            value={values.price}
+                                            error={errors.price && touched.price}
+                                            helperText={errors.price}
                                             sx={{ width: '100%' }} />
                                     </Grid>
+
                                     <Grid item xs={12} md={12}>
                                         <TextField
                                             id="description"
@@ -243,26 +241,25 @@ export default function AddMembership() {
                                             name="description"
                                             label="Description"
                                             variant="standard"
+                                            value={values.description}
                                             error={errors.description && touched.description}
                                             helperText={errors.description}
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={12}>
                                         <FormControlLabel
-                                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked={values.status} />}
                                             label="Active"
                                             name="status"
                                             onChange={handleChange}
-                                            value={values.status}
                                             sx={{ width: '100%' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={12}>
-                                        <Button type="submit" variant="contained" color="success" startIcon={<CheckIcon />} disabled={isSubmitting} sx={{ width: '80%' }}>
-                                            Save
+                                        <Button type="submit" variant="contained" color="info" startIcon={<CheckIcon />} disabled={isSubmitting} sx={{ width: '80%' }}>
+                                            Update
                                         </Button>
                                     </Grid>
-
                                 </Grid>
                             </form>
                         )}

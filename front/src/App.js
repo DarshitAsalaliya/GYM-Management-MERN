@@ -6,6 +6,7 @@ import AdminDashboard from './Components/Admin/AdminDashboard';
 import ManageMembers from './Components/Admin/Member/ManageMembers';
 import ManageTrainers from './Components/Admin/Trainer/ManageTrainers';
 import ManageMemberships from './Components/Admin/Membership/ManageMemberships';
+import ManageSupplements from './Components/Admin/Supplement/ManageSupplements';
 import AddMember from './Components/Admin/Member/AddMember';
 import HomeLayout from './Components/Home/HomeLayout/HomeLayout';
 import Login from './Components/Home/Login';
@@ -37,6 +38,7 @@ function App() {
             <Route path='ManageMembers' element={<ManageMembers />} />
             <Route path='ManageTrainers' element={<ManageTrainers />} />
             <Route path='ManageMemberships' element={<ManageMemberships />} />
+            <Route path='ManageSupplements' element={<ManageSupplements />} />
           </Route>
           <Route path='*' element={<h1>Error 404 Page not Found !!</h1>} />
         </Routes>

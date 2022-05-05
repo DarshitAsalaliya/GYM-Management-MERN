@@ -19,7 +19,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 
 // Constants
-import * as constants from '../../../Redux/constants/membershipConstants';
+import * as constants from '../../../Redux/constants/supplementConstants';
 
 import * as Yup from 'yup';
 
@@ -27,7 +27,7 @@ import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { createMembership } from '../../../Redux/actions/membershipAction';
+import { createSupplement } from '../../../Redux/actions/supplementAction';
 
 // Snackbar
 import SnackbarMsg from '../../Utils/SnackbarMsg';
@@ -38,12 +38,11 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '55%',
-    height: '80%',
+    height: '82%',
     bgcolor: 'background.paper',
     boxShadow: 24,
     overflow: 'scroll',
     p: 4,
-    
 };
 
 const IOSSwitch = styled((props) => (
@@ -97,22 +96,25 @@ const IOSSwitch = styled((props) => (
     },
 }));
 
-export default function AddMembership() {
+export default function AddSupplement() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const dispatch = useDispatch();
 
-    const { registererror, registersuccess } = useSelector(state => state.createmembership);
+    const { registererror, registersuccess } = useSelector(state => state.createsupplement);
+
+    const Input = styled('input')({
+        display: 'none',
+    });
 
     const ValidationSchema = Yup.object().shape({
-        membershipname: Yup.string()
+        supplementname: Yup.string()
             .min(3, 'Too Short!')
             .max(50, 'Too Long!')
             .required('Required'),
-        duration: Yup.string().required('Required'),
-        amount: Yup.number().positive('Invalid')
+        price: Yup.number().positive('Invalid')
     });
 
     useEffect(() => {
@@ -126,7 +128,7 @@ export default function AddMembership() {
             {registererror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={registererror} severity="error" />}
 
             <Button onClick={handleOpen} variant="outlined" startIcon={<AddIcon />} size='small'>
-                Add Membership
+                Add Supplement
             </Button>
             <Modal
                 open={open}
@@ -135,20 +137,29 @@ export default function AddMembership() {
             >
                 <Box sx={style}>
                     <Formik
-                        initialValues={{ membershipname: '', duration: '', amount: 0, description: '', status: true }}
+                        initialValues={{ supplementname: '', price: 0, description: '', status: true }}
                         validationSchema={ValidationSchema}
                         onSubmit={async (values, { setSubmitting }) => {
 
+                            var formData = new FormData();
+
+                            for (var key in values) {
+                                if (key === 'file')
+                                    formData.append('image', values[key]);
+                                else
+                                    formData.append(key, values[key]);
+                            }
+
                             // Add
                             await dispatch({
-                                type: constants.NEW_MEMBERSHIP_RESET
+                                type: constants.NEW_SUPPLEMENT_RESET
                             });
 
-                            await dispatch(createMembership(values));
+                            await dispatch(createSupplement(formData));
 
                             // Reset
                             await dispatch({
-                                type: constants.MEMBERSHIP_LIST_RESET
+                                type: constants.SUPPLEMENT_LIST_RESET
                             });
 
                             setSubmitting(false);
@@ -161,6 +172,7 @@ export default function AddMembership() {
                             handleChange,
                             handleBlur,
                             handleSubmit,
+                            setFieldValue,
                             isSubmitting,
                             /* and other goodies */
                         }) => (
@@ -171,7 +183,7 @@ export default function AddMembership() {
                                         <Grid container spacing={3} >
                                             <Grid item xs={10} md={8} sx={{ textAlign: 'left' }}>
                                                 <Typography variant="h6" gutterBottom component="div" >
-                                                    Add Membership
+                                                    Add Supplement
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={2} md={4} sx={{ textAlign: 'right' }}>
@@ -180,60 +192,40 @@ export default function AddMembership() {
                                             </Grid>
                                         </Grid>
                                     </Grid>
+                                    <Grid item xs={12} md={12} sx={{ textAlign: 'left' }}>
+                                        <label htmlFor="contained-button-file">
+                                            <Input accept="image/*" id="contained-button-file" name="image" type="file" onChange={(event) => {
+                                                setFieldValue("file", event.currentTarget.files[0]);
+                                            }} />
+                                            <Button variant="contained" component="span">
+                                                Upload Image
+                                            </Button>
+                                        </label>
+                                    </Grid>
                                     <Grid item xs={12} md={12}>
                                         <TextField
-                                            id="membershipname"
+                                            id="supplementname"
                                             onChange={handleChange}
                                             onBlur={handleBlur}
-                                            value={values.membershipname}
-                                            name="membershipname"
-                                            label="Membership Name"
+                                            value={values.supplementname}
+                                            name="supplementname"
+                                            label="Supplement Name"
                                             variant="standard"
                                             autoComplete='off'
-                                            error={errors.membershipname && touched.membershipname}
-                                            helperText={errors.membershipname}
+                                            error={errors.supplementname && touched.supplementname}
+                                            helperText={errors.supplementname}
                                             sx={{ width: '100%' }} />
-
-                                    </Grid>
-                                    <Grid item xs={12} md={12}>
-                                        <FormControl fullWidth size="small">
-                                            <InputLabel id="duration">Number of Month</InputLabel>
-                                            <Select
-                                                labelId="duration"
-                                                id="demo-simple-select"
-                                                name="duration"
-                                                label="Duration"
-                                                error={errors.duration && touched.duration}
-                                                helperText={errors.duration}
-                                                onChange={handleChange}
-                                                defaultValue=""
-                                            >
-                                                <MenuItem value="1">1</MenuItem>
-                                                <MenuItem value="2">2</MenuItem>
-                                                <MenuItem value="3">3</MenuItem>
-                                                <MenuItem value="4">4</MenuItem>
-                                                <MenuItem value="5">5</MenuItem>
-                                                <MenuItem value="6">6</MenuItem>
-                                                <MenuItem value="7">7</MenuItem>
-                                                <MenuItem value="8">8</MenuItem>
-                                                <MenuItem value="9">9</MenuItem>
-                                                <MenuItem value="10">10</MenuItem>
-                                                <MenuItem value="11">11</MenuItem>
-                                                <MenuItem value="12">12</MenuItem>
-
-                                            </Select>
-                                        </FormControl>
                                     </Grid>
                                     <Grid item xs={12} md={12}>
                                         <TextField
-                                            id="amount"
+                                            id="price"
                                             type="number"
                                             onChange={handleChange}
-                                            name="amount"
+                                            name="price"
                                             label="Amount"
                                             variant="standard"
-                                            error={errors.amount && touched.amount}
-                                            helperText={errors.amount}
+                                            error={errors.price && touched.price}
+                                            helperText={errors.price}
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={12}>

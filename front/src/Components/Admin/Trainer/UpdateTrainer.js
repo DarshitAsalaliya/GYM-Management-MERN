@@ -11,7 +11,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-
+import Avatar from '@mui/material/Avatar';
+import { deepOrange } from '@mui/material/colors';
+import PersonIcon from '@mui/icons-material/Person';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 
@@ -25,21 +27,16 @@ import EditIcon from '@mui/icons-material/Edit';
 import * as constants from '../../../Redux/constants/trainerConstants';
 
 // Validator
-import validator from 'validator';
 import * as Yup from 'yup';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { updateTrainer, getTrainerList } from '../../../Redux/actions/trainerAction';
+import { updateTrainer } from '../../../Redux/actions/trainerAction';
 
 // Snackbar
 import SnackbarMsg from '../../Utils/SnackbarMsg';
-
-// Axios
-import axios from 'axios';
-const { REACT_APP_BASE_URL } = process.env;
 
 const style = {
     position: 'absolute',
@@ -106,13 +103,13 @@ const IOSSwitch = styled((props) => (
 }));
 
 export default function UpdateTrainer(props) {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const dispatch = useDispatch();
 
-    const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatetrainer);
+    const { updateerror, updatesuccess } = useSelector(state => state.updatetrainer);
 
     const Input = styled('input')({
         display: 'block',
@@ -259,6 +256,7 @@ export default function UpdateTrainer(props) {
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={4} sx={{ textAlign: 'left' }}>
+                                    {props.dataforupdate?.image?.image_url ? <Avatar src={props.dataforupdate.image.image_url} sx={{ width: 50, height: 50 }} /> : <Avatar sx={{ bgcolor: deepOrange[400] }}><PersonIcon /></Avatar>}
                                         <label htmlFor="contained-button-file">
                                             <Input accept="image/*" id="contained-button-file" name="image" type="file" onChange={(event) => {
                                                 setFieldValue("file", event.currentTarget.files[0]);

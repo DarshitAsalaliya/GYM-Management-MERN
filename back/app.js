@@ -53,4 +53,8 @@ app.use(supplementRoute);
 const leadRoute = require('./src/routes/LeadRoute');
 app.use(leadRoute);
 
+// Set Dashboard Router
+const dashboardRoute = require('./src/routes/DashboardRoute');
+app.use(dashboardRoute);
+
 app.listen(port, () => { });

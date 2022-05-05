@@ -14,7 +14,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-
+import Avatar from '@mui/material/Avatar';
+import { deepOrange, deepPurple } from '@mui/material/colors';
+import PersonIcon from '@mui/icons-material/Person';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 
@@ -292,6 +294,8 @@ export default function UpdateMember(props) {
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={4} sx={{ textAlign: 'left' }}>
+                                        
+                                        {props.dataforupdate?.image?.image_url ? <Avatar src={props.dataforupdate.image.image_url} sx={{ width: 50, height: 50 }} /> : <Avatar sx={{ bgcolor: deepOrange[400] }}><PersonIcon /></Avatar>}
                                         <label htmlFor="contained-button-file">
                                             <Input accept="image/*" id="contained-button-file" name="image" type="file" onChange={(event) => {
                                                 setFieldValue("file", event.currentTarget.files[0]);

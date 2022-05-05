@@ -149,9 +149,9 @@ exports.DeleteSupplement = async (req, res) => {
 }
 
 // Get All Supplements
-exports.GetAllSupplement = async (req, res) => {
+exports.GetSupplementList = async (req, res) => {
     try {
-        const SupplementList = await SupplementModel.find({ status: true });
+        const SupplementList = await SupplementModel.find();
 
         // Check Supplement Length
         if (SupplementList.length === 0) {

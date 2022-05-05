@@ -1,68 +1,74 @@
 import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Chip from '@mui/material/Chip';
-
-// DeleteMembership
-import DeleteMembership from './DeleteMembership';
+import Avatar from '@mui/material/Avatar';
+import { deepOrange, deepPurple } from '@mui/material/colors';
+import BoltIcon from '@mui/icons-material/Bolt';
+// DeleteSupplement
+import DeleteSupplement from './DeleteSupplement';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { getMembershipList } from '../../../Redux/actions/membershipAction';
+import { getSupplementList } from '../../../Redux/actions/supplementAction';
 
-import UpdateMembership from './UpdateMembership';
+import UpdateSupplement from './UpdateSupplement';
 
-export default function MembershipList() {
+export default function SupplementList() {
 
-    const [membershipList, setMembershipList] = useState([]);
+    const [supplementList, setSupplementList] = useState([]);
 
     const dispatch = useDispatch();
 
-    const { data, getlistsuccess } = useSelector(state => state.getmembershiplist);
+    const { data, getlistsuccess } = useSelector(state => state.getsupplementlist);
 
     useEffect(() => {
 
-        loadMembershipList();
+        loadSupplementList();
 
     }, [getlistsuccess]);
 
-    const loadMembershipList = async () => {
+    const loadSupplementList = async () => {
 
-        await dispatch(getMembershipList());
+        await dispatch(getSupplementList());
 
         const filterData = data?.map(function (obj) {
             obj['editid'] = obj['_id'];
             return obj;
         });
 
-        data && setMembershipList(filterData);
+        data && setSupplementList(filterData);
     };
 
     return (
         <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
             <DataGrid
                 sx={{
-                    '.MuiDataGrid-columnHeaderTitle':{
-                        color:'#3c4854',
-                        fontWeight:600,
+                    '.MuiDataGrid-columnHeaderTitle': {
+                        color: '#3c4854',
+                        fontWeight: 600,
                     }
                 }}
                 getRowId={(row) => row._id}
                 columns={[
                     {
-                        field: 'membershipname',
-                        headerName: 'Membership Name',
-                        description: 'Membership Name',
-                        width: 250
+                        field: 'image',
+                        headerName: 'Image',
+                        width: 60,
+                        sortable: false,
+                        filterable: false,
+                        renderCell: (params) => (
+                            params.value ? <Avatar src={params.value.image_url} /> : <Avatar sx={{ bgcolor: deepOrange[400] }}><BoltIcon /></Avatar>
+                        ),
                     },
-
                     {
-                        field: 'duration', headerName: 'Duration', width: 120, valueFormatter: (params) => {
-                            return params.value + ' Months';
-                        }
+                        field: 'supplementname',
+                        headerName: 'Supplement Name',
+                        description: 'Supplement Name',
+                        width: 270
                     },
-                    { field: 'amount', headerName: 'Amount', width: 100 },
+                    { field: 'price', headerName: 'Price', width: 100 },
                     {
                         field: 'status',
                         headerName: 'Status',
@@ -73,7 +79,7 @@ export default function MembershipList() {
 
                         ),
                     },
-                    { field: 'description', headerName: 'Description', width: 150 },
+                    { field: 'description', headerName: 'Description', width: 200 },
                     {
                         field: 'editid',
                         headerName: 'Edit',
@@ -81,7 +87,7 @@ export default function MembershipList() {
                         sortable: false,
                         filterable: false,
                         renderCell: (params) => (
-                            <UpdateMembership dataforupdate={membershipList.find(obj => obj.editid === params.value)} />
+                            <UpdateSupplement dataforupdate={supplementList.find(obj => obj.editid === params.value)} />
                         ),
                     },
                     {
@@ -91,11 +97,11 @@ export default function MembershipList() {
                         sortable: false,
                         filterable: false,
                         renderCell: (params) => (
-                            <DeleteMembership id={params.value} />
+                            <DeleteSupplement id={params.value} />
                         ),
                     },
                 ]}
-                rows={membershipList}
+                rows={supplementList}
             />
         </div>
     );
