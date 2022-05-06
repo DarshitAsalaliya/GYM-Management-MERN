@@ -1,16 +1,18 @@
 import { combineReducers } from "redux";
-import { userAuthReducer, getLoggedUserDataReducer } from "./userReducer";
+import { userAuthReducer, getLoggedUserDataReducer, changePasswordReducer } from "./userReducer";
 import { getAdminDashboardDataReducer } from "./dashboardReducer";
 import { registerMemberReducer, deleteMemberReducer, getMemberListReducer, updateMemberReducer } from "./memberReducer";
 import { registerTrainerReducer, deleteTrainerReducer, getTrainerListReducer, updateTrainerReducer } from "./trainerReducer";
 import { createMembershipReducer, deleteMembershipReducer, getMembershipListReducer, updateMembershipReducer } from "./membershipReducer";
 import { createSupplementReducer, deleteSupplementReducer, getSupplementListReducer, updateSupplementReducer } from "./supplementReducer";
+import { createInvoiceReducer, deleteInvoiceReducer, getInvoiceListReducer, updateInvoiceReducer } from "./invoiceReducer";
 
 const reducers = combineReducers({
     userauth: userAuthReducer,
     admindashboarddata:getAdminDashboardDataReducer,
     loggeduserdata: getLoggedUserDataReducer,
     registermember: registerMemberReducer,
+    changepassword: changePasswordReducer,
     getmemberlist: getMemberListReducer,
     updatemember: updateMemberReducer,
     deletemember: deleteMemberReducer,
@@ -26,6 +28,10 @@ const reducers = combineReducers({
     getsupplementlist: getSupplementListReducer,
     updatesupplement: updateSupplementReducer,
     deletesupplement: deleteSupplementReducer,
+    createinvoice: createInvoiceReducer,
+    getinvoicelist: getInvoiceListReducer,
+    updateinvoice: updateInvoiceReducer,
+    deleteinvoice: deleteInvoiceReducer,
 })
 
 export default reducers;

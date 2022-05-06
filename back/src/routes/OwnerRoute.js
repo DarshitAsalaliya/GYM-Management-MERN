@@ -22,4 +22,7 @@ router.post('/api/Owner/Logout',auth, OwnerController.Logout);
 // Get Profile
 router.get('/api/Owner/me',auth, OwnerController.AdminProfile);
 
+// Change Password
+router.post('/api/Owner/ChangePassword',auth, OwnerController.ChangePassword);
+
 module.exports = router;

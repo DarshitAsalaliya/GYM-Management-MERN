@@ -21,6 +21,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getMemberList } from '../../../Redux/actions/memberAction';
 
 import UpdateMember from './UpdateMember';
+
+import AddMemberInvoice from './AddMemberInvoice';
+
 const { REACT_APP_BASE_URL } = process.env;
 
 export default function MemberList() {
@@ -42,6 +45,7 @@ export default function MemberList() {
         await dispatch(getMemberList());
 
         const filterData = data?.map(function (obj) {
+            obj['invoiceid'] = obj['_id'];
             obj['editid'] = obj['_id'];
             return obj;
         });
@@ -116,6 +120,16 @@ export default function MemberList() {
                         field: "trainer", headerName: 'Trainer', width: 150, valueFormatter: (params) => {
                             return params?.value[0]?.name;
                         }
+                    },
+                    {
+                        field: 'invoiceid',
+                        headerName: 'Invoice',
+                        width: 120,
+                        sortable: false,
+                        filterable: false,
+                        renderCell: (params) => (
+                            <AddMemberInvoice dataforupdate={memberList.find(obj => obj.editid === params.value)} />
+                        ),
                     },
                     {
                         field: 'editid',

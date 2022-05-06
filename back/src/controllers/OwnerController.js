@@ -52,7 +52,7 @@ exports.Login = async (req, res) => {
 
         const user = await OwnerModel.findByCredentials(req.body.email, req.body.password);
         const token = await user.generateAuthToken();
-        return res.send({ user: await user.getPublicProfile(), token });
+        return res.status(200).send({ user: await user.getPublicProfile(), token });
     } catch (e) {
         return res.status(400).send({ error: e.message });
     }
@@ -92,3 +92,20 @@ exports.AdminProfile = async (req, res) => {
         res.status(500).send({ error: e.message });
     }
 };
+
+// Change Password
+exports.ChangePassword = async (req, res) => {
+    try {
+        const user = await OwnerModel.findByCredentials(req.body.email, req.body.password);
+        user.password = req.body.newpassword;
+        await user.save();
+        return res.status(200).send({ data: "Password changed.." });
+    } catch (e) {
+
+        if (e.message = "Invalid User..") {
+            return res.status(401).send({ error: 'Old Password is Wrong..' });
+        }
+
+        return res.status(400).send({ error: e.message });
+    }
+}

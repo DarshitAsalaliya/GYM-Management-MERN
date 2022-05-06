@@ -101,3 +101,36 @@ export const getLoggedUserData = (usertype) => async (dispatch) => {
         })
     }
 }
+
+export const changePassword = (usertype,formData) => async (dispatch) => {
+    try {
+
+        dispatch({
+            type: constants.CHANGE_PASSWORD_REQUEST
+        })
+
+        let requestURL = null;
+
+        if (usertype === 'Member')
+            requestURL = REACT_APP_BASE_URL + 'api/Member/ChangePassword';
+        else if (usertype === 'Trainer')
+            requestURL = REACT_APP_BASE_URL + 'api/Trainer/ChangePassword';
+        else if (usertype === 'Admin')
+            requestURL = REACT_APP_BASE_URL + 'api/Owner/ChangePassword';
+
+        // Request
+        const { data } = await axios.post(requestURL,formData);
+
+        dispatch({
+            type: constants.CHANGE_PASSWORD_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+
+        dispatch({
+            type: constants.CHANGE_PASSWORD_FAIL,
+            payload: error.response.data.error
+        })
+    }
+}

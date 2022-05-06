@@ -15,7 +15,7 @@ exports.CreateInvoice = async (req, res) => {
 }
 
 // Get All Invoice
-exports.GetAllInvoice = async (req, res) => {
+exports.GetInvoiceList = async (req, res) => {
     try {
         const invoiceList = await InvoiceModel.find();
 
@@ -26,6 +26,47 @@ exports.GetAllInvoice = async (req, res) => {
 
         return res.status(200).send(invoiceList);
     } catch (e) {
+        return res.status(400).send({ error: e.message });
+    }
+}
+
+// Update Invoice
+exports.UpdateInvoice = async (req, res) => {
+    try {
+
+        const _id = req.params.id;
+
+        //Find Invoice For Update
+        const data = await InvoiceModel.findById(_id);
+
+        if (!data)
+            return res.status(404).send({ error: "Not Found.." });
+
+        Object.keys(req.body).forEach((update) => {
+            data[update] = req.body[update];
+        });
+
+        await data.save();
+
+        return res.status(200).send(data);
+
+    } catch (e) {
+        return res.status(400).send({ error: e.message });
+    }
+}
+
+// Delete Invoice
+exports.DeleteInvoice = async (req, res) => {
+    try {
+        const data = await InvoiceModel.findByIdAndDelete(req.params.id);
+
+        if (!data) {
+            return res.status(404).send({ error: "Invoice Not Found.." });
+        }
+
+        return res.status(200).send(data);
+    }
+    catch (e) {
         return res.status(400).send({ error: e.message });
     }
 }

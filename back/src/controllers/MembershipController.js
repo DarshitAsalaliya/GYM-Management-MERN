@@ -30,6 +30,22 @@ exports.GetMembershipList = async (req, res) => {
     }
 }
 
+// Get All Membership
+exports.GetActiveMembershipList = async (req, res) => {
+    try {
+        const membershipList = await MembershipModel.find({status:true});
+
+        // Check Membership Length
+        if (membershipList.length === 0) {
+            return res.status(404).send({ error: "Membership not found.." });
+        }
+
+        return res.status(200).send(membershipList);
+    } catch (e) {
+        return res.status(400).send({ error: e.message });
+    }
+}
+
 // Update Membership
 exports.UpdateMembership = async (req, res) => {
     try {

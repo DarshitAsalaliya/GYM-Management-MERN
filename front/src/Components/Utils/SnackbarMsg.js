@@ -34,7 +34,7 @@ export default function SnackbarMsg(props) {
     return (
         <Stack spacing={2} sx={{ width: '100%' }}>
 
-            <Snackbar open={msg.open} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical, horizontal }} key={msg.vertical + msg.horizontal}>
+            <Snackbar open={msg.open} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{ vertical, horizontal }} key={msg.vertical + msg.horizontal}>
                 <Alert onClose={handleClose} severity={msg.severity} sx={{ width: '100%' }}>
                     {msg.message}
                 </Alert>

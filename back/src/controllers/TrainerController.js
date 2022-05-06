@@ -58,6 +58,7 @@ exports.Registration = async (req, res) => {
         catch (er) {
             return res.status(400).send({ error: er.message });
         }
+        return res.status(400).send({ error: e.message });
     }
 }
 

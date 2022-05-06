@@ -18,9 +18,9 @@ const invoiceSchema = new mongoose.Schema({
         type: Date,
         required: [true, 'Start date is required..']
     },
-    enddate: {
+    expirydate: {
         type: Date,
-        required: [true, 'End date is required..']
+        required: [true, 'Expiry date is required..']
     },
     totalamount: {
         type: Number,
@@ -33,8 +33,11 @@ const invoiceSchema = new mongoose.Schema({
     paymentmode: {
         type: String
     },
-    status: {
+    paymentdetail: {
         type: String
+    },
+    status: {
+        type: Boolean
     },
     ownerprofileid: {
         type: mongoose.Schema.Types.ObjectId,

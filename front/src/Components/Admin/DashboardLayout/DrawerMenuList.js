@@ -18,6 +18,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import CardMembershipIcon from '@mui/icons-material/CardMembership';
 
 import '../../Utils/GlobalStyle.css';
 
@@ -50,6 +51,13 @@ export default function DrawerMenuList() {
         <ListItemText primary="Manage Members" className='sideMenuTextStyle'/>
       </ListItemButton>
 
+      <ListItemButton onClick={() => navigate("./ManageInvoices", { replace: true })}>
+        <ListItemIcon>
+          <CardMembershipIcon />
+        </ListItemIcon>
+        <ListItemText primary="Manage Invoices" className='sideMenuTextStyle'/>
+      </ListItemButton>
+
       <ListItemButton onClick={() => navigate("./ManageTrainers", { replace: true })}>
         <ListItemIcon>
           <AccountBoxIcon />
@@ -70,6 +78,8 @@ export default function DrawerMenuList() {
         </ListItemIcon>
         <ListItemText primary="Supplements" className='sideMenuTextStyle'/>
       </ListItemButton>
+
+      
 
       {/* <ListItemButton onClick={handleClick}>
         <ListItemIcon>

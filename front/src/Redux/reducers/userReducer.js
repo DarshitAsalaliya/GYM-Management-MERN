@@ -60,3 +60,30 @@ export const getLoggedUserDataReducer = (state = {}, action) => {
             return state
     }
 }
+
+export const changePasswordReducer = (state = {}, action) => {
+    switch (action.type) {
+        case constants.CHANGE_PASSWORD_REQUEST:
+            return {
+                ...state,
+                changepasswordloading: true
+            }
+        case constants.CHANGE_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                changepasswordloading: false,
+                changepasswordsuccess: true
+            }
+        case constants.CHANGE_PASSWORD_FAIL:
+            return {
+                ...state,
+                changepasswordloading: false,
+                changepassworderror: action.payload,
+                changepasswordsuccess: false
+            }
+        case constants.CHANGE_PASSWORD_RESET:
+            return { ...state, changepasswordloading: false, changepassworderror: false, changepasswordsuccess: false }
+        default:
+            return state
+    }
+}

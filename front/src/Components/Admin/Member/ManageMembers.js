@@ -29,6 +29,7 @@ export default function ManageMembers() {
 
     const dispatch = useDispatch();
     const { registerloading, registererror, registersuccess } = useSelector(state => state.registermember);
+    const { createinvoiceloading, createinvoiceerror, createinvoicesuccess } = useSelector(state => state.createinvoice);
     const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatemember);
     const { deleteloading, deleteerror, deletesuccess } = useSelector(state => state.deletemember);
 
@@ -49,6 +50,7 @@ export default function ManageMembers() {
     return (
         <>
             {registersuccess && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message="Added Successfully.." severity="success" />}
+            {createinvoicesuccess && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message="Invoice Created Successfully.." severity="success" />}
             {updatesuccess && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message="Updated Successfully.." severity="info" />}
             {deletesuccess && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message="Deleted Successfully.." severity="error" />}
 

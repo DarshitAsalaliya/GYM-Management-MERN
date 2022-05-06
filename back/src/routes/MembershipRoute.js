@@ -13,10 +13,13 @@ router.post('/api/Membership/CreateMembership', auth, MembershipController.Creat
 // Get All Membership
 router.get('/api/Membership/GetMembershipList', auth, MembershipController.GetMembershipList);
 
+// Get All Active Membership
+router.get('/api/Membership/GetActiveMembershipList', auth, MembershipController.GetActiveMembershipList);
+
 // Update Membership
 router.patch('/api/Membership/UpdateMembership/:id', auth, MembershipController.UpdateMembership);
 
-// Delete Membership
+// Delete Membership  
 router.delete('/api/Membership/DeleteMembership/:id', auth, MembershipController.DeleteMembership);
 
 module.exports = router;
