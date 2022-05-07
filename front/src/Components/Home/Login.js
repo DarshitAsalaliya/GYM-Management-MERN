@@ -31,12 +31,6 @@ export default function SignInSide() {
 
     const { loading, error, isAuthenticated } = useSelector(state => state.userauth);
 
-    useEffect(() => {
-        if (isAuthenticated && localStorage.getItem("token")) {
-            navigate("/Dashboard/Admin", { replace: true });
-        }
-    }, [isAuthenticated, navigate]);
-
     // Form Data State
     const [formData, setFormData] = useState({
         userEmail: '',
@@ -55,11 +49,22 @@ export default function SignInSide() {
     const [userType, setUserType] = React.useState('Member');
     const [tabIndex, setTabIndex] = React.useState(0);
 
+    useEffect(() => {
+        if (isAuthenticated && localStorage.getItem("token")) {
+            if (userType === 'Admin')
+                navigate("/Dashboard/Admin", { replace: true });
+            else if (userType === 'Trainer')
+                navigate("/Dashboard/Trainer", { replace: true });
+            else if (userType === 'Member')
+                navigate("/Dashboard/Member", { replace: true });
+        }
+    }, [isAuthenticated, navigate]);
+
     // Form Submit Event
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(checkLogin({ email: formData.userEmail, password: formData.userPassword }, userType));
 
+        dispatch(checkLogin({ email: formData.userEmail.toLocaleLowerCase(), password: formData.userPassword }, userType));
 
     };
 

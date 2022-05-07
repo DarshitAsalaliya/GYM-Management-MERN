@@ -50,7 +50,7 @@ export default function AdminProfile() {
 
   useEffect(() => {
 
-    dispatch(getLoggedUserData('Admin'));
+    dispatch(getLoggedUserData('Trainer'));
 
   }, []);
 
@@ -116,7 +116,7 @@ export default function AdminProfile() {
                       type: constants.CHANGE_PASSWORD_RESET
                     });
 
-                    await dispatch(changePassword('Admin', values));
+                    await dispatch(changePassword('Trainer', values));
 
                     setSubmitting(false);
                   }}

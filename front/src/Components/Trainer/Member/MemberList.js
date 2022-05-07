@@ -22,8 +22,6 @@ import { getMemberList } from '../../../Redux/actions/memberAction';
 
 import UpdateMember from './UpdateMember';
 
-import AddMemberInvoice from './AddMemberInvoice';
-
 const { REACT_APP_BASE_URL } = process.env;
 
 export default function MemberList() {
@@ -42,7 +40,7 @@ export default function MemberList() {
 
     const loadMemberList = async () => {
 
-        await dispatch(getMemberList());
+        await dispatch(getMemberList('TrainerId'));
 
         const filterData = data?.map(function (obj) {
             obj['invoiceid'] = obj['_id'];
@@ -52,6 +50,22 @@ export default function MemberList() {
 
         data && setMemberList(filterData);
     };
+
+    // useEffect(() => {
+
+    //     dispatch(getMemberList());
+
+    // }, [dispatch,getlistsuccess])
+
+    // useEffect(() => {
+
+    //     const filterData = data?.map(function (obj) {
+    //         obj['invoiceid'] = obj['_id'];
+    //         obj['editid'] = obj['_id'];
+    //         return obj;
+    //     });
+    //     data && setMemberList(filterData);
+    // }, [data])
 
     return (
         <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
@@ -87,16 +101,6 @@ export default function MemberList() {
                         width: 150,
                         renderCell: (params) => (
                             params?.value?.length > 0 ? new Date(params?.value[params?.value?.length - 1]?.expirydate).toLocaleDateString() <= new Date().toLocaleDateString() ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" /> : <Chip variant="outlined" color="warning" size="small" label="Invoice Not Found" />
-                        ),
-                    },
-                    {
-                        field: 'invoiceid',
-                        headerName: 'Invoice',
-                        width: 120,
-                        sortable: false,
-                        filterable: false,
-                        renderCell: (params) => (
-                            <AddMemberInvoice dataforupdate={memberList.find(obj => obj.editid === params.value)} />
                         ),
                     },
                     {
@@ -138,27 +142,6 @@ export default function MemberList() {
                         field: "trainer", headerName: 'Trainer', width: 150, valueFormatter: (params) => {
                             return params?.value[0]?.name;
                         }
-                    },
-
-                    {
-                        field: 'editid',
-                        headerName: 'Edit',
-                        width: 85,
-                        sortable: false,
-                        filterable: false,
-                        renderCell: (params) => (
-                            <UpdateMember dataforupdate={memberList.find(obj => obj.editid === params.value)} />
-                        ),
-                    },
-                    {
-                        field: '_id',
-                        headerName: 'Delete',
-                        width: 85,
-                        sortable: false,
-                        filterable: false,
-                        renderCell: (params) => (
-                            <DeleteMember id={params.value} />
-                        ),
                     },
                 ]}
                 rows={memberList}

@@ -9,48 +9,46 @@ import BoyIcon from '@mui/icons-material/Boy';
 import GirlIcon from '@mui/icons-material/Girl';
 
 // Constants
-import * as constants from '../../../Redux/constants/memberConstants';
+import * as constants from '../../../Redux/constants/trainerConstants';
 
-// DeleteMember
-import DeleteMember from './DeleteMember';
+// DeleteTrainer
+import DeleteTrainer from './DeleteTrainer';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { getMemberList } from '../../../Redux/actions/memberAction';
+import { getTrainerList } from '../../../Redux/actions/trainerAction';
 
-import UpdateMember from './UpdateMember';
-
-import AddMemberInvoice from './AddMemberInvoice';
-
+// Axios
+import axios from 'axios';
+import UpdateTrainer from './UpdateTrainer';
 const { REACT_APP_BASE_URL } = process.env;
 
-export default function MemberList() {
+export default function TrainerList() {
 
-    const [memberList, setMemberList] = useState([]);
+    const [trainerList, setTrainerList] = useState([]);
 
     const dispatch = useDispatch();
 
-    const { data, getlistloading, getlisterror, getlistsuccess } = useSelector(state => state.getmemberlist);
+    const { data, getlistloading, getlisterror, getlistsuccess } = useSelector(state => state.gettrainerlist);
 
     useEffect(() => {
 
-        loadMemberList();
+        loadTrainerList();
 
     }, [getlistsuccess]);
 
-    const loadMemberList = async () => {
+    const loadTrainerList = async () => {
 
-        await dispatch(getMemberList());
+        await dispatch(getTrainerList());
 
         const filterData = data?.map(function (obj) {
-            obj['invoiceid'] = obj['_id'];
             obj['editid'] = obj['_id'];
             return obj;
         });
 
-        data && setMemberList(filterData);
+        data && setTrainerList(filterData);
     };
 
     return (
@@ -77,28 +75,16 @@ export default function MemberList() {
                     {
                         field: 'name',
                         headerName: 'Name',
-                        description: 'Member Name',
+                        description: 'Trainer Name',
                         width: 200
                     },
+                    {
+                        field: 'email',
+                        headerName: 'Email',
+                        description: 'Email',
+                        width: 240
+                    },
                     { field: 'phone', headerName: 'Contact', width: 120 },
-                    {
-                        field: 'invoices',
-                        headerName: 'Membership Status',
-                        width: 150,
-                        renderCell: (params) => (
-                            params?.value?.length > 0 ? new Date(params?.value[params?.value?.length - 1]?.expirydate).toLocaleDateString() <= new Date().toLocaleDateString() ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" /> : <Chip variant="outlined" color="warning" size="small" label="Invoice Not Found" />
-                        ),
-                    },
-                    {
-                        field: 'invoiceid',
-                        headerName: 'Invoice',
-                        width: 120,
-                        sortable: false,
-                        filterable: false,
-                        renderCell: (params) => (
-                            <AddMemberInvoice dataforupdate={memberList.find(obj => obj.editid === params.value)} />
-                        ),
-                    },
                     {
                         field: 'gender', headerName: 'Gender', width: 80,
                         renderCell: (params) => (
@@ -107,7 +93,6 @@ export default function MemberList() {
 
                         ),
                     },
-                    { field: 'workouttime', headerName: 'Time', width: 150 },
                     {
                         field: 'status',
                         headerName: 'Status',
@@ -118,7 +103,6 @@ export default function MemberList() {
 
                         ),
                     },
-                    { field: 'workouttype', headerName: 'Workout Type', width: 120 },
                     {
                         field: 'doj', headerName: 'Joining Date', width: 120, valueFormatter: (params) => {
 
@@ -135,19 +119,13 @@ export default function MemberList() {
                     },
                     { field: 'bloodgroup', headerName: 'Blood', width: 60 },
                     {
-                        field: "trainer", headerName: 'Trainer', width: 150, valueFormatter: (params) => {
-                            return params?.value[0]?.name;
-                        }
-                    },
-
-                    {
                         field: 'editid',
                         headerName: 'Edit',
                         width: 85,
                         sortable: false,
                         filterable: false,
                         renderCell: (params) => (
-                            <UpdateMember dataforupdate={memberList.find(obj => obj.editid === params.value)} />
+                            <UpdateTrainer dataforupdate={trainerList.find(obj => obj.editid === params.value)} />
                         ),
                     },
                     {
@@ -157,11 +135,11 @@ export default function MemberList() {
                         sortable: false,
                         filterable: false,
                         renderCell: (params) => (
-                            <DeleteMember id={params.value} />
+                            <DeleteTrainer id={params.value} />
                         ),
                     },
                 ]}
-                rows={memberList}
+                rows={trainerList}
             />
         </div>
     );

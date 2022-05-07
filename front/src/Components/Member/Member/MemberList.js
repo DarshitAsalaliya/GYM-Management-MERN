@@ -53,6 +53,22 @@ export default function MemberList() {
         data && setMemberList(filterData);
     };
 
+    // useEffect(() => {
+
+    //     dispatch(getMemberList());
+
+    // }, [dispatch,getlistsuccess])
+
+    // useEffect(() => {
+
+    //     const filterData = data?.map(function (obj) {
+    //         obj['invoiceid'] = obj['_id'];
+    //         obj['editid'] = obj['_id'];
+    //         return obj;
+    //     });
+    //     data && setMemberList(filterData);
+    // }, [data])
+
     return (
         <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
             <DataGrid

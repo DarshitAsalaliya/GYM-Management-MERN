@@ -96,7 +96,9 @@ exports.AdminProfile = async (req, res) => {
 // Change Password
 exports.ChangePassword = async (req, res) => {
     try {
+       
         const user = await OwnerModel.findByCredentials(req.body.email, req.body.password);
+       
         user.password = req.body.newpassword;
         await user.save();
         return res.status(200).send({ data: "Password changed.." });

@@ -33,14 +33,19 @@ export const registerMember = (formData) => async (dispatch) => {
     }
 }
 
-export const getMemberList = () => async (dispatch) => {
+export const getMemberList = (trainerprofileid = null) => async (dispatch) => {
     try {
 
         dispatch({
             type: constants.MEMBER_LIST_REQUEST
         })
 
-        let requestURL = REACT_APP_BASE_URL + 'api/Member/GetMemberList/';
+        let requestURL = null;
+      
+        if (trainerprofileid)
+            requestURL = REACT_APP_BASE_URL + 'api/Member/GetMemberListByTrainer/';
+        else
+            requestURL = REACT_APP_BASE_URL + 'api/Member/GetMemberList/';
 
         // Request
         const { data } = await axios.get(requestURL);

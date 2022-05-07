@@ -72,6 +72,7 @@ exports.Login = async (req, res) => {
 
         const user = await TrainerModel.findByCredentials(req.body.email, req.body.password);
         const token = await user.generateAuthToken();
+       
         return res.send({ user: await user.getPublicProfile(), token });
     } catch (e) {
         return res.status(400).send({ error: e.message });
@@ -191,6 +192,61 @@ exports.DeleteTrainer = async (req, res) => {
         return res.status(200).send(data);
     }
     catch (e) {
+        return res.status(400).send({ error: e.message });
+    }
+}
+
+// Profile
+
+exports.TrainerProfile = async (req, res) => {
+    const _id = req.user.id;
+   
+    try {
+        const data = await TrainerModel.findById(_id);
+
+        if (!data) {
+            return res.status(404).send('Not Found..');
+        }
+
+        const newObject = data.toObject();
+
+        delete newObject.password;
+        delete newObject.tokens;
+
+        res.status(200).send(newObject);
+    } catch (e) {
+        res.status(500).send({ error: e.message });
+    }
+};
+
+// Logout
+exports.Logout = async (req, res) => {
+    try {
+        req.user.tokens = req.user.tokens.filter((obj) => {
+            return obj.token !== req.token;
+        });
+
+        await req.user.save();
+        return res.status(200).send();
+    }
+    catch (e) {
+        return res.status(500).send({ error: e.message });
+    }
+}
+
+// Change Password
+exports.ChangePassword = async (req, res) => {
+    try {
+        const user = await TrainerModel.findByCredentials(req.body.email, req.body.password);
+        user.password = req.body.newpassword;
+        await user.save();
+        return res.status(200).send({ data: "Password changed.." });
+    } catch (e) {
+
+        if (e.message = "Invalid User..") {
+            return res.status(401).send({ error: 'Old Password is Wrong..' });
+        }
+
         return res.status(400).send({ error: e.message });
     }
 }

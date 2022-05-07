@@ -28,4 +28,15 @@ router.patch('/api/Trainer/UpdateTrainer/:id', [auth, upload.single('image')], T
 // Delete
 router.delete('/api/Trainer/DeleteTrainer/:id', auth, TrainerController.DeleteTrainer);
 
+// Get Profile
+
+// Logout
+router.post('/api/Trainer/Logout',auth, TrainerController.Logout);
+
+// Get Profile
+router.get('/api/Trainer/me',auth, TrainerController.TrainerProfile);
+
+// Change Password
+router.post('/api/Trainer/ChangePassword',auth, TrainerController.ChangePassword);
+
 module.exports = router;

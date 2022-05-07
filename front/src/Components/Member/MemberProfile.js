@@ -31,6 +31,7 @@ import Grid from '@mui/material/Grid';
 import * as constants from '../../Redux/constants/userConstants';
 
 import * as Yup from 'yup';
+
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -50,7 +51,7 @@ export default function AdminProfile() {
 
   useEffect(() => {
 
-    dispatch(getLoggedUserData('Admin'));
+    dispatch(getLoggedUserData('Member'));
 
   }, []);
 
@@ -116,7 +117,7 @@ export default function AdminProfile() {
                       type: constants.CHANGE_PASSWORD_RESET
                     });
 
-                    await dispatch(changePassword('Admin', values));
+                    await dispatch(changePassword('Member', values));
 
                     setSubmitting(false);
                   }}

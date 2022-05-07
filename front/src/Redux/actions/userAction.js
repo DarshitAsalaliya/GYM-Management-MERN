@@ -79,15 +79,15 @@ export const getLoggedUserData = (usertype) => async (dispatch) => {
         let requestURL = null;
 
         if (usertype === 'Member')
-            requestURL = REACT_APP_BASE_URL + 'api/Member/Logout';
+            requestURL = REACT_APP_BASE_URL + 'api/Member/me';
         else if (usertype === 'Trainer')
-            requestURL = REACT_APP_BASE_URL + 'api/Trainer/Logout';
+            requestURL = REACT_APP_BASE_URL + 'api/Trainer/me';
         else if (usertype === 'Admin')
             requestURL = REACT_APP_BASE_URL + 'api/Owner/me';
 
         // Request
         const { data } = await axios.get(requestURL);
-
+     
         dispatch({
             type: constants.LOGGED_USERDATA_SUCCESS,
             payload: data
