@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
+import { Button, CardContent } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import PersonIcon from '@mui/icons-material/Person';
@@ -16,6 +16,7 @@ import SnackbarMsg from '../Utils/SnackbarMsg';
 // Card
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
+import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
@@ -26,9 +27,10 @@ import '../Utils/GlobalStyle.css';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-
+import UpdateMember from './Member/UpdateMember';
 // Constants
 import * as constants from '../../Redux/constants/userConstants';
+import * as memberconstants from '../../Redux/constants/memberConstants';
 
 import * as Yup from 'yup';
 
@@ -40,7 +42,7 @@ import { getLoggedUserData, changePassword } from '../../Redux/actions/userActio
 
 const { REACT_APP_BASE_URL } = process.env;
 
-export default function AdminProfile() {
+export default function MemberProfile() {
 
   const [userData, setUserData] = useState([]);
 
@@ -48,12 +50,14 @@ export default function AdminProfile() {
 
   const { userdata, getdatasuccess } = useSelector(state => state.loggeduserdata);
   const { changepasswordsuccess, changepassworderror } = useSelector(state => state.changepassword);
+  const { data, getlistloading, getlisterror, getlistsuccess } = useSelector(state => state.getmemberlist);
+  const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatemember);
 
   useEffect(() => {
 
     dispatch(getLoggedUserData('Member'));
 
-  }, []);
+  }, [updatesuccess]);
 
   useEffect(() => {
 
@@ -64,6 +68,7 @@ export default function AdminProfile() {
 
   useEffect(() => {
     dispatch({ type: constants.CHANGE_PASSWORD_RESET });
+    dispatch({ type: memberconstants.MEMBER_UPDATE_RESET });
   }, [])
 
   const ValidationSchema = Yup.object().shape({
@@ -83,14 +88,17 @@ export default function AdminProfile() {
     <>
       {changepasswordsuccess && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message="Password Changed Successfully.." severity="success" />}
       {changepassworderror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={changepassworderror} severity="error" />}
+      {updatesuccess && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message="Updated Successfully.." severity="info" />}
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
             <Typography variant="h6" component="div" className='moduleHeading'>
-              Admin Profile
+              Member Profile
             </Typography>
             <Box sx={{ flexGrow: 1 }}>
+
               <Card sx={{ maxWidth: 345 }} variant="outlined">
+
                 <CardHeader
                   avatar={
                     <Avatar alt="Cindy Baker" src={userData?.image?.image_url} sx={{ width: 80, height: 80 }} />
@@ -98,6 +106,51 @@ export default function AdminProfile() {
                   title={userData?.email}
                   subheader={userData?.createdAt}
                 />
+                <Divider />
+                <CardContent>
+                  <Typography variant="body2" display="block" gutterBottom>
+                    <b>GYM Time:</b> {userData?.workouttime}
+                  </Typography>
+                  <Typography variant="body2" display="block" gutterBottom>
+                    <b>Status:</b> {userData?.status ? 'Active' : 'Inactive'} | <b>Gender:</b> {userData?.gender?.toUpperCase()}
+                  </Typography>
+                  <Typography variant="body2" display="block" gutterBottom>
+
+                  </Typography>
+                </CardContent>
+                <Divider />
+                <CardContent>
+                  <Typography variant="body2" display="block" gutterBottom>
+                    <b>Joining Date:</b> {userData?.doj?.slice(0, 10)}
+                  </Typography>
+                  <Typography variant="body2" display="block" gutterBottom>
+                    <b>Birth Date:</b> {userData?.dob?.slice(0, 10)}
+                  </Typography>
+                </CardContent>
+                <Divider />
+                <CardContent>
+                  <Typography variant="body2" display="block" gutterBottom>
+                    <b>Height:</b> {userData?.height} CM
+                  </Typography>
+                  <Typography variant="body2" display="block" gutterBottom>
+                    <b>Weight:</b> {userData?.weight} KG
+                  </Typography>
+                  <Typography variant="body2" display="block" gutterBottom>
+                    <b>Blood:</b> {userData?.bloodgroup}
+                  </Typography>
+                </CardContent>
+                <Divider />
+                <CardContent>
+                  <Typography variant="body2" display="block" gutterBottom>
+                    <b>Phone:</b> {userData?.phone}
+                  </Typography>
+                  <Typography variant="body2" display="block" gutterBottom>
+                    <b>Address:</b> {userData?.address}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  {userData && <UpdateMember dataforupdate={userData} />}
+                </CardActions>
               </Card>
             </Box>
           </Grid>

@@ -25,3 +25,51 @@ export const getAdminDashboardData = () => async (dispatch) => {
         })
     }
 }
+
+export const getTrainerDashboardData = () => async (dispatch) => {
+    try {
+        
+        dispatch({
+            type: constants.GET_TRAINER_DASHBOARD_DATA_REQUEST
+        })
+        let requestURL = REACT_APP_BASE_URL + 'api/Dashboard/GetTrainerDashboardData/';
+    
+        // Request
+        const { data } = await axios.get(requestURL);
+     
+        dispatch({
+            type: constants.GET_TRAINER_DASHBOARD_DATA_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: constants.GET_TRAINER_DASHBOARD_DATA_FAIL,
+            payload: error.response.data
+        })
+    }
+}
+
+export const getMemberDashboardData = () => async (dispatch) => {
+    try {
+        
+        dispatch({
+            type: constants.GET_MEMBER_DASHBOARD_DATA_REQUEST
+        })
+        let requestURL = REACT_APP_BASE_URL + 'api/Dashboard/GetMemberDashboardData/';
+    
+        // Request
+        const { data } = await axios.get(requestURL);
+     
+        dispatch({
+            type: constants.GET_MEMBER_DASHBOARD_DATA_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: constants.GET_MEMBER_DASHBOARD_DATA_FAIL,
+            payload: error.response.data
+        })
+    }
+}

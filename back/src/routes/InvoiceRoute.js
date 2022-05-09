@@ -13,6 +13,9 @@ router.post('/api/Invoice/CreateInvoice', auth, InvoiceController.CreateInvoice)
 // Get All Topic
 router.get('/api/Invoice/GetInvoiceList', auth, InvoiceController.GetInvoiceList);
 
+// Get By Member
+router.get('/api/Invoice/GetInvoiceListByMember/:memberprofileid?', auth, InvoiceController.GetInvoiceListByMember);
+
 // Update Invoice
 router.patch('/api/Invoice/UpdateInvoice/:id', auth, InvoiceController.UpdateInvoice);
 

@@ -11,13 +11,16 @@ import TrainerDashboard from './Components/Trainer/TrainerDashboard';
 import MemberDashboard from './Components/Member/MemberDashboard';
 import ManageMembers from './Components/Admin/Member/ManageMembers';
 import TrainerManageMembers from './Components/Trainer/Member/ManageMembers';
+import MemberManageMembers from './Components/Member/Member/ManageMembers';
 import ManageTrainers from './Components/Admin/Trainer/ManageTrainers';
 import ManageMemberships from './Components/Admin/Membership/ManageMemberships';
 import ManageSupplements from './Components/Admin/Supplement/ManageSupplements';
 import ManageInvoices from './Components/Admin/Invoice/ManageInvoices';
+import MemberManageInvoices from './Components/Member/Invoice/ManageInvoices';
 import AddMember from './Components/Admin/Member/AddMember';
 import HomeLayout from './Components/Home/HomeLayout/HomeLayout';
 import Login from './Components/Home/Login';
+import HomePage from './Components/Home/HomePage';
 import axios from 'axios';
 import ForgotPassword from './Components/Home/ForgotPassword';
 
@@ -25,7 +28,7 @@ function App() {
 
   // Intercepter For Set Authorization
   axios.interceptors.request.use(function (config) {
-   
+
     const token = localStorage.getItem('token');
     if (token)
       config.headers.Authorization = `Bearer ${token}`;
@@ -37,6 +40,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<HomeLayout />}>
+            <Route path='' index element={<HomePage />} />
             <Route path='Login' element={<Login />} />
             <Route path='ForgotPassword' element={<ForgotPassword />} />
           </Route>
@@ -58,6 +62,8 @@ function App() {
           <Route path='/Dashboard/Member/' element={<MemberDashboardLayout />}>
             <Route path='' index element={<MemberDashboard />} />
             <Route path='MemberProfile' element={<MemberProfile />} />
+            <Route path='ManageMembers' element={<MemberManageMembers />} />
+            <Route path='ManageInvoices' element={<MemberManageInvoices />} />
           </Route>
           <Route path='*' element={<h1>Error 404 Page not Found !!</h1>} />
         </Routes>

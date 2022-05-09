@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { getAdminDashboardData } from '../../Redux/actions/dashboardAction';
+import { getMemberDashboardData } from '../../Redux/actions/dashboardAction';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -25,15 +25,15 @@ export default function AdminDashboard() {
 
   const dispatch = useDispatch();
 
-  const { admindashboarddata, getadmindashboarddatasuccess } = useSelector(state => state.admindashboarddata);
+  const { memberdashboarddata, getmemberdashboarddatasuccess } = useSelector(state => state.memberdashboarddata);
 
   useEffect(() => {
-    dispatch(getAdminDashboardData());
+    dispatch(getMemberDashboardData());
   }, [dispatch])
 
   useEffect(() => {
-    admindashboarddata && setDashboardData(admindashboarddata);
-  }, [admindashboarddata])
+    memberdashboarddata && setDashboardData(memberdashboarddata);
+  }, [memberdashboarddata])
 
   return (
 
@@ -51,7 +51,7 @@ export default function AdminDashboard() {
         </Grid>
 
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={6} md={3} >
+          {/* <Grid item xs={6} md={3} >
             <Item elevation={0} sx={{ backgroundColor: '#D1E9FC' }}>
 
               <Typography variant="caption" display="block" gutterBottom>
@@ -98,7 +98,7 @@ export default function AdminDashboard() {
               </Typography>
 
             </Item>
-          </Grid>
+          </Grid> */}
           <Grid item xs={6} md={3}>
             <Item elevation={0} sx={{ backgroundColor: '#FFF7CD' }}>
 

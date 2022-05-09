@@ -189,7 +189,7 @@ export default function UpdateMember(props) {
             >
                 <Box sx={style}>
                     <Formik
-                        initialValues={{ name: props.dataforupdate.name, email: props.dataforupdate.email, password: '', status: props.dataforupdate.status, gender: props.dataforupdate.gender, workouttype: props.dataforupdate.workouttype, fromtime: props.dataforupdate.workouttime.slice(0, 5), totime: props.dataforupdate.workouttime.slice(9, 15), phone: props.dataforupdate.phone, address: props.dataforupdate.address, problem: props.dataforupdate.problem, dob: props.dataforupdate.dob.slice(0, 10), doj: props.dataforupdate.doj.slice(0, 10), bloodgroup: props.dataforupdate.bloodgroup, height: props.dataforupdate.height, weight: props.dataforupdate.weight, trainerprofileid: props.dataforupdate.trainerprofileid }}
+                        initialValues={{ name: props.dataforupdate.name, email: props.dataforupdate.email, password: '', status: props.dataforupdate.status, gender: props.dataforupdate.gender, workouttype: props.dataforupdate.workouttype, fromtime: props.dataforupdate.workouttime?.slice(0, 5), totime: props.dataforupdate.workouttime?.slice(9, 15), phone: props.dataforupdate.phone, address: props.dataforupdate.address, problem: props.dataforupdate.problem, dob: props.dataforupdate.dob?.slice(0, 10), doj: props.dataforupdate.doj?.slice(0, 10), bloodgroup: props.dataforupdate.bloodgroup, height: props.dataforupdate.height, weight: props.dataforupdate.weight, trainerprofileid: props.dataforupdate.trainerprofileid }}
                         validationSchema={ValidationSchema}
                         onSubmit={async (values, { setSubmitting }) => {
 
@@ -204,14 +204,12 @@ export default function UpdateMember(props) {
                                 }
                             }
 
-                            formData.append("workouttime", values['fromtime'] + ' To ' + values['totime']);
-
                             // Update
                             await dispatch({
                                 type: constants.MEMBER_UPDATE_RESET
                             });
 
-                            await dispatch(updateMember(props.dataforupdate.editid, formData));
+                            await dispatch(updateMember(props.dataforupdate._id, formData));
 
                             // Reset
                             await dispatch({
@@ -275,6 +273,7 @@ export default function UpdateMember(props) {
                                             autoComplete='off'
                                             error={errors.email && touched.email}
                                             helperText={errors.email}
+                                            disabled
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={4}>
@@ -290,11 +289,12 @@ export default function UpdateMember(props) {
                                             variant="standard"
                                             error={errors.password && touched.password}
                                             helperText={errors.password}
+                                            disabled
                                             sx={{ width: '100%' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={4} sx={{ textAlign: 'left' }}>
-                                        
+
                                         {props.dataforupdate?.image?.image_url ? <Avatar src={props.dataforupdate.image.image_url} sx={{ width: 50, height: 50 }} /> : <Avatar sx={{ bgcolor: deepOrange[400] }}><PersonIcon /></Avatar>}
                                         <label htmlFor="contained-button-file">
                                             <Input accept="image/*" id="contained-button-file" name="image" type="file" onChange={(event) => {
@@ -311,6 +311,7 @@ export default function UpdateMember(props) {
                                             label="Active"
                                             name="status"
                                             onChange={handleChange}
+                                            disabled
                                             sx={{ width: '100%' }}
                                         />
                                     </Grid>
@@ -341,6 +342,7 @@ export default function UpdateMember(props) {
                                                 onChange={handleChange}
                                                 error={errors.workouttype && touched.workouttype}
                                                 helperText={errors.workouttype}
+                                                disabled
                                                 defaultValue=""
                                             >
                                                 <MenuItem value="Weight Loss">Weight Loss</MenuItem>
@@ -359,6 +361,7 @@ export default function UpdateMember(props) {
                                             variant="standard"
                                             error={errors.fromtime && touched.fromtime}
                                             helperText={errors.fromtime || 'From Time'}
+                                            disabled
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={4}>
@@ -371,6 +374,7 @@ export default function UpdateMember(props) {
                                             variant="standard"
                                             error={errors.totime && touched.totime}
                                             helperText={errors.totime || 'To Time'}
+                                            disabled
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={4}>
@@ -383,6 +387,7 @@ export default function UpdateMember(props) {
                                             variant="standard"
                                             error={errors.phone && touched.phone}
                                             helperText={errors.phone}
+                                            disabled
                                             sx={{ width: '100%' }} />
                                     </Grid>
 
@@ -448,6 +453,7 @@ export default function UpdateMember(props) {
                                                 helperText={errors.trainerprofileid}
                                                 onChange={handleChange}
                                                 defaultValue=""
+                                                disabled
                                                 value={values.trainerprofileid}
                                             >
                                                 {trainerList.map((obj) => {

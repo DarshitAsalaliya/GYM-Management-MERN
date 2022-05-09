@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { userAuthReducer, getLoggedUserDataReducer, changePasswordReducer } from "./userReducer";
-import { getAdminDashboardDataReducer } from "./dashboardReducer";
+import { getAdminDashboardDataReducer, getTrainerDashboardDataReducer, getMemberDashboardDataReducer } from "./dashboardReducer";
 import { registerMemberReducer, deleteMemberReducer, getMemberListReducer, updateMemberReducer } from "./memberReducer";
 import { registerTrainerReducer, deleteTrainerReducer, getTrainerListReducer, updateTrainerReducer } from "./trainerReducer";
 import { createMembershipReducer, deleteMembershipReducer, getMembershipListReducer, updateMembershipReducer } from "./membershipReducer";
@@ -9,7 +9,9 @@ import { createInvoiceReducer, deleteInvoiceReducer, getInvoiceListReducer, upda
 
 const reducers = combineReducers({
     userauth: userAuthReducer,
-    admindashboarddata:getAdminDashboardDataReducer,
+    admindashboarddata: getAdminDashboardDataReducer,
+    trainerdashboarddata: getTrainerDashboardDataReducer,
+    memberdashboarddata: getMemberDashboardDataReducer,
     loggeduserdata: getLoggedUserDataReducer,
     registermember: registerMemberReducer,
     changepassword: changePasswordReducer,

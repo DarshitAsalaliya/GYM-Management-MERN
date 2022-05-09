@@ -18,6 +18,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
 import CardMembershipIcon from '@mui/icons-material/CardMembership';
 
 import '../../Utils/GlobalStyle.css';
@@ -42,6 +43,20 @@ export default function DrawerMenuList() {
           <HomeIcon />
         </ListItemIcon>
         <ListItemText primary="Dashboard" className='sideMenuTextStyle' />
+      </ListItemButton>
+
+      <ListItemButton onClick={() => navigate("./ManageMembers", { replace: true })}>
+        <ListItemIcon>
+          <FastfoodIcon />
+        </ListItemIcon>
+        <ListItemText primary="My Diet Plan" className='sideMenuTextStyle'/>
+      </ListItemButton>
+
+      <ListItemButton onClick={() => navigate("./ManageInvoices", { replace: true })}>
+        <ListItemIcon>
+          <CardMembershipIcon />
+        </ListItemIcon>
+        <ListItemText primary="My Invoices" className='sideMenuTextStyle' />
       </ListItemButton>
 
       {/* <ListItemButton onClick={() => navigate("./ManageMembers", { replace: true })}>

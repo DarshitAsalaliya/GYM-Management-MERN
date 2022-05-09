@@ -19,7 +19,7 @@ router.post('/api/Member/Login', MemberController.Login);
 // Get
 router.get('/api/Member/GetMemberList/', auth, MemberController.GetAllMember);
 
-// Get
+// Get By Trainer
 router.get('/api/Member/GetMemberListByTrainer/:trainerprofileid?', auth, MemberController.GetMemberListByTrainer);
 
 // Update

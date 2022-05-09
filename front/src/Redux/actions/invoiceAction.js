@@ -27,14 +27,19 @@ export const createInvoice = (formData) => async (dispatch) => {
     }
 }
 
-export const getInvoiceList = () => async (dispatch) => {
+export const getInvoiceList = (memberprofileid = null) => async (dispatch) => {
     try {
 
         dispatch({
             type: constants.INVOICE_LIST_REQUEST
         })
 
-        let requestURL = REACT_APP_BASE_URL + 'api/Invoice/GetInvoiceList/';
+        let requestURL = null;
+
+        if (memberprofileid)
+            requestURL = REACT_APP_BASE_URL + 'api/Invoice/GetInvoiceListByMember/';
+        else
+            requestURL = REACT_APP_BASE_URL + 'api/Invoice/GetInvoiceList/';
 
         // Request
         const { data } = await axios.get(requestURL);

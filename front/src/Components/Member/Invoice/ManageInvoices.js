@@ -58,13 +58,11 @@ export default function ManageInvoices() {
                 <Grid container spacing={2}>
                     <Grid item xs={6} md={8}>
                         <Typography variant="h6" component="div" className='moduleHeading'>
-                            Manage Invoice
+                            Your Invoice
                         </Typography>
                     </Grid>
                     <Grid item xs={6} md={4} sx={{ textAlign: 'right' }}>
-                        <Button onClick={navigateToMemberList} variant="outlined" startIcon={<AddIcon />} size='small'>
-                            Add Invoice
-                        </Button>
+                     
                     </Grid>
                 </Grid>
             </Box>

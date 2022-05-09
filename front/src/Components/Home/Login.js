@@ -95,13 +95,11 @@ export default function SignInSide() {
                     md={4}
                     sx={{
                         backgroundRepeat: 'no-repeat',
-                        backgroundColor: (t) =>
-                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
                 />
-                <Grid item xs={10} sm={8} md={4} component={Paper} elevation={4} square>
+                <Grid item xs={10} sm={8} md={4} sx={{ border: '1px solid #DDDEE0' }} square>
                     <Box
                         sx={{
                             my: 2,

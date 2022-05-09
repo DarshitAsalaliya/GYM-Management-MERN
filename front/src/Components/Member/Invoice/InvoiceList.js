@@ -29,7 +29,7 @@ export default function InvoiceList() {
 
     const loadInvoiceList = async () => {
 
-        await dispatch(getInvoiceList());
+        await dispatch(getInvoiceList('MemberId'));
 
         const filterData = data?.map(function (obj) {
             obj['editid'] = obj['_id'];
@@ -91,26 +91,6 @@ export default function InvoiceList() {
                     },
                     { field: 'paymentmode', headerName: 'Payment Mode', width: 150 },
                     { field: 'paymentdetail', headerName: 'Payment Detail', width: 150 },
-                    {
-                        field: 'editid',
-                        headerName: 'Edit',
-                        width: 85,
-                        sortable: false,
-                        filterable: false,
-                        renderCell: (params) => (
-                            <UpdateInvoice dataforupdate={invoiceList.find(obj => obj.editid === params.value)} />
-                        ),
-                    },
-                    {
-                        field: '_id',
-                        headerName: 'Delete',
-                        width: 85,
-                        sortable: false,
-                        filterable: false,
-                        renderCell: (params) => (
-                            <DeleteInvoice id={params.value} />
-                        ),
-                    },
                 ]}
                 rows={invoiceList}
             />

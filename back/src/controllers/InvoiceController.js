@@ -30,6 +30,30 @@ exports.GetInvoiceList = async (req, res) => {
     }
 }
 
+// Get All Invoice
+exports.GetInvoiceListByMember = async (req, res) => {
+    try {
+
+        if (req.params.memberprofileid) {
+            id = req.params.memberprofileid
+        }
+        else {
+            id = req.user._id
+        }
+
+        const invoiceList = await InvoiceModel.find({ memberprofileid: id });
+
+        // Check Invoice Length
+        if (invoiceList.length === 0) {
+            return res.status(404).send({ error: "Invoice not found.." });
+        }
+
+        return res.status(200).send(invoiceList);
+    } catch (e) {
+        return res.status(400).send({ error: e.message });
+    }
+}
+
 // Update Invoice
 exports.UpdateInvoice = async (req, res) => {
     try {

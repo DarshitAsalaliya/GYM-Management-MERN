@@ -4,6 +4,7 @@ const TrainerModel = require('../models/TrainerModel');
 const MembershipModel = require('../models/MembershipModel');
 const SupplementModel = require('../models/SupplementModel');
 const InvoiceModel = require('../models/InvoiceModel');
+const { mongoose } = require('mongoose');
 
 // API Using Async Await
 
@@ -13,10 +14,29 @@ exports.GetAdminDashboardData = async (req, res) => {
         const totalMembers = await MemberModel.find().count();
         const totalTrainers = await TrainerModel.find().count();
         const totalMemberships = await MembershipModel.find().count();
-        const totalSupplements = await SupplementModel.find({status:true}).count();
+        const totalSupplements = await SupplementModel.find({ status: true }).count();
         const totalInvoices = await InvoiceModel.find().count();
-        
-        return res.status(200).send({totalMembers,totalTrainers,totalMemberships,totalSupplements,totalInvoices});
+
+        return res.status(200).send({ totalMembers, totalTrainers, totalMemberships, totalSupplements, totalInvoices });
+    } catch (e) {
+        return res.status(400).send({ error: e.message });
+    }
+}
+
+exports.GetTrainerDashboardData = async (req, res) => {
+    try {
+        const totalMembers = await MemberModel.find({ trainerprofileid: mongoose.Types.ObjectId(req.user.id) }).count();
+
+        return res.status(200).send({ totalMembers });
+    } catch (e) {
+        return res.status(400).send({ error: e.message });
+    }
+}
+
+exports.GetMemberDashboardData = async (req, res) => {
+    try {
+        const totalInvoices = await InvoiceModel.find({ memberprofileid: mongoose.Types.ObjectId(req.user.id) }).count();
+        return res.status(200).send({ totalInvoices });
     } catch (e) {
         return res.status(400).send({ error: e.message });
     }

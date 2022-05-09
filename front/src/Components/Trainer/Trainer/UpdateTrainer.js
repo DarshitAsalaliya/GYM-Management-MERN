@@ -154,7 +154,7 @@ export default function UpdateTrainer(props) {
             >
                 <Box sx={style}>
                     <Formik
-                        initialValues={{ name: props.dataforupdate.name, email: props.dataforupdate.email, password: '', status: props.dataforupdate.status, gender: props.dataforupdate.gender, phone: props.dataforupdate.phone, address: props.dataforupdate.address, dob: props.dataforupdate.dob.slice(0, 10), doj: props.dataforupdate.doj.slice(0, 10), bloodgroup: props.dataforupdate.bloodgroup, height: props.dataforupdate.height, weight: props.dataforupdate.weight, salary: props.dataforupdate.salary }}
+                        initialValues={{ name: props.dataforupdate.name, email: props.dataforupdate.email, password: '', status: props.dataforupdate.status, gender: props.dataforupdate.gender, phone: props.dataforupdate.phone, address: props.dataforupdate.address, dob: props.dataforupdate.dob?.slice(0, 10), doj: props.dataforupdate.doj?.slice(0, 10), bloodgroup: props.dataforupdate.bloodgroup, height: props.dataforupdate.height, weight: props.dataforupdate.weight, salary: props.dataforupdate.salary }}
                         validationSchema={ValidationSchema}
                         onSubmit={async (values, { setSubmitting }) => {
                             var formData = new FormData();
@@ -173,7 +173,7 @@ export default function UpdateTrainer(props) {
                                 type: constants.TRAINER_UPDATE_RESET
                             });
 
-                            await dispatch(updateTrainer(props.dataforupdate.editid, formData));
+                            await dispatch(updateTrainer(props.dataforupdate._id, formData));
 
                             // Reset
                             await dispatch({
@@ -237,6 +237,7 @@ export default function UpdateTrainer(props) {
                                             autoComplete='off'
                                             error={errors.email && touched.email}
                                             helperText={errors.email}
+                                            disabled
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={4}>
@@ -252,6 +253,7 @@ export default function UpdateTrainer(props) {
                                             variant="standard"
                                             error={errors.password && touched.password}
                                             helperText={errors.password}
+                                            disabled
                                             sx={{ width: '100%' }}
                                         />
                                     </Grid>
@@ -272,6 +274,7 @@ export default function UpdateTrainer(props) {
                                             label="Active"
                                             name="status"
                                             onChange={handleChange}
+                                            disabled
                                             sx={{ width: '100%' }}
                                         />
                                     </Grid>
@@ -300,6 +303,7 @@ export default function UpdateTrainer(props) {
                                             variant="standard"
                                             error={errors.phone && touched.phone}
                                             helperText={errors.phone}
+                                            disabled
                                             sx={{ width: '100%' }} />
                                     </Grid>
 
@@ -325,6 +329,7 @@ export default function UpdateTrainer(props) {
                                             variant="standard"
                                             error={errors.doj && touched.doj}
                                             helperText={errors.doj || 'Date of Join'}
+                                            disabled
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={4}>
@@ -386,6 +391,7 @@ export default function UpdateTrainer(props) {
                                             variant="standard"
                                             error={errors.salary && touched.salary}
                                             helperText={errors.salary}
+                                            disabled
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={4}>

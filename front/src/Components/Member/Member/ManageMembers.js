@@ -3,8 +3,8 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
-import AddMember from './AddMember';
 import MemberList from './MemberList';
+import MemberDietPlan from './MemberDietPlan';
 import SnackbarMsg from '../../Utils/SnackbarMsg';
 import Typography from '@mui/material/Typography';
 
@@ -56,18 +56,16 @@ export default function ManageMembers() {
 
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
-                    <Grid item xs={6} md={8}>
+                    <Grid item xs={12} md={8}>
                         <Typography variant="h6" component="div" className='moduleHeading'>
-                            Manage Member
+                            Your Diet Plan
                         </Typography>
                     </Grid>
-                    <Grid item xs={6} md={4} sx={{ textAlign: 'right' }}>
-                        <AddMember />
+                    <Grid item xs={0} md={4} sx={{ textAlign: 'right' }}>
                     </Grid>
                 </Grid>
             </Box>
-
-            <MemberList />
+            <MemberDietPlan />
         </>
     );
 }
