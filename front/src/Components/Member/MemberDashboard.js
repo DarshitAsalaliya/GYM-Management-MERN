@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 // Action
 import { getMemberDashboardData } from '../../Redux/actions/dashboardAction';
+import { getLoggedUserData } from '../../Redux/actions/userAction';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -29,6 +30,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     dispatch(getMemberDashboardData());
+    
   }, [dispatch])
 
   useEffect(() => {

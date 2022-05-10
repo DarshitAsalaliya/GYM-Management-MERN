@@ -87,7 +87,7 @@ export const getLoggedUserData = (usertype) => async (dispatch) => {
 
         // Request
         const { data } = await axios.get(requestURL);
-     
+
         dispatch({
             type: constants.LOGGED_USERDATA_SUCCESS,
             payload: data
@@ -102,7 +102,7 @@ export const getLoggedUserData = (usertype) => async (dispatch) => {
     }
 }
 
-export const changePassword = (usertype,formData) => async (dispatch) => {
+export const changePassword = (usertype, formData) => async (dispatch) => {
     try {
 
         dispatch({
@@ -119,7 +119,7 @@ export const changePassword = (usertype,formData) => async (dispatch) => {
             requestURL = REACT_APP_BASE_URL + 'api/Owner/ChangePassword';
 
         // Request
-        const { data } = await axios.post(requestURL,formData);
+        const { data } = await axios.post(requestURL, formData);
 
         dispatch({
             type: constants.CHANGE_PASSWORD_SUCCESS,

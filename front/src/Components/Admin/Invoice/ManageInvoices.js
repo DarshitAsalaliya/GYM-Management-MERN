@@ -40,6 +40,10 @@ export default function ManageInvoices() {
         dispatch({
             type: constants.INVOICE_DELETE_RESET
         });
+
+        dispatch({
+            type: constants.INVOICE_LIST_RESET
+        });
     }, [dispatch]);
 
     const navigate = useNavigate();

@@ -5,6 +5,9 @@ import Chip from '@mui/material/Chip';
 // DeleteInvoice
 import DeleteInvoice from './DeleteInvoice';
 
+// Print Invoice
+import InvoicePrint from '../../Utils/InvoicePrint';
+
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -20,6 +23,7 @@ export default function InvoiceList() {
     const dispatch = useDispatch();
 
     const { data, getlistsuccess } = useSelector(state => state.getinvoicelist);
+    const { userdata, getdatasuccess } = useSelector(state => state.loggeduserdata);
 
     useEffect(() => {
 
@@ -30,7 +34,6 @@ export default function InvoiceList() {
     const loadInvoiceList = async () => {
 
         await dispatch(getInvoiceList('MemberId'));
-
         const filterData = data?.map(function (obj) {
             obj['editid'] = obj['_id'];
             obj['membershipexpirydate'] = obj['expirydate'];
@@ -39,6 +42,7 @@ export default function InvoiceList() {
 
         data && setInvoiceList(filterData);
     };
+
 
     return (
         <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
@@ -91,6 +95,16 @@ export default function InvoiceList() {
                     },
                     { field: 'paymentmode', headerName: 'Payment Mode', width: 150 },
                     { field: 'paymentdetail', headerName: 'Payment Detail', width: 150 },
+                    {
+                        field: '_id',
+                        headerName: 'Print',
+                        width: 85,
+                        sortable: false,
+                        filterable: false,
+                        renderCell: (params) => (
+                            <InvoicePrint data={invoiceList.find(obj => obj._id === params.value)}/>
+                        ),
+                    },
                 ]}
                 rows={invoiceList}
             />

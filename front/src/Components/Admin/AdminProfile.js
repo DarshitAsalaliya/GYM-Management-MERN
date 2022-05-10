@@ -13,6 +13,9 @@ import MenuItem from '@mui/material/MenuItem';
 import CheckIcon from '@mui/icons-material/Check';
 import SnackbarMsg from '../Utils/SnackbarMsg';
 
+// Navbar
+import { useNavigate } from 'react-router-dom';
+
 // Card
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -59,7 +62,6 @@ export default function AdminProfile() {
     userdata && setUserData(userdata);
 
   }, [userdata]);
-
 
   useEffect(() => {
     dispatch({ type: constants.CHANGE_PASSWORD_RESET });

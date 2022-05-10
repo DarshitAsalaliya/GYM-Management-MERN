@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Chip from '@mui/material/Chip';
-
+import InvoicePrint from '../../Utils/InvoicePrint';
 // DeleteInvoice
 import DeleteInvoice from './DeleteInvoice';
 
@@ -33,6 +33,7 @@ export default function InvoiceList() {
 
         const filterData = data?.map(function (obj) {
             obj['editid'] = obj['_id'];
+            obj['invoiceid'] = obj['_id'];
             obj['membershipexpirydate'] = obj['expirydate'];
             return obj;
         });
@@ -91,6 +92,16 @@ export default function InvoiceList() {
                     },
                     { field: 'paymentmode', headerName: 'Payment Mode', width: 150 },
                     { field: 'paymentdetail', headerName: 'Payment Detail', width: 150 },
+                    {
+                        field: 'invoiceid',
+                        headerName: 'Print',
+                        width: 85,
+                        sortable: false,
+                        filterable: false,
+                        renderCell: (params) => (
+                            <InvoicePrint data={invoiceList.find(obj => obj.invoiceid === params.value)}/>
+                        ),
+                    },
                     {
                         field: 'editid',
                         headerName: 'Edit',

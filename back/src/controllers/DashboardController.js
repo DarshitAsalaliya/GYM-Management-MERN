@@ -11,11 +11,11 @@ const { mongoose } = require('mongoose');
 // Get Admin Dashboard Data
 exports.GetAdminDashboardData = async (req, res) => {
     try {
-        const totalMembers = await MemberModel.find().count();
-        const totalTrainers = await TrainerModel.find().count();
-        const totalMemberships = await MembershipModel.find().count();
-        const totalSupplements = await SupplementModel.find({ status: true }).count();
-        const totalInvoices = await InvoiceModel.find().count();
+        const totalMembers = await MemberModel.find();
+        const totalTrainers = await TrainerModel.find();
+        const totalMemberships = await MembershipModel.find();
+        const totalSupplements = await SupplementModel.find({ status: true });
+        const totalInvoices = await InvoiceModel.find();
 
         return res.status(200).send({ totalMembers, totalTrainers, totalMemberships, totalSupplements, totalInvoices });
     } catch (e) {

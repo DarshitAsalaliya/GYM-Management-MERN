@@ -17,7 +17,18 @@ exports.CreateInvoice = async (req, res) => {
 // Get All Invoice
 exports.GetInvoiceList = async (req, res) => {
     try {
-        const invoiceList = await InvoiceModel.find();
+        //const invoiceList = await InvoiceModel.find();
+
+        const invoiceList = await InvoiceModel.aggregate([
+            {
+                $lookup: {
+                    from: "MemberProfile",
+                    localField: "memberprofileid",
+                    foreignField: "_id",
+                    as: "member",
+                },
+            }
+        ])
 
         // Check Invoice Length
         if (invoiceList.length === 0) {
@@ -41,7 +52,24 @@ exports.GetInvoiceListByMember = async (req, res) => {
             id = req.user._id
         }
 
-        const invoiceList = await InvoiceModel.find({ memberprofileid: id });
+        //const invoiceList = await InvoiceModel.find({ memberprofileid: id });
+
+        const invoiceList = await InvoiceModel.aggregate([
+            {
+                $match:
+                {
+                    memberprofileid: id
+                }
+            },
+            {
+                $lookup: {
+                    from: "MemberProfile",
+                    localField: "memberprofileid",
+                    foreignField: "_id",
+                    as: "member",
+                },
+            }
+        ]);
 
         // Check Invoice Length
         if (invoiceList.length === 0) {

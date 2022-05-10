@@ -5,6 +5,15 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
+import HomeIcon from '@mui/icons-material/Home';
+import PersonIcon from '@mui/icons-material/Person';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import CardMembershipIcon from '@mui/icons-material/CardMembership';
+
+
+
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -35,6 +44,8 @@ export default function AdminDashboard() {
     admindashboarddata && setDashboardData(admindashboarddata);
   }, [admindashboarddata])
 
+  
+
   return (
 
     <>
@@ -53,14 +64,12 @@ export default function AdminDashboard() {
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={6} md={3} >
             <Item elevation={0} sx={{ backgroundColor: '#D1E9FC' }}>
-
               <Typography variant="caption" display="block" gutterBottom>
                 Total Members
               </Typography>
               <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                {dashboardData.totalMembers || 0}
+                {dashboardData.totalMembers?.length || 0}
               </Typography>
-              
             </Item>
           </Grid>
           <Grid item xs={6} md={3}>
@@ -70,7 +79,7 @@ export default function AdminDashboard() {
                 Total Trainers
               </Typography>
               <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                {dashboardData.totalTrainers || 0}
+                {dashboardData.totalTrainers?.length || 0}
               </Typography>
 
             </Item>
@@ -82,7 +91,7 @@ export default function AdminDashboard() {
                 Total Memberships
               </Typography>
               <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                {dashboardData.totalMemberships || 0}
+                {dashboardData.totalMemberships?.length || 0}
               </Typography>
 
             </Item>
@@ -94,7 +103,7 @@ export default function AdminDashboard() {
                 Total Supplements
               </Typography>
               <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                {dashboardData.totalSupplements || 0}
+                {dashboardData.totalSupplements?.length || 0}
               </Typography>
 
             </Item>
@@ -106,8 +115,14 @@ export default function AdminDashboard() {
                 Total Invoices
               </Typography>
               <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                {dashboardData.totalInvoices || 0}
+                {dashboardData.totalInvoices?.length || 0}
               </Typography>
+
+            </Item>
+          </Grid>
+
+          <Grid item xs={6} md={3}>
+            <Item elevation={0} sx={{ backgroundColor: '#FFF7CD' }}>
 
             </Item>
           </Grid>
