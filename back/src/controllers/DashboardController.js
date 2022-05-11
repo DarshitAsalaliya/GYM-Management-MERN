@@ -11,10 +11,29 @@ const { mongoose } = require('mongoose');
 // Get Admin Dashboard Data
 exports.GetAdminDashboardData = async (req, res) => {
     try {
-        const totalMembers = await MemberModel.find();
+
+        const totalMembers = await MemberModel.aggregate([
+            {
+                $lookup: {
+                    from: "TrainerProfile",
+                    localField: "trainerprofileid",
+                    foreignField: "_id",
+                    as: "trainer",
+                },
+            },
+            {
+                $lookup: {
+                    from: "Invoice",
+                    localField: "_id",
+                    foreignField: "memberprofileid",
+                    as: "invoices",
+                },
+            }
+        ])
+
         const totalTrainers = await TrainerModel.find();
         const totalMemberships = await MembershipModel.find();
-        const totalSupplements = await SupplementModel.find({ status: true });
+        const totalSupplements = await SupplementModel.find();
         const totalInvoices = await InvoiceModel.find();
 
         return res.status(200).send({ totalMembers, totalTrainers, totalMemberships, totalSupplements, totalInvoices });
@@ -25,7 +44,37 @@ exports.GetAdminDashboardData = async (req, res) => {
 
 exports.GetTrainerDashboardData = async (req, res) => {
     try {
-        const totalMembers = await MemberModel.find({ trainerprofileid: mongoose.Types.ObjectId(req.user.id) }).count();
+        //const totalMembers = await MemberModel.find({}).count();
+
+        const totalMembers = await MemberModel.aggregate([
+            // {
+            //     $match: {
+            //         trainerprofileid: mongoose.Types.ObjectId(req.user.id)
+            //     }
+            // },
+            {
+                $match:
+                {
+                    trainerprofileid: mongoose.Types.ObjectId(req.user.id)
+                }
+            },
+            {
+                $lookup: {
+                    from: "TrainerProfile",
+                    localField: "trainerprofileid",
+                    foreignField: "_id",
+                    as: "trainer",
+                },
+            },
+            {
+                $lookup: {
+                    from: "Invoice",
+                    localField: "_id",
+                    foreignField: "memberprofileid",
+                    as: "invoices",
+                },
+            }
+        ])
 
         return res.status(200).send({ totalMembers });
     } catch (e) {

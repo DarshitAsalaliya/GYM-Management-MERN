@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { deepOrange, deepPurple } from '@mui/material/colors';
@@ -50,10 +50,21 @@ export default function MemberDietPlan() {
         { id: 7, day: 'Saturday', breakfast: dietplan?.saturdaybreakfast, lunch: dietplan?.saturdaylunch, dinner: dietplan?.saturdaydinner, snacks: dietplan?.saturdaysnacks, }
     ];
 
+    const CustomToolbar = () => {
+        return (
+            <GridToolbarContainer>
+                <GridToolbarExport printOptions={{ disableToolbarButton: true }} />
+            </GridToolbarContainer>
+        );
+    }
+
     return (
 
         <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
             <DataGrid
+                components={{
+                    Toolbar: CustomToolbar,
+                }}
                 sx={{
                     '.MuiDataGrid-columnHeaderTitle': {
                         color: '#3c4854',
@@ -71,18 +82,18 @@ export default function MemberDietPlan() {
                     {
                         field: 'breakfast',
                         headerName: 'Breakfast',
-                        width:250,
+                        width: 250,
                         renderCell: (params) => (
-                            <div style={{maxWidth:'100px',}}>{params.value}</div>
+                            <div style={{ maxWidth: '100px', }}>{params.value}</div>
                         ),
-                        
+
                     },
                     {
                         field: 'lunch',
                         headerName: 'Lunch',
                         width: 250,
                         renderCell: (params) => (
-                            <div style={{maxWidth:'100px',}}>{params.value}</div>
+                            <div style={{ maxWidth: '100px', }}>{params.value}</div>
                         ),
                     },
                     {
@@ -90,7 +101,7 @@ export default function MemberDietPlan() {
                         headerName: 'Dinner',
                         width: 250,
                         renderCell: (params) => (
-                            <div style={{maxWidth:'100px',}}>{params.value}</div>
+                            <div style={{ maxWidth: '100px', }}>{params.value}</div>
                         ),
                     },
                     {
@@ -98,7 +109,7 @@ export default function MemberDietPlan() {
                         headerName: 'Snacks',
                         width: 250,
                         renderCell: (params) => (
-                            <div style={{maxWidth:'100px',}}>{params.value}</div>
+                            <div style={{ maxWidth: '100px', }}>{params.value}</div>
                         ),
                     },
                 ]}

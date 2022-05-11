@@ -251,9 +251,10 @@ exports.DeleteMember = async (req, res) => {
 // Profile
 
 exports.MemberProfile = async (req, res) => {
-    const _id = req.user.id;
+
 
     try {
+        const _id = req.user.id;
         const data = await MemberModel.findById(_id);
 
         if (!data) {
@@ -265,9 +266,9 @@ exports.MemberProfile = async (req, res) => {
         delete newObject.password;
         delete newObject.tokens;
 
-        res.status(200).send(newObject);
+        return res.status(200).send(newObject);
     } catch (e) {
-        res.status(500).send({ error: e.message });
+        return res.status(500).send({ error: e.message });
     }
 };
 

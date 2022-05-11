@@ -25,7 +25,7 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { userLogout } from '../../../Redux/actions/userAction';
+import { getLoggedUserData, userLogout } from '../../../Redux/actions/userAction';
 
 const drawerWidth = 240;
 

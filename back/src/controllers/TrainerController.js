@@ -72,7 +72,7 @@ exports.Login = async (req, res) => {
 
         const user = await TrainerModel.findByCredentials(req.body.email, req.body.password);
         const token = await user.generateAuthToken();
-       
+
         return res.send({ user: await user.getPublicProfile(), token });
     } catch (e) {
         return res.status(400).send({ error: e.message });
@@ -121,11 +121,11 @@ exports.UpdateTrainer = async (req, res) => {
 
         if (!data)
             return res.status(404).send({ error: "Not Found.." });
-       
+
         if (req.file) {
 
             // Delete Existing Image From Cloudinary
-               data.image.public_id && await cloudinary.v2.uploader.destroy(data.image.public_id);
+            data.image.public_id && await cloudinary.v2.uploader.destroy(data.image.public_id);
 
             // Upload New Image To Cloudinary
             const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
@@ -199,9 +199,9 @@ exports.DeleteTrainer = async (req, res) => {
 // Profile
 
 exports.TrainerProfile = async (req, res) => {
-    const _id = req.user.id;
-   
+
     try {
+        const _id = req.user.id;
         const data = await TrainerModel.findById(_id);
 
         if (!data) {
@@ -213,9 +213,9 @@ exports.TrainerProfile = async (req, res) => {
         delete newObject.password;
         delete newObject.tokens;
 
-        res.status(200).send(newObject);
+        return res.status(200).send(newObject);
     } catch (e) {
-        res.status(500).send({ error: e.message });
+        return res.status(500).send({ error: e.message });
     }
 };
 

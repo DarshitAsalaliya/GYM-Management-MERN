@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { deepOrange, deepPurple } from '@mui/material/colors';
@@ -47,15 +47,37 @@ export default function MemberList() {
         const filterData = data?.map(function (obj) {
             obj['invoiceid'] = obj['_id'];
             obj['editid'] = obj['_id'];
+            obj['expirydate'] = obj['invoices'][obj['invoices']?.length - 1]?.expirydate;
+            obj['membershipstatus'] = obj['invoices']?.length > 0 ? new Date(obj['invoices'][obj['invoices']?.length - 1]?.expirydate).toLocaleDateString() < new Date().toLocaleDateString() ? 'expired' : 'valid' : 'invoice not found';
             return obj;
         });
 
         data && setMemberList(filterData);
     };
 
+    const getMembershipStatus = (type) => {
+        if (type === 'expired')
+            return <Chip variant="outlined" color="error" size="small" label="Expired" />
+        else if (type === 'valid')
+            return <Chip variant="outlined" color="success" size="small" label="Valid" />
+        else
+            return <Chip variant="outlined" color="warning" size="small" label="Invoice Not Found" />;
+    }
+
+    const CustomToolbar = () => {
+        return (
+            <GridToolbarContainer>
+                <GridToolbarExport printOptions={{ disableToolbarButton: true }} />
+            </GridToolbarContainer>
+        );
+    }
+
     return (
         <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
             <DataGrid
+                components={{
+                    Toolbar: CustomToolbar,
+                }}
                 sx={{
                     '.MuiDataGrid-columnHeaderTitle': {
                         color: '#3c4854',
@@ -82,12 +104,19 @@ export default function MemberList() {
                     },
                     { field: 'phone', headerName: 'Contact', width: 120 },
                     {
-                        field: 'invoices',
+                        field: 'membershipstatus',
                         headerName: 'Membership Status',
                         width: 150,
                         renderCell: (params) => (
-                            params?.value?.length > 0 ? new Date(params?.value[params?.value?.length - 1]?.expirydate).toLocaleDateString() <= new Date().toLocaleDateString() ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" /> : <Chip variant="outlined" color="warning" size="small" label="Invoice Not Found" />
+                            getMembershipStatus(params.value)
                         ),
+                    },
+                    {
+                        field: 'expirydate', headerName: 'Expiry Date', width: 120, valueFormatter: (params) => {
+
+                            const valueFormatted = new Date(params.value).toLocaleDateString();
+                            return `${valueFormatted}`;
+                        }
                     },
                     {
                         field: 'invoiceid',

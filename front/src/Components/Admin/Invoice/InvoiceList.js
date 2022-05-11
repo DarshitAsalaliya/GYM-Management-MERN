@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
 import Chip from '@mui/material/Chip';
 import InvoicePrint from '../../Utils/InvoicePrint';
 // DeleteInvoice
@@ -35,15 +35,27 @@ export default function InvoiceList() {
             obj['editid'] = obj['_id'];
             obj['invoiceid'] = obj['_id'];
             obj['membershipexpirydate'] = obj['expirydate'];
+            obj['membername'] = obj['member'][0]?.name;
             return obj;
         });
 
         data && setInvoiceList(filterData);
     };
 
+    const CustomToolbar = () => {
+        return (
+            <GridToolbarContainer>
+                <GridToolbarExport printOptions={{ disableToolbarButton: true }} />
+            </GridToolbarContainer>
+        );
+    }
+
     return (
         <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
             <DataGrid
+                components={{
+                    Toolbar: CustomToolbar,
+                }}
                 sx={{
                     '.MuiDataGrid-columnHeaderTitle': {
                         color: '#3c4854',
@@ -52,6 +64,7 @@ export default function InvoiceList() {
                 }}
                 getRowId={(row) => row._id}
                 columns={[
+                    { field: 'membername', headerName: 'Member', width: 180 },
                     {
                         field: 'startdate', headerName: 'Start Date', width: 120, valueFormatter: (params) => {
 
@@ -77,7 +90,7 @@ export default function InvoiceList() {
                         headerName: 'Membership Status',
                         width: 150,
                         renderCell: (params) => (
-                            new Date(params.value).toLocaleDateString() <= new Date().toLocaleDateString() ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" />
+                            new Date(params.value).toLocaleDateString() < new Date().toLocaleDateString() ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" />
                         ),
                     },
                     {
@@ -99,7 +112,7 @@ export default function InvoiceList() {
                         sortable: false,
                         filterable: false,
                         renderCell: (params) => (
-                            <InvoicePrint data={invoiceList.find(obj => obj.invoiceid === params.value)}/>
+                            <InvoicePrint data={invoiceList.find(obj => obj.invoiceid === params.value)} />
                         ),
                     },
                     {

@@ -11,6 +11,12 @@ import { useSelector, useDispatch } from 'react-redux';
 // Action
 import { getTrainerDashboardData } from '../../Redux/actions/dashboardAction';
 
+//Chart
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2'
+
+ChartJS.register(ArcElement, Tooltip, Legend);
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -35,6 +41,82 @@ export default function AdminDashboard() {
     trainerdashboarddata && setDashboardData(trainerdashboarddata);
   }, [trainerdashboarddata])
 
+  const memberactiveinactivechartdata = {
+    labels: ['Active  ', 'Inactive'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [dashboardData.totalMembers?.filter(d => d.status === true).length, dashboardData.totalMembers?.filter(d => d.status === false).length],
+        backgroundColor: [
+          'rgba(0, 128, 0, 0.4)',
+          'rgba(255, 99, 132, 0.4)',
+        ],
+        borderColor: [
+          'rgba(0, 128, 0, 0.4)',
+          'rgba(255, 99, 132, 0.4)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const membergenderchartdata = {
+    labels: ['Male    ', 'Female'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [dashboardData.totalMembers?.filter(d => d.gender === 'male').length, dashboardData.totalMembers?.filter(d => d.gender === 'female').length],
+        backgroundColor: [
+          'rgba(0, 128, 0, 0.4)',
+          'rgba(255, 99, 132, 0.4)',
+        ],
+        borderColor: [
+          'rgba(0, 128, 0, 0.4)',
+          'rgba(255, 99, 132, 0.4)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const membermembershipstatusdata = {
+    labels: ['Valid Membership    ', 'Expired Membership'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate).toLocaleDateString() >= new Date().toLocaleDateString() && d?.invoices?.length > 0 && d?.status === true).length, dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate).toLocaleDateString() < new Date().toLocaleDateString() && d?.invoices?.length > 0 && d?.status === true).length],
+        backgroundColor: [
+          'rgba(0, 128, 0, 0.4)',
+          'rgba(255, 99, 132, 0.4)',
+        ],
+        borderColor: [
+          'rgba(0, 128, 0, 0.4)',
+          'rgba(255, 99, 132, 0.4)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const memberdietplanstatuschartdata = {
+    labels: ['Diet Plan Set       ', 'Diet Plan Not Set'],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [dashboardData.totalMembers?.filter(d => d.dietplan !== '{}').length, dashboardData.totalMembers?.filter(d => d.dietplan === '{}').length],
+        backgroundColor: [
+          'rgba(0, 128, 0, 0.4)',
+          'rgba(255, 99, 132, 0.4)',
+        ],
+        borderColor: [
+          'rgba(0, 128, 0, 0.4)',
+          'rgba(255, 99, 132, 0.4)',
+        ],
+        borderWidth: 1,
+      },
+    ],
+  };
+
   return (
 
     <>
@@ -51,18 +133,36 @@ export default function AdminDashboard() {
         </Grid>
 
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={6} md={3} >
-            <Item elevation={0} sx={{ backgroundColor: '#D1E9FC' }}>
-
-              <Typography variant="caption" display="block" gutterBottom>
-                Total Members
-              </Typography>
-              <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                {dashboardData.totalMembers || 0}
-              </Typography>
-              
+          <Grid item xs={12} md={12} >
+            <Item elevation={0} sx={{ backgroundColor: '#f1f8ff' }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={2}>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    Total Members
+                  </Typography>
+                  <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
+                    {dashboardData.totalMembers?.length || 0}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={2}>
+                  <Doughnut data={membermembershipstatusdata} />
+                </Grid>
+                <Grid item xs={12} md={2}>
+                  <Doughnut data={memberactiveinactivechartdata} />
+                </Grid>
+                <Grid item xs={12} md={2}>
+                  <Doughnut data={membergenderchartdata} />
+                </Grid>
+                <Grid item xs={12} md={2}>
+                  <Doughnut data={memberdietplanstatuschartdata} />
+                </Grid>
+              </Grid>
             </Item>
           </Grid>
+
+
+          
+
           {/* <Grid item xs={6} md={3}>
             <Item elevation={0} sx={{ backgroundColor: '#D0F2FF' }}>
 

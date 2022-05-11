@@ -190,6 +190,12 @@ export default function UpdateMember(props) {
 
                             var formData = new FormData();
 
+                            for (var key in values) {
+                                if (values[key] === null || values[key] === undefined || values[key] === '') {
+                                    delete values[key];
+                                }
+                            }
+
                             formData.append('dietplan', JSON.stringify(values));
 
                             // Update

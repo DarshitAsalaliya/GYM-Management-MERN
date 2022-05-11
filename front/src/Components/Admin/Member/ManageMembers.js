@@ -45,6 +45,10 @@ export default function ManageMembers() {
         dispatch({
             type: constants.MEMBER_DELETE_RESET
         });
+
+        dispatch({
+            type: constants.MEMBER_LIST_RESET
+        });
     }, [dispatch]);
 
     return (

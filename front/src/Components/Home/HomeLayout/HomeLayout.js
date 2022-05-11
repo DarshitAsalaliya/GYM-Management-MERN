@@ -24,7 +24,9 @@ const HomeLayout = () => {
             
           </Toolbar>
         </AppBar>
+        
       </Box>
+      
       <Outlet />
     </>
   );

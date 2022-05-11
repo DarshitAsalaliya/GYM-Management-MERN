@@ -24,9 +24,16 @@ export const checkLogin = (credential, usertype) => async (dispatch) => {
         // Set Token
         localStorage.setItem("token", data.token);
 
+        // if (usertype === 'Member')
+        //     localStorage.setItem("id", 2);
+        // else if (usertype === 'Trainer')
+        //     localStorage.setItem("id", 1);
+        // else if (usertype === 'Admin')
+        //     localStorage.setItem("id", 0);
+
         dispatch({
             type: constants.NEW_LOGIN_SUCCESS,
-            payload: true
+            payload: usertype
         })
 
     } catch (error) {
@@ -59,6 +66,7 @@ export const userLogout = (usertype) => async (dispatch) => {
 
         // Set Token
         localStorage.removeItem("token");
+
 
     } catch (error) {
 

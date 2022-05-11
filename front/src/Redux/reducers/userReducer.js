@@ -52,7 +52,7 @@ export const getLoggedUserDataReducer = (state = {}, action) => {
                 ...state,
                 getdataloading: false,
                 getdataerror: action.payload,
-                getdatasuccess: false
+                getdatasuccess: false,
             }
         case constants.LOGGED_USERDATA_RESET:
             return { ...state, getdataloading: false, getdataerror: false, getdatasuccess: false }

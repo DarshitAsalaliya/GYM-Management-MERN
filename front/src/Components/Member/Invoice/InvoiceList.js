@@ -80,7 +80,7 @@ export default function InvoiceList() {
                         headerName: 'Membership Status',
                         width: 150,
                         renderCell: (params) => (
-                            new Date(params.value).toLocaleDateString() <= new Date().toLocaleDateString() ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" />
+                            new Date(params.value).toLocaleDateString() < new Date().toLocaleDateString() ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" />
                         ),
                     },
                     {
