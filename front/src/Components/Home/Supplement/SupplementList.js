@@ -5,6 +5,9 @@ import Avatar from '@mui/material/Avatar';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import BoltIcon from '@mui/icons-material/Bolt';
 
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+
 // Grid
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -33,27 +36,24 @@ export default function SupplementList() {
 
     const loadSupplementList = async () => {
 
-        await dispatch(getSupplementList());
+        await dispatch(getSupplementList('Active'));
 
-        const filterData = data?.map(function (obj) {
-            obj['editid'] = obj['_id'];
-            return obj;
-        });
+        const filterData = data?.filter(d => d.status === true);
 
         data && setSupplementList(filterData);
     };
 
     return (
-        <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
-
-            <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2}>
-                    {
-                        supplementList.map((obj) => <Grid item xs={6} md={3}><SupplementCard data={obj} /></Grid>)
-                    }
-                </Grid>
-            </Box>
-
-        </div>
+        <Box sx={{ flexGrow: 1 }} mt={1} p={2}>
+            <Typography variant="h6" sx={{ color: '#474747' }}>
+                Supplements
+            </Typography>
+            <Divider />
+            <Grid container spacing={2} sx={{ marginTop: '0.01%' }}>
+                {
+                    supplementList.map((obj) => <Grid item xs={6} md={2}><SupplementCard data={obj} /></Grid>)
+                }
+            </Grid>
+        </Box>
     );
 }

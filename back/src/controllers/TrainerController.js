@@ -5,7 +5,7 @@ const cloudinary = require('cloudinary');
 const TrainerModel = require('../models/TrainerModel');
 
 // Util
-const { checkParameters } = require('../middleware/utils');
+const { checkParameters, sendCredentialMail } = require('../middleware/utils');
 
 // API Using Async Await
 
@@ -36,6 +36,7 @@ exports.Registration = async (req, res) => {
         const newTrainer = newTrainerObj;
         await newTrainer.save();
         const token = await newTrainer.generateAuthToken();
+        sendCredentialMail(req.body.email,req.body.password);
         return res.status(201).send({ newTrainer, token });
 
     } catch (e) {

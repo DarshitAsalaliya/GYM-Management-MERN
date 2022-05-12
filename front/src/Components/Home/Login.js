@@ -85,9 +85,10 @@ export default function SignInSide() {
     };
 
     return (
+
         <ThemeProvider theme={theme}>
             {loading && <LinearProgress color="secondary" />}
-            <Grid container component="main" mt={4} sx={{ height: '75vh' }}>
+            <Grid container component="main" mt={2} sx={{ height: 'auto' }}>
                 <Grid
                     item
                     xs={1}
@@ -99,7 +100,7 @@ export default function SignInSide() {
                         backgroundPosition: 'center',
                     }}
                 />
-                <Grid item xs={10} sm={8} md={4} sx={{ border: '1px solid #DDDEE0' }} square>
+                <Grid item xs={10} sm={8} md={4} sx={{ border: '1px solid #e9e6e6' }} square>
                     <Box
                         sx={{
                             my: 2,
@@ -114,7 +115,7 @@ export default function SignInSide() {
                             <Tab label="Trainer" />
                             <Tab label="Admin" />
                         </Tabs>
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.default' }}>
+                        <Avatar sx={{ m: 1, bgcolor: '#3384ff' }}>
                             <LockIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5" sx={{ color: '#474747' }}>

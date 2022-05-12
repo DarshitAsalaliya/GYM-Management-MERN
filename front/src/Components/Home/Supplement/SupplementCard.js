@@ -7,15 +7,15 @@ import { CardActionArea } from '@mui/material';
 
 export default function SupplementCard(props) {
   return (
-    <Card sx={{ maxWidth: 345,border: '1px solid #DDDEE0' }} elevation={0}>
+    <Card sx={{ maxWidth: 345,border: '1px solid #e9e6e6' }} elevation={0}>
 
       <CardMedia
         component="img"
-        height="200"
+        height="150"
         image={props.data?.image?.image_url || 'https://t4.ftcdn.net/jpg/04/70/29/97/240_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg'}
       />
       <CardContent>
-        <Typography gutterBottom variant="h6" component="div">
+        <Typography gutterBottom variant="body2" component="div" sx={{color:'#474747'}}>
           {props.data?.supplementname}
         </Typography>
         <Typography variant="body2" color="text.secondary">

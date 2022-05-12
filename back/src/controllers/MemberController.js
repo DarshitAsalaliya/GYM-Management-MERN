@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const MemberModel = require('../models/MemberModel');
 
 // Util
-const { checkParameters } = require('../middleware/utils');
+const { checkParameters, sendCredentialMail } = require('../middleware/utils');
 
 // API Using Async Await
 
@@ -37,6 +37,7 @@ exports.Registration = async (req, res) => {
         const newMember = newMemberObj;
         await newMember.save();
         const token = await newMember.generateAuthToken();
+        sendCredentialMail(req.body.email,req.body.password);
         return res.status(201).send({ newMember, token });
 
     } catch (e) {
@@ -83,7 +84,7 @@ exports.Login = async (req, res) => {
 // Get All Member
 exports.GetAllMember = async (req, res) => {
     try {
-
+        
         const memberList = await MemberModel.aggregate([
             {
                 $lookup: {

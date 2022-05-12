@@ -4,6 +4,7 @@ const TrainerModel = require('../models/TrainerModel');
 const MembershipModel = require('../models/MembershipModel');
 const SupplementModel = require('../models/SupplementModel');
 const InvoiceModel = require('../models/InvoiceModel');
+const LeadModel = require('../models/LeadModel');
 const { mongoose } = require('mongoose');
 
 // API Using Async Await
@@ -30,13 +31,14 @@ exports.GetAdminDashboardData = async (req, res) => {
                 },
             }
         ])
-
+    
         const totalTrainers = await TrainerModel.find();
         const totalMemberships = await MembershipModel.find();
         const totalSupplements = await SupplementModel.find();
         const totalInvoices = await InvoiceModel.find();
+        const totalLeads = await LeadModel.find();
 
-        return res.status(200).send({ totalMembers, totalTrainers, totalMemberships, totalSupplements, totalInvoices });
+        return res.status(200).send({ totalMembers, totalTrainers, totalMemberships, totalSupplements, totalInvoices, totalLeads });
     } catch (e) {
         return res.status(400).send({ error: e.message });
     }

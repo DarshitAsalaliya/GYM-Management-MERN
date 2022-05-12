@@ -11,6 +11,12 @@ const LeadController = require('../controllers/LeadController');
 router.post('/api/Lead/CreateLead', LeadController.CreateLead);
 
 // Get All Lead
-router.get('/api/Lead/GetAllLead', LeadController.GetAllLead);
+router.get('/api/Lead/GetLeadList', auth, LeadController.GetLeadList);
+
+// Update Lead
+router.patch('/api/Lead/UpdateLead/:id', auth, LeadController.UpdateLead);
+
+// Delete Lead  
+router.delete('/api/Lead/DeleteLead/:id', auth, LeadController.DeleteLead);
 
 module.exports = router;

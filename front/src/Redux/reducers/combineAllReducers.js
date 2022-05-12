@@ -4,6 +4,7 @@ import { getAdminDashboardDataReducer, getTrainerDashboardDataReducer, getMember
 import { registerMemberReducer, deleteMemberReducer, getMemberListReducer, updateMemberReducer } from "./memberReducer";
 import { registerTrainerReducer, deleteTrainerReducer, getTrainerListReducer, updateTrainerReducer } from "./trainerReducer";
 import { createMembershipReducer, deleteMembershipReducer, getMembershipListReducer, updateMembershipReducer } from "./membershipReducer";
+import { createLeadReducer, deleteLeadReducer, getLeadListReducer, updateLeadReducer } from "./leadReducer";
 import { createSupplementReducer, deleteSupplementReducer, getSupplementListReducer, updateSupplementReducer } from "./supplementReducer";
 import { createInvoiceReducer, deleteInvoiceReducer, getInvoiceListReducer, updateInvoiceReducer } from "./invoiceReducer";
 
@@ -34,6 +35,10 @@ const reducers = combineReducers({
     getinvoicelist: getInvoiceListReducer,
     updateinvoice: updateInvoiceReducer,
     deleteinvoice: deleteInvoiceReducer,
+    createlead: createLeadReducer,
+    getleadlist: getLeadListReducer,
+    updatelead: updateLeadReducer,
+    deletelead: deleteLeadReducer,
 })
 
 export default reducers;

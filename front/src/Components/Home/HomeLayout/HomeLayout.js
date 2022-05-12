@@ -1,9 +1,20 @@
-import React from 'react'
+import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import AdbIcon from '@mui/icons-material/Adb';
 
+import Navbar from './Navbar';
+import Footer from './Footer';
 // Navbar
 import { NavLink, Outlet } from 'react-router-dom';
 
@@ -11,23 +22,14 @@ import { NavLink, Outlet } from 'react-router-dom';
 import './HomeStyle.css';
 
 const HomeLayout = () => {
+
+
   return (
     <>
-      <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' } }}>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <NavLink to="/" className='Nav-Item'>GYM Management</NavLink>
-            </Typography>
-            
-            <NavLink to="/Login" className='Nav-Item'>Login</NavLink>
-            
-          </Toolbar>
-        </AppBar>
-        
-      </Box>
-      
+      <Navbar />
+    
       <Outlet />
+      <Footer />
     </>
   );
 }

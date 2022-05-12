@@ -232,13 +232,32 @@ export default function AdminDashboard() {
     datasets: [
       {
         label: 'Male',
-        data: [male10, male1020, male2030, male3040, male4050, male5060, male60,10],
+        data: [male10, male1020, male2030, male3040, male4050, male5060, male60, 10],
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
       {
         label: 'Female',
-        data: [female10, female1020, female2030, female3040, female4050, female5060, female60,10],
+        data: [female10, female1020, female2030, female3040, female4050, female5060, female60, 10],
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+    ],
+  };
+
+  const leadchartdata = {
+    labels: ['Completed  ', 'Pending      '],
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [dashboardData.totalLeads?.filter(d => d.status === 'Completed').length, dashboardData.totalLeads?.filter(d => d.status === 'Pending').length],
+        backgroundColor: [
+          'rgba(0, 128, 0, 0.4)',
+          'rgba(255, 99, 132, 0.4)',
+        ],
+        borderColor: [
+          'rgba(0, 128, 0, 0.4)',
+          'rgba(255, 99, 132, 0.4)',
+        ],
+        borderWidth: 1,
       },
     ],
   };
@@ -365,6 +384,23 @@ export default function AdminDashboard() {
                     Age Analysis
                   </Typography>
                   <Bar data={agewisechartdata} />
+                </Grid>
+              </Grid>
+            </Item>
+          </Grid>
+          <Grid item xs={6} md={3}>
+            <Item elevation={0} sx={{ backgroundColor: '#e9fdff' }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={5}>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    Leads
+                  </Typography>
+                  <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
+                    {dashboardData?.totalLeads?.length || 0}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={7}>
+                  <Doughnut data={leadchartdata} />
                 </Grid>
               </Grid>
             </Item>

@@ -10,6 +10,7 @@ import AdminDashboard from './Components/Admin/AdminDashboard';
 import TrainerDashboard from './Components/Trainer/TrainerDashboard';
 import MemberDashboard from './Components/Member/MemberDashboard';
 import ManageMembers from './Components/Admin/Member/ManageMembers';
+import ManageLeads from './Components/Admin/Lead/ManageLeads';
 import TrainerManageMembers from './Components/Trainer/Member/ManageMembers';
 import MemberManageMembers from './Components/Member/Member/ManageMembers';
 import ManageTrainers from './Components/Admin/Trainer/ManageTrainers';
@@ -20,6 +21,8 @@ import MemberManageInvoices from './Components/Member/Invoice/ManageInvoices';
 import AddMember from './Components/Admin/Member/AddMember';
 import HomeLayout from './Components/Home/HomeLayout/HomeLayout';
 import Login from './Components/Home/Login';
+import SupplementList from './Components/Home/Supplement/SupplementList';
+import QueryForm from './Components/Home/QueryForm';
 import HomePage from './Components/Home/HomePage';
 import axios from 'axios';
 import ForgotPassword from './Components/Home/ForgotPassword';
@@ -42,6 +45,8 @@ function App() {
           <Route path='/' element={<HomeLayout />}>
             <Route path='' index element={<HomePage />} />
             <Route path='Login' element={<Login />} />
+            <Route path='Supplements' element={<SupplementList />} />
+            <Route path='QueryForm' element={<QueryForm />} />
             <Route path='ForgotPassword' element={<ForgotPassword />} />
           </Route>
           <Route path='/Dashboard/Admin/' element={<AdminDashboardLayout />}>
@@ -53,6 +58,7 @@ function App() {
             <Route path='ManageMemberships' element={<ManageMemberships />} />
             <Route path='ManageSupplements' element={<ManageSupplements />} />
             <Route path='ManageInvoices' element={<ManageInvoices />} />
+            <Route path='ManageLeads' element={<ManageLeads />} />
           </Route>
           <Route path='/Dashboard/Trainer/' element={<TrainerDashboardLayout />}>
             <Route path='' index element={<TrainerDashboard />} />
