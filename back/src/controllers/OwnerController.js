@@ -3,9 +3,10 @@ const cloudinary = require('cloudinary');
 
 // Model
 const OwnerModel = require('../models/OwnerModel');
+const OtpModel = require('../models/OtpModel');
 
 // Util
-const { checkParameters } = require('../middleware/utils');
+const { checkParameters,sendOtpMail } = require('../middleware/utils');
 
 // API Using Async Await
 
@@ -113,3 +114,52 @@ exports.ChangePassword = async (req, res) => {
         return res.status(400).send({ error: e.message });
     }
 }
+
+exports.ForgotPasswordSendOtp = async (req, res) => {
+    try {
+        const user = await OwnerModel.find({ email: req.body.email });
+        if (user.length === 0) {
+            throw new Error("Owner is not register with this email.");
+        }
+
+        // Generate OTP
+        var digits = "0123456789";
+        let otp = "";
+        for (let i = 0; i < 4; i++) {
+            otp += digits[Math.floor(Math.random() * 10)];
+        }
+
+        const newOtp = new OtpModel({ ...req.body, otp });
+        sendOtpMail(req.body.email, otp);
+        await newOtp.save();
+        res.status(200).send({ data: newOtp.email });
+    } catch (e) {
+        res.status(400).send({ error: e.message });
+    }
+};
+
+exports.ChangePasswordAfterOtp = async (req, res) => {
+    const data = await OtpModel.find({ otp: req.body.otp, email: req.body.email });
+    if (data.length === 0) {
+        res.status(400).send({ error: "Invalid OTP, Sorry.." });
+    } else {
+        const userData = await OwnerModel.findOne({ email: req.body.email });
+
+        // Generate Password
+        var chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var passwordLength = 6;
+        var newpassword = "";
+
+        for (var i = 0; i <= passwordLength; i++) {
+            var randomNumber = Math.floor(Math.random() * chars.length);
+            newpassword += chars.substring(randomNumber, randomNumber + 1);
+        }
+
+        userData.password = newpassword;
+        await userData.save();
+
+        sendCredentialMail(req.body.email, newpassword);
+
+        res.status(200).send({ data: "New password sent to your email.." });
+    }
+};

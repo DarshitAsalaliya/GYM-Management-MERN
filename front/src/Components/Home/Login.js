@@ -11,11 +11,12 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import LinearProgress from '@mui/material/LinearProgress';
-
+import LoginIcon from '@mui/icons-material/Login';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 import { useSelector, useDispatch } from 'react-redux';
+import SnackbarMsg from '../Utils/SnackbarMsg';
 
 // Action
 import { checkLogin } from '../../Redux/actions/userAction';
@@ -87,6 +88,7 @@ export default function SignInSide() {
     return (
 
         <ThemeProvider theme={theme}>
+
             {loading && <LinearProgress color="secondary" />}
             <Grid container component="main" mt={2} sx={{ height: 'auto' }}>
                 <Grid
@@ -116,12 +118,12 @@ export default function SignInSide() {
                             <Tab label="Admin" />
                         </Tabs>
                         <Avatar sx={{ m: 1, bgcolor: '#3384ff' }}>
-                            <LockIcon />
+                            <LockIcon fontSize='small'/>
                         </Avatar>
-                        <Typography component="h1" variant="h5" sx={{ color: '#474747' }}>
+                        <Typography component="h1" variant="h6" sx={{ color: '#474747' }}>
                             {userType} Login
                         </Typography>
-                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 0 }}>
                             {error && <Alert severity="error">Invalid User!</Alert>}
                             <TextField
                                 margin="normal"
@@ -155,7 +157,7 @@ export default function SignInSide() {
                             </Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link onClick={() => navigate('/ForgotPassword')} variant="body2">
+                                    <Link onClick={() => navigate('/ForgotPassword')} variant="body2" sx={{ textDecoration: 'none',cursor:'pointer' }}>
                                         Forgot password?
                                     </Link>
                                 </Grid>

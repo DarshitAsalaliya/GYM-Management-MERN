@@ -37,4 +37,10 @@ router.get('/api/Member/me',auth, MemberController.MemberProfile);
 // Change Password
 router.post('/api/Member/ChangePassword',auth, MemberController.ChangePassword);
 
+// Forgot Password
+router.post("/api/Member/ForgotPasswordSendOtp", MemberController.ForgotPasswordSendOtp);
+
+// Change Password After Otp
+router.patch("/api/Member/ChangePasswordAfterOtp", MemberController.ChangePasswordAfterOtp);
+
 module.exports = router;

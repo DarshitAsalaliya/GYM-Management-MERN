@@ -62,11 +62,11 @@ export default function AdminDashboard() {
         data: [dashboardData.totalMembers?.filter(d => d.status === true).length, dashboardData.totalMembers?.filter(d => d.status === false).length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderWidth: 1,
       },
@@ -81,11 +81,11 @@ export default function AdminDashboard() {
         data: [dashboardData.totalMembers?.filter(d => d.gender === 'male').length, dashboardData.totalMembers?.filter(d => d.gender === 'female').length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderWidth: 1,
       },
@@ -100,11 +100,11 @@ export default function AdminDashboard() {
         data: [dashboardData.totalTrainers?.filter(d => d.status === true).length, dashboardData.totalTrainers?.filter(d => d.status === false).length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderWidth: 1,
       },
@@ -119,11 +119,11 @@ export default function AdminDashboard() {
         data: [dashboardData.totalMemberships?.filter(d => d.status === true).length, dashboardData.totalMemberships?.filter(d => d.status === false).length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderWidth: 1,
       },
@@ -138,11 +138,11 @@ export default function AdminDashboard() {
         data: [dashboardData.totalSupplements?.filter(d => d.status === true).length, dashboardData.totalSupplements?.filter(d => d.status === false).length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderWidth: 1,
       },
@@ -157,11 +157,11 @@ export default function AdminDashboard() {
         data: [dashboardData.totalInvoices?.filter(d => d.totalamount === d.paidamount).length, dashboardData.totalInvoices?.filter(d => d.totalamount > d.paidamount).length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderWidth: 1,
       },
@@ -176,11 +176,11 @@ export default function AdminDashboard() {
         data: [dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate).toLocaleDateString() >= new Date().toLocaleDateString() && d?.invoices?.length > 0 && d?.status === true).length, dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate).toLocaleDateString() < new Date().toLocaleDateString() && d?.invoices?.length > 0 && d?.status === true).length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderWidth: 1,
       },
@@ -195,11 +195,11 @@ export default function AdminDashboard() {
         data: [dashboardData.totalMembers?.filter(d => d.dietplan !== '{}').length, dashboardData.totalMembers?.filter(d => d.dietplan === '{}').length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderWidth: 1,
       },
@@ -251,11 +251,11 @@ export default function AdminDashboard() {
         data: [dashboardData.totalLeads?.filter(d => d.status === 'Completed').length, dashboardData.totalLeads?.filter(d => d.status === 'Pending').length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderWidth: 1,
       },
@@ -277,7 +277,7 @@ export default function AdminDashboard() {
           </Grid>
         </Grid>
 
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid container rowSpacing={{ xs: 1, sm: 2, md: 1 }} columnSpacing={{ xs: 1, sm: 2, md: 1 }}>
           <Grid item xs={12} md={12} >
             <Item elevation={0} sx={{ backgroundColor: '#f1f8ff' }}>
               <Grid container spacing={2}>
@@ -305,77 +305,6 @@ export default function AdminDashboard() {
             </Item>
           </Grid>
 
-          <Grid item xs={6} md={3} >
-            <Item elevation={0} sx={{ backgroundColor: '#fff9dd' }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={5}>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    Total Invoices
-                  </Typography>
-                  <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                    {dashboardData.totalInvoices?.length || 0}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} md={7}>
-                  <Doughnut data={invoicechartpaidstatusdata} />
-                </Grid>
-              </Grid>
-            </Item>
-          </Grid>
-
-          <Grid item xs={6} md={3}>
-            <Item elevation={0} sx={{ backgroundColor: '#ecffeb' }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={5}>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    Total Trainers
-                  </Typography>
-                  <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                    {dashboardData.totalTrainers?.length || 0}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} md={7}>
-                  <Doughnut data={traineractiveinactivechartdata} />
-                </Grid>
-              </Grid>
-            </Item>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Item elevation={0} sx={{ backgroundColor: '#fff0e7' }}>
-
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={5}>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    Supplements
-                  </Typography>
-                  <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                    {dashboardData.totalSupplements?.length || 0}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} md={7}>
-                  <Doughnut data={supplementactiveinactivechartdata} />
-                </Grid>
-              </Grid>
-
-            </Item>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Item elevation={0} sx={{ backgroundColor: '#e9fdff' }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={5}>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    Memberships
-                  </Typography>
-                  <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                    {dashboardData.totalMemberships?.length || 0}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} md={7}>
-                  <Doughnut data={membershipactiveinactivechartdata} />
-                </Grid>
-              </Grid>
-            </Item>
-          </Grid>
           <Grid item xs={12} md={6}>
             <Item elevation={0} sx={{ backgroundColor: '#e9fdff' }}>
               <Grid container spacing={2}>
@@ -388,6 +317,83 @@ export default function AdminDashboard() {
               </Grid>
             </Item>
           </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Grid container rowSpacing={{ xs: 1, sm: 2, md: 1 }} columnSpacing={{ xs: 1, sm: 2, md: 1 }}>
+              <Grid item xs={6} md={6} >
+                <Item elevation={0} sx={{ backgroundColor: '#fff9dd' }}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={5}>
+                      <Typography variant="caption" display="block" gutterBottom>
+                        Total Invoices
+                      </Typography>
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
+                        {dashboardData.totalInvoices?.length || 0}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={7}>
+                      <Doughnut data={invoicechartpaidstatusdata} />
+                    </Grid>
+                  </Grid>
+                </Item>
+              </Grid>
+
+              <Grid item xs={6} md={6}>
+                <Item elevation={0} sx={{ backgroundColor: '#ecffeb' }}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={5}>
+                      <Typography variant="caption" display="block" gutterBottom>
+                        Total Trainers
+                      </Typography>
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
+                        {dashboardData.totalTrainers?.length || 0}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={7}>
+                      <Doughnut data={traineractiveinactivechartdata} />
+                    </Grid>
+                  </Grid>
+                </Item>
+              </Grid>
+              <Grid item xs={6} md={6}>
+                <Item elevation={0} sx={{ backgroundColor: '#fff0e7' }}>
+
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={5}>
+                      <Typography variant="caption" display="block" gutterBottom>
+                        Supplements
+                      </Typography>
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
+                        {dashboardData.totalSupplements?.length || 0}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={7}>
+                      <Doughnut data={supplementactiveinactivechartdata} />
+                    </Grid>
+                  </Grid>
+
+                </Item>
+              </Grid>
+              <Grid item xs={6} md={6}>
+                <Item elevation={0} sx={{ backgroundColor: '#e9fdff' }}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={5}>
+                      <Typography variant="caption" display="block" gutterBottom>
+                        Memberships
+                      </Typography>
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
+                        {dashboardData.totalMemberships?.length || 0}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={7}>
+                      <Doughnut data={membershipactiveinactivechartdata} />
+                    </Grid>
+                  </Grid>
+                </Item>
+              </Grid>
+            </Grid>
+          </Grid>
+
           <Grid item xs={6} md={3}>
             <Item elevation={0} sx={{ backgroundColor: '#e9fdff' }}>
               <Grid container spacing={2}>

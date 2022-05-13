@@ -62,7 +62,7 @@ export default function QueryForm() {
 
             <Grid container spacing={2}>
                 <Grid item xs={12} md={12}>
-                    <Typography variant="h6" sx={{ color: '#474747' }}>
+                    <Typography variant="h6" sx={{ color: '#474747',textAlign:'center' }}>
                         Query Form
                     </Typography>
                     <Divider />
@@ -79,7 +79,7 @@ export default function QueryForm() {
                         validationSchema={ValidationSchema}
                         onSubmit={async (values, { setSubmitting }) => {
 
-                            // Add
+                            // Reset
                             await dispatch({
                                 type: constants.NEW_LEAD_RESET
                             });

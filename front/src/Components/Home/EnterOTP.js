@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockIcon from '@mui/icons-material/Lock';
+import PasswordIcon from '@mui/icons-material/Password';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import LinearProgress from '@mui/material/LinearProgress';
-import EmailIcon from '@mui/icons-material/Email';
 
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -25,26 +23,38 @@ import * as constants from '../../Redux/constants/userConstants';
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { forgotPasswordSendOtp } from '../../Redux/actions/userAction';
+import { changePasswordAfterOtp } from '../../Redux/actions/userAction';
 
-import EnterOTP from './EnterOTP';
+// Snackbar
+import SnackbarMsg from '../Utils/SnackbarMsg';
 
 const theme = createTheme();
 
-export default function ForgotPassword() {
+export default function EnterOTP(props) {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const { loading, error, success } = useSelector(state => state.userauth);
 
+    const { changepasswordafterotperror, changepasswordafterotpsuccess } = useSelector(state => state.changepasswordafterotp);
+
     useEffect(() => {
         success && navigate("/Dashboard/Admin", { replace: true });
     }, [success, navigate]);
 
+    useEffect(() => {
+        // Reset
+        dispatch({
+            type: constants.CHANGE_PASSWORD_AFTER_OTP_RESET
+        });
+
+        startTimer(60 * 2);
+    }, []);
+
     // Form Data State
     const [formData, setFormData] = useState({
-        userEmail: ''
+        userOTP: ''
     });
 
     // Form Field Change Events
@@ -58,8 +68,6 @@ export default function ForgotPassword() {
     // Tab Changed
     const [userType, setUserType] = React.useState('Member');
     const [tabIndex, setTabIndex] = React.useState(0);
-
-    const [formType, setFormType] = React.useState('ForgotForm');
 
     const handleChangeUserType = (event, newTabIndex) => {
         if (newTabIndex === 0) {
@@ -79,24 +87,46 @@ export default function ForgotPassword() {
     // Form Submit Event
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        debugger;
         // Reset
         dispatch({
-            type: constants.FORGOT_PASSWORD_SEND_OTP_RESET
+            type: constants.CHANGE_PASSWORD_AFTER_OTP_RESET
         });
 
-        dispatch(forgotPasswordSendOtp(userType, { email: formData.userEmail }));
-
-        setFormType('EnterOTPForm');
+        dispatch(changePasswordAfterOtp(userType, { email: props.data?.userEmail, otp: formData.userOTP }));
 
     };
 
+    useEffect(() => {
+        changepasswordafterotpsuccess && navigate("/Login", { replace: true });
+    }, [changepasswordafterotpsuccess, navigate]);
+
+
+    const [otpCounter, setOtpCounter] = useState('02:00');
+
+    function startTimer(duration) {
+        var timer = duration, minutes, seconds;
+        setInterval(function () {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            setOtpCounter(minutes + ":" + seconds);
+
+            if (--timer < 0) {
+                setOtpCounter('00:00');
+            }
+        }, 1000);
+    }
 
 
     return (
         <ThemeProvider theme={theme}>
-
-            {formType === 'ForgotForm' ? <Grid container component="main" mt={2} sx={{ height: 'auto' }}>
+            {loading && <LinearProgress color="secondary" />}
+            {changepasswordafterotperror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={changepasswordafterotperror} severity="error" />}
+            <Grid container component="main" mt={2} sx={{ height: 'auto' }}>
                 <Grid
                     item
                     xs={1}
@@ -120,16 +150,12 @@ export default function ForgotPassword() {
                             alignItems: 'center',
                         }}
                     >
-                        <Tabs value={tabIndex} onChange={handleChangeUserType} centered variant="fullWidth">
-                            <Tab label="Member" />
-                            <Tab label="Trainer" />
-                            <Tab label="Admin" />
-                        </Tabs>
+
                         <Avatar sx={{ m: 1, bgcolor: '#3384ff' }}>
-                            <EmailIcon fontSize='small' />
+                            <PasswordIcon fontSize='small' />
                         </Avatar>
                         <Typography component="h1" variant="h6" sx={{ color: '#474747' }}>
-                            Forgot Password
+                            Enter OTP
                         </Typography>
 
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 0 }}>
@@ -137,9 +163,9 @@ export default function ForgotPassword() {
                                 margin="normal"
                                 required
                                 fullWidth
-                                id="userEmail"
-                                label="Email Address"
-                                name="userEmail"
+                                id="userOTP"
+                                label="Enter OTP"
+                                name="userOTP"
                                 autoComplete="off"
                                 autoFocus
                                 onChange={handleChange}
@@ -151,19 +177,16 @@ export default function ForgotPassword() {
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}
                             >
-                                Send Code
+                                Validate OTP
                             </Button>
-                            <Grid container>
-                                <Grid item xs>
-                                    <Link onClick={() => navigate('/Login')} variant="body2" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
-                                        Back To Login
-                                    </Link>
-                                </Grid>
-                            </Grid>
+                            <Typography component="h1" variant="body2" sx={{ color: 'green',fontWeight:'bold' }}>
+                                {otpCounter}
+                            </Typography>
+
                         </Box>
                     </Box>
                 </Grid>
-            </Grid> : <EnterOTP data={{ userEmail: formData.userEmail }} />}
+            </Grid>
         </ThemeProvider>
     );
 }

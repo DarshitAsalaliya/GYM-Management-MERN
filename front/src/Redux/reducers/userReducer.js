@@ -87,3 +87,57 @@ export const changePasswordReducer = (state = {}, action) => {
             return state
     }
 }
+
+export const forgotPasswordSendOtpReducer = (state = {}, action) => {
+    switch (action.type) {
+        case constants.FORGOT_PASSWORD_SEND_OTP_REQUEST:
+            return {
+                ...state,
+                forgotpasswordloading: true
+            }
+        case constants.FORGOT_PASSWORD_SEND_OTP_SUCCESS:
+            return {
+                ...state,
+                forgotpasswordloading: false,
+                forgotpasswordsuccess: true
+            }
+        case constants.FORGOT_PASSWORD_SEND_OTP_FAIL:
+            return {
+                ...state,
+                forgotpasswordloading: false,
+                forgotpassworderror: action.payload,
+                forgotpasswordsuccess: false
+            }
+        case constants.FORGOT_PASSWORD_SEND_OTP_RESET:
+            return { ...state, forgotpasswordloading: false, forgotpassworderror: false, forgotpasswordsuccess: false }
+        default:
+            return state
+    }
+}
+
+export const changePasswordAfterOtpReducer = (state = {}, action) => {
+    switch (action.type) {
+        case constants.CHANGE_PASSWORD_AFTER_OTP_REQUEST:
+            return {
+                ...state,
+                changepasswordafterotploading: true
+            }
+        case constants.CHANGE_PASSWORD_AFTER_OTP_SUCCESS:
+            return {
+                ...state,
+                changepasswordafterotploading: false,
+                changepasswordafterotpsuccess: true
+            }
+        case constants.CHANGE_PASSWORD_AFTER_OTP_FAIL:
+            return {
+                ...state,
+                changepasswordafterotploading: false,
+                changepasswordafterotperror: action.payload,
+                changepasswordafterotpsuccess: false
+            }
+        case constants.CHANGE_PASSWORD_AFTER_OTP_RESET:
+            return { ...state, changepasswordafterotploading: false, changepasswordafterotperror: false, changepasswordafterotpsuccess: false }
+        default:
+            return state
+    }
+}

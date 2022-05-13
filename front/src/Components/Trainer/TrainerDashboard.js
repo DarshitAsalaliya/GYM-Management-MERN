@@ -49,11 +49,11 @@ export default function AdminDashboard() {
         data: [dashboardData.totalMembers?.filter(d => d.status === true).length, dashboardData.totalMembers?.filter(d => d.status === false).length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderWidth: 1,
       },
@@ -68,11 +68,11 @@ export default function AdminDashboard() {
         data: [dashboardData.totalMembers?.filter(d => d.gender === 'male').length, dashboardData.totalMembers?.filter(d => d.gender === 'female').length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderWidth: 1,
       },
@@ -87,11 +87,11 @@ export default function AdminDashboard() {
         data: [dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate).toLocaleDateString() >= new Date().toLocaleDateString() && d?.invoices?.length > 0 && d?.status === true).length, dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate).toLocaleDateString() < new Date().toLocaleDateString() && d?.invoices?.length > 0 && d?.status === true).length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderWidth: 1,
       },
@@ -106,11 +106,11 @@ export default function AdminDashboard() {
         data: [dashboardData.totalMembers?.filter(d => d.dietplan !== '{}').length, dashboardData.totalMembers?.filter(d => d.dietplan === '{}').length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderColor: [
           'rgba(0, 128, 0, 0.4)',
-          'rgba(255, 99, 132, 0.4)',
+          'rgba(255, 99, 132, 0.5)',
         ],
         borderWidth: 1,
       },

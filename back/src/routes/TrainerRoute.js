@@ -39,4 +39,10 @@ router.get('/api/Trainer/me',auth, TrainerController.TrainerProfile);
 // Change Password
 router.post('/api/Trainer/ChangePassword',auth, TrainerController.ChangePassword);
 
+// Forgot Password
+router.post("/api/Trainer/ForgotPasswordSendOtp", TrainerController.ForgotPasswordSendOtp);
+
+// Change Password After Otp
+router.patch("/api/Trainer/ChangePasswordAfterOtp", TrainerController.ChangePasswordAfterOtp);
+
 module.exports = router;

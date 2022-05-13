@@ -113,7 +113,7 @@ export default function AdminProfile() {
                   validationSchema={ValidationSchema}
                   onSubmit={async (values, { setSubmitting }) => {
                     values.email = userData?.email;
-                    // Add
+                    // Reset
                     await dispatch({
                       type: constants.CHANGE_PASSWORD_RESET
                     });

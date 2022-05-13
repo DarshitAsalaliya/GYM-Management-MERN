@@ -26,6 +26,7 @@ import QueryForm from './Components/Home/QueryForm';
 import HomePage from './Components/Home/HomePage';
 import axios from 'axios';
 import ForgotPassword from './Components/Home/ForgotPassword';
+import EnterOTP from './Components/Home/EnterOTP';
 
 function App() {
 
@@ -48,6 +49,7 @@ function App() {
             <Route path='Supplements' element={<SupplementList />} />
             <Route path='QueryForm' element={<QueryForm />} />
             <Route path='ForgotPassword' element={<ForgotPassword />} />
+            <Route path='EnterOTP' element={<EnterOTP />} />
           </Route>
           <Route path='/Dashboard/Admin/' element={<AdminDashboardLayout />}>
             <Route path='' index element={<AdminDashboard />} />

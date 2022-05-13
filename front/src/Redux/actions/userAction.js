@@ -142,3 +142,68 @@ export const changePassword = (usertype, formData) => async (dispatch) => {
         })
     }
 }
+
+export const forgotPasswordSendOtp = (usertype, formData) => async (dispatch) => {
+    try {
+
+        dispatch({
+            type: constants.FORGOT_PASSWORD_SEND_OTP_REQUEST
+        })
+
+        let requestURL = null;
+
+        if (usertype === 'Member')
+            requestURL = REACT_APP_BASE_URL + 'api/Member/ForgotPasswordSendOtp';
+        else if (usertype === 'Trainer')
+            requestURL = REACT_APP_BASE_URL + 'api/Trainer/ForgotPasswordSendOtp';
+        else if (usertype === 'Admin')
+            requestURL = REACT_APP_BASE_URL + 'api/Owner/ForgotPasswordSendOtp';
+
+        // Request
+        const { data } = await axios.post(requestURL, formData);
+
+        dispatch({
+            type: constants.FORGOT_PASSWORD_SEND_OTP_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: constants.FORGOT_PASSWORD_SEND_OTP_FAIL,
+            payload: error.response.data.error
+        })
+    }
+}
+
+export const changePasswordAfterOtp = (usertype, formData) => async (dispatch) => {
+    try {
+
+        dispatch({
+            type: constants.CHANGE_PASSWORD_AFTER_OTP_REQUEST
+        })
+
+        let requestURL = null;
+
+        if (usertype === 'Member')
+            requestURL = REACT_APP_BASE_URL + 'api/Member/ChangePasswordAfterOtp';
+        else if (usertype === 'Trainer')
+            requestURL = REACT_APP_BASE_URL + 'api/Trainer/ChangePasswordAfterOtp';
+        else if (usertype === 'Admin')
+            requestURL = REACT_APP_BASE_URL + 'api/Owner/ChangePasswordAfterOtp';
+
+        // Request
+        const { data } = await axios.patch(requestURL, formData);
+
+        dispatch({
+            type: constants.CHANGE_PASSWORD_AFTER_OTP_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+
+        dispatch({
+            type: constants.CHANGE_PASSWORD_AFTER_OTP_FAIL,
+            payload: error.response.data.error
+        })
+    }
+}

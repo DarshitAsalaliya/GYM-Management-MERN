@@ -25,4 +25,10 @@ router.get('/api/Owner/me',auth, OwnerController.AdminProfile);
 // Change Password
 router.post('/api/Owner/ChangePassword',auth, OwnerController.ChangePassword);
 
+// Forgot Password
+router.post("/api/Owner/ForgotPasswordSendOtp", OwnerController.ForgotPasswordSendOtp);
+
+// Change Password After Otp
+router.patch("/api/Owner/ChangePasswordAfterOtp", OwnerController.ChangePasswordAfterOtp);
+
 module.exports = router;
