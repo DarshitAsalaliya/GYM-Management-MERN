@@ -12,6 +12,8 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { Divider } from '@mui/material';
 
+import Fab from '@mui/material/Fab';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 const theme = createTheme({
     typography: {
         fontFamily: 'unset',
@@ -21,6 +23,11 @@ const theme = createTheme({
 export default function HomePage() {
     return (
         <>
+            <a href="whatsapp://send?text=This is WhatsApp sharing example using link" data-action="share/whatsapp/share" target="_blank">
+                <Fab size="medium" color="success" aria-label="add" sx={{ position: 'fixed', bottom: '15px', right: '15px' }}>
+                    <WhatsAppIcon />
+                </Fab>
+            </a>
             <ThemeProvider theme={theme}>
                 <Grid container spacing={2} sx={{ color: '#464646' }}>
                     <Grid xs={12} p={6} pb={0}>
@@ -76,7 +83,9 @@ export default function HomePage() {
                         </Typography>
                     </Grid>
 
-
+                    <Grid xs={12} md={12}>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119059.04409367226!2d72.70240264756087!3d21.16850485785246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be05273c684c4a1%3A0xb50ed2baeacb2fa4!2sAV%20Fitness!5e0!3m2!1sen!2sin!4v1652510795179!5m2!1sen!2sin" width="100%" height="450" loading="lazy"></iframe>
+                    </Grid>
 
                 </Grid>
             </ThemeProvider>

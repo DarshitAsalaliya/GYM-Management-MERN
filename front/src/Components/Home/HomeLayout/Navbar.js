@@ -18,7 +18,7 @@ import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 // Navbar
 import { NavLink } from 'react-router-dom';
 
-const pages = ['Supplements', 'Query'];
+const pages = ['Memberships', 'Supplements', 'Query'];
 
 const Navbar = () => {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -40,7 +40,7 @@ const Navbar = () => {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: '#3384ff' }} elevation={0}>
+        <AppBar position="static" sx={{ backgroundColor: '#4885ed' }} elevation={0}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <FitnessCenterIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -95,6 +95,12 @@ const Navbar = () => {
                             <MenuItem>
                                 <NavLink to="/Supplements" className='Nav-Item-SM'>Supplements</NavLink>
                             </MenuItem>
+                            <MenuItem>
+                                <NavLink to="/Memberships" className='Nav-Item-SM'>Memberships</NavLink>
+                            </MenuItem>
+                            <MenuItem>
+                                <NavLink to="/QueryForm" className='Nav-Item-SM'>Query</NavLink>
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <FitnessCenterIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -118,6 +124,9 @@ const Navbar = () => {
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                        <Button>
+                            <NavLink to="/Memberships" className='Nav-Item'>Memberships</NavLink>
+                        </Button>
                         <Button>
                             <NavLink to="/Supplements" className='Nav-Item'>Supplements</NavLink>
                         </Button>

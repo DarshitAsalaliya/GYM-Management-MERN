@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import SupplementList from '../Home/Supplement/SupplementList';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -30,7 +31,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     dispatch(getMemberDashboardData());
-    
+
   }, [dispatch])
 
   useEffect(() => {
@@ -101,7 +102,7 @@ export default function AdminDashboard() {
 
             </Item>
           </Grid> */}
-          <Grid item xs={6} md={3}>
+          <Grid item xs={12} md={3}>
             <Item elevation={0} sx={{ backgroundColor: '#FFF7CD' }}>
 
               <Typography variant="caption" display="block" gutterBottom>
@@ -113,9 +114,11 @@ export default function AdminDashboard() {
 
             </Item>
           </Grid>
+          <Grid item xs={12} md={9} sx={{marginTop:{xs:'0px',md:'-35px'}}} >
+            <SupplementList md="3" />
+          </Grid>
         </Grid>
       </Box>
-
     </>
   );
 }

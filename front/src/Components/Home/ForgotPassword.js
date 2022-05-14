@@ -27,6 +27,9 @@ import { useSelector, useDispatch } from 'react-redux';
 // Action
 import { forgotPasswordSendOtp } from '../../Redux/actions/userAction';
 
+// Snackbar
+import SnackbarMsg from '../Utils/SnackbarMsg';
+
 import EnterOTP from './EnterOTP';
 
 const theme = createTheme();
@@ -37,6 +40,9 @@ export default function ForgotPassword() {
     const dispatch = useDispatch();
 
     const { loading, error, success } = useSelector(state => state.userauth);
+    const { forgotpasswordsuccess, forgotpassworderror } = useSelector(state => state.forgotpasswordsendotp);
+
+
 
     useEffect(() => {
         success && navigate("/Dashboard/Admin", { replace: true });
@@ -87,16 +93,26 @@ export default function ForgotPassword() {
 
         dispatch(forgotPasswordSendOtp(userType, { email: formData.userEmail }));
 
-        setFormType('EnterOTPForm');
-
     };
 
+    useEffect(() => {
+        forgotpasswordsuccess && setFormType('EnterOTPForm');
+    }, [forgotpasswordsuccess, navigate]);
 
+    useEffect(() => {
+        setFormType('ForgotForm');
+
+        // Reset
+        dispatch({
+            type: constants.FORGOT_PASSWORD_SEND_OTP_RESET
+        });
+
+    }, []);
 
     return (
         <ThemeProvider theme={theme}>
-
-            {formType === 'ForgotForm' ? <Grid container component="main" mt={2} sx={{ height: 'auto' }}>
+            {forgotpassworderror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={forgotpassworderror} severity="error" />}
+            {formType === 'ForgotForm' ? <Grid container component="main" mt={2} mb={2} sx={{ height: 'auto' }}>
                 <Grid
                     item
                     xs={1}
@@ -142,6 +158,7 @@ export default function ForgotPassword() {
                                 name="userEmail"
                                 autoComplete="off"
                                 autoFocus
+                                variant="standard"
                                 onChange={handleChange}
                             />
 
@@ -163,7 +180,7 @@ export default function ForgotPassword() {
                         </Box>
                     </Box>
                 </Grid>
-            </Grid> : <EnterOTP data={{ userEmail: formData.userEmail }} />}
+            </Grid> : <EnterOTP data={{ userEmail: formData.userEmail }} resendSubmit={handleSubmit} />}
         </ThemeProvider>
     );
 }

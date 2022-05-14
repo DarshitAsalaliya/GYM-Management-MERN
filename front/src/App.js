@@ -22,6 +22,7 @@ import AddMember from './Components/Admin/Member/AddMember';
 import HomeLayout from './Components/Home/HomeLayout/HomeLayout';
 import Login from './Components/Home/Login';
 import SupplementList from './Components/Home/Supplement/SupplementList';
+import MembershipList from './Components/Home/MembershipList';
 import QueryForm from './Components/Home/QueryForm';
 import HomePage from './Components/Home/HomePage';
 import axios from 'axios';
@@ -47,6 +48,7 @@ function App() {
             <Route path='' index element={<HomePage />} />
             <Route path='Login' element={<Login />} />
             <Route path='Supplements' element={<SupplementList />} />
+            <Route path='Memberships' element={<MembershipList />} />
             <Route path='QueryForm' element={<QueryForm />} />
             <Route path='ForgotPassword' element={<ForgotPassword />} />
             <Route path='EnterOTP' element={<EnterOTP />} />

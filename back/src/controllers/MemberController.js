@@ -310,7 +310,7 @@ exports.ForgotPasswordSendOtp = async (req, res) => {
     try {
         const user = await MemberModel.find({ email: req.body.email });
         if (user.length === 0) {
-            throw new Error("Member is not register with this email.");
+            throw new Error("No result found! Please try again with other email.");
         }
 
         // Generate OTP

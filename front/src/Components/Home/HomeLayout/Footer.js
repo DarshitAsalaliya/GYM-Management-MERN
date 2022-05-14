@@ -27,7 +27,7 @@ export default function Footer() {
     return (
         <>
             <ThemeProvider theme={theme}>
-                <Grid container spacing={2} sx={{ backgroundColor: '#363636', color: '#efefef', }} mt={2} p={2}>
+                <Grid container spacing={2} sx={{ backgroundColor: '#363636', color: '#efefef', }} mt={0} p={2}>
                     <Grid item xs={12} md={4}>
 
                         <Typography variant="body1" component="h2">

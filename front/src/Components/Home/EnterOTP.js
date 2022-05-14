@@ -23,10 +23,15 @@ import * as constants from '../../Redux/constants/userConstants';
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { changePasswordAfterOtp } from '../../Redux/actions/userAction';
+import { changePasswordAfterOtp, forgotPasswordSendOtp } from '../../Redux/actions/userAction';
 
 // Snackbar
 import SnackbarMsg from '../Utils/SnackbarMsg';
+
+// OTP
+import OTPInput, { ResendOTP } from "otp-input-react";
+
+import '../Utils/GlobalStyle.css';
 
 const theme = createTheme();
 
@@ -49,7 +54,6 @@ export default function EnterOTP(props) {
             type: constants.CHANGE_PASSWORD_AFTER_OTP_RESET
         });
 
-        startTimer(60 * 2);
     }, []);
 
     // Form Data State
@@ -65,7 +69,10 @@ export default function EnterOTP(props) {
         });
     }
 
+    const [OTP, setOTP] = useState("");
+
     // Tab Changed
+
     const [userType, setUserType] = React.useState('Member');
     const [tabIndex, setTabIndex] = React.useState(0);
 
@@ -87,46 +94,34 @@ export default function EnterOTP(props) {
     // Form Submit Event
     const handleSubmit = (event) => {
         event.preventDefault();
-        debugger;
+
         // Reset
         dispatch({
             type: constants.CHANGE_PASSWORD_AFTER_OTP_RESET
         });
 
-        dispatch(changePasswordAfterOtp(userType, { email: props.data?.userEmail, otp: formData.userOTP }));
-
+        dispatch(changePasswordAfterOtp(userType, { email: props.data?.userEmail, otp: OTP }));
     };
+
+    const handleResendOTP = () => {
+        // Reset
+        dispatch({
+            type: constants.FORGOT_PASSWORD_SEND_OTP_RESET
+        });
+
+        dispatch(forgotPasswordSendOtp(userType, { email: props.data?.userEmail }));
+
+    }
 
     useEffect(() => {
         changepasswordafterotpsuccess && navigate("/Login", { replace: true });
     }, [changepasswordafterotpsuccess, navigate]);
 
-
-    const [otpCounter, setOtpCounter] = useState('02:00');
-
-    function startTimer(duration) {
-        var timer = duration, minutes, seconds;
-        setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
-
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-
-            setOtpCounter(minutes + ":" + seconds);
-
-            if (--timer < 0) {
-                setOtpCounter('00:00');
-            }
-        }, 1000);
-    }
-
-
     return (
         <ThemeProvider theme={theme}>
             {loading && <LinearProgress color="secondary" />}
             {changepasswordafterotperror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={changepasswordafterotperror} severity="error" />}
-            <Grid container component="main" mt={2} sx={{ height: 'auto' }}>
+            <Grid container component="main" mt={2} mb={2} sx={{ height: 'auto' }}>
                 <Grid
                     item
                     xs={1}
@@ -159,7 +154,7 @@ export default function EnterOTP(props) {
                         </Typography>
 
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 0 }}>
-                            <TextField
+                            {/* <TextField
                                 margin="normal"
                                 required
                                 fullWidth
@@ -168,8 +163,13 @@ export default function EnterOTP(props) {
                                 name="userOTP"
                                 autoComplete="off"
                                 autoFocus
+                                variant="standard"
                                 onChange={handleChange}
-                            />
+                            /> */}
+
+                            <OTPInput value={OTP} name="userOTP" id="userOTP" onChange={setOTP} autoFocus OTPLength={4} otpType="number" disabled={false} />
+
+                            <ResendOTP onResendClick={handleResendOTP} maxTime="120" className='resendButton' />
 
                             <Button
                                 type="submit"
@@ -179,9 +179,6 @@ export default function EnterOTP(props) {
                             >
                                 Validate OTP
                             </Button>
-                            <Typography component="h1" variant="body2" sx={{ color: 'green',fontWeight:'bold' }}>
-                                {otpCounter}
-                            </Typography>
 
                         </Box>
                     </Box>

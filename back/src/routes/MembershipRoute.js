@@ -14,7 +14,7 @@ router.post('/api/Membership/CreateMembership', auth, MembershipController.Creat
 router.get('/api/Membership/GetMembershipList', auth, MembershipController.GetMembershipList);
 
 // Get All Active Membership
-router.get('/api/Membership/GetActiveMembershipList', auth, MembershipController.GetActiveMembershipList);
+router.get('/api/Membership/GetActiveMembershipList', MembershipController.GetActiveMembershipList);
 
 // Update Membership
 router.patch('/api/Membership/UpdateMembership/:id', auth, MembershipController.UpdateMembership);

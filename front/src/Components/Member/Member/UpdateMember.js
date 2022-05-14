@@ -413,6 +413,7 @@ export default function UpdateMember(props) {
                                             variant="standard"
                                             error={errors.doj && touched.doj}
                                             helperText={errors.doj || 'Date of Join'}
+                                            disabled
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={4}>

@@ -257,7 +257,7 @@ exports.ForgotPasswordSendOtp = async (req, res) => {
     try {
         const user = await TrainerModel.find({ email: req.body.email });
         if (user.length === 0) {
-            throw new Error("Trainer is not register with this email.");
+            throw new Error("No result found! Please try again with other email.");
         }
 
         // Generate OTP

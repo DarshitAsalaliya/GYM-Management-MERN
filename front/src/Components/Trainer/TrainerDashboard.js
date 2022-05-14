@@ -134,11 +134,11 @@ export default function AdminDashboard() {
 
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12} md={12} >
-            <Item elevation={0} sx={{ backgroundColor: '#f1f8ff' }}>
+            <Item elevation={0} sx={{ backgroundColor: '' }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} md={2}>
                   <Typography variant="caption" display="block" gutterBottom>
-                    Total Members
+                    Assigned Members
                   </Typography>
                   <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
                     {dashboardData.totalMembers?.length || 0}

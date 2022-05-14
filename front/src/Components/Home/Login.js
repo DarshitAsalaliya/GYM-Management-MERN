@@ -90,7 +90,7 @@ export default function SignInSide() {
         <ThemeProvider theme={theme}>
 
             {loading && <LinearProgress color="secondary" />}
-            <Grid container component="main" mt={2} sx={{ height: 'auto' }}>
+            <Grid container component="main" mt={2} mb={2} sx={{ height: 'auto' }}>
                 <Grid
                     item
                     xs={1}
@@ -118,7 +118,7 @@ export default function SignInSide() {
                             <Tab label="Admin" />
                         </Tabs>
                         <Avatar sx={{ m: 1, bgcolor: '#3384ff' }}>
-                            <LockIcon fontSize='small'/>
+                            <LockIcon fontSize='small' />
                         </Avatar>
                         <Typography component="h1" variant="h6" sx={{ color: '#474747' }}>
                             {userType} Login
@@ -134,6 +134,7 @@ export default function SignInSide() {
                                 name="userEmail"
                                 autoComplete="off"
                                 autoFocus
+                                variant="standard"
                                 onChange={handleChange}
                             />
                             <TextField
@@ -145,6 +146,7 @@ export default function SignInSide() {
                                 type="password"
                                 id="userPassword"
                                 autoComplete="current-password"
+                                variant="standard"
                                 onChange={handleChange}
                             />
                             <Button
@@ -157,7 +159,7 @@ export default function SignInSide() {
                             </Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link onClick={() => navigate('/ForgotPassword')} variant="body2" sx={{ textDecoration: 'none',cursor:'pointer' }}>
+                                    <Link onClick={() => navigate('/ForgotPassword')} variant="body2" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
                                         Forgot password?
                                     </Link>
                                 </Grid>

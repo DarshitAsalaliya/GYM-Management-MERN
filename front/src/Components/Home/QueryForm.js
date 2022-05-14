@@ -112,7 +112,7 @@ export default function QueryForm() {
                                     value={values.name}
                                     name="name"
                                     label="Name"
-                                    variant="outlined"
+                                    variant="standard"
                                     autoComplete='off'
                                     error={errors.name && touched.name}
                                     helperText={errors.name}
@@ -125,7 +125,7 @@ export default function QueryForm() {
                                     value={values.query}
                                     name="query"
                                     label="Query"
-                                    variant="outlined"
+                                    variant="standard"
                                     autoComplete='off'
                                     error={errors.query && touched.query}
                                     helperText={errors.query}
@@ -137,7 +137,7 @@ export default function QueryForm() {
                                     onBlur={handleBlur}
                                     name="phone"
                                     label="Phone"
-                                    variant="outlined"
+                                    variant="standard"
                                     autoComplete='off'
                                     error={errors.phone && touched.phone}
                                     helperText={errors.phone}

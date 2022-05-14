@@ -20,7 +20,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // Action
 import { getSupplementList } from '../../../Redux/actions/supplementAction';
 
-export default function SupplementList() {
+export default function SupplementList(props) {
 
     const [supplementList, setSupplementList] = useState([]);
 
@@ -51,7 +51,7 @@ export default function SupplementList() {
             <Divider />
             <Grid container spacing={2} sx={{ marginTop: '0.01%' }}>
                 {
-                    supplementList.map((obj) => <Grid item xs={6} md={2}><SupplementCard data={obj} /></Grid>)
+                    supplementList.map((obj) => <Grid item xs={6} md={props.md ? props.md : 2}><SupplementCard data={obj}/></Grid>)
                 }
             </Grid>
         </Box>

@@ -46,7 +46,6 @@ const HomeLayout = () => {
     <>
       {changepasswordafterotpsuccess && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message="New password sent to your email.." severity="success" />}
       <Navbar />
-
       <Outlet />
       <Footer />
     </>

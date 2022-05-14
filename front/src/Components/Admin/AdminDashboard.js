@@ -278,54 +278,78 @@ export default function AdminDashboard() {
         </Grid>
 
         <Grid container rowSpacing={{ xs: 1, sm: 2, md: 1 }} columnSpacing={{ xs: 1, sm: 2, md: 1 }}>
-          <Grid item xs={12} md={12} >
-            <Item elevation={0} sx={{ backgroundColor: '#f1f8ff' }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={2}>
-                  <Typography variant="caption" display="block" gutterBottom>
-                    Total Members
-                  </Typography>
-                  <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                    {dashboardData.totalMembers?.length || 0}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} md={2}>
-                  <Doughnut data={membermembershipstatusdata} />
-                </Grid>
-                <Grid item xs={12} md={2}>
-                  <Doughnut data={memberactiveinactivechartdata} />
-                </Grid>
-                <Grid item xs={12} md={2}>
-                  <Doughnut data={membergenderchartdata} />
-                </Grid>
-                <Grid item xs={12} md={2}>
-                  <Doughnut data={memberdietplanstatuschartdata} />
-                </Grid>
-              </Grid>
-            </Item>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Item elevation={0} sx={{ backgroundColor: '#e9fdff' }}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={12}>
-                  <Typography variant="h6" display="block" gutterBottom>
-                    Age Analysis
-                  </Typography>
-                  <Bar data={agewisechartdata} />
-                </Grid>
-              </Grid>
-            </Item>
-          </Grid>
 
           <Grid item xs={12} md={6}>
             <Grid container rowSpacing={{ xs: 1, sm: 2, md: 1 }} columnSpacing={{ xs: 1, sm: 2, md: 1 }}>
+
+              <Grid item xs={6} md={6}>
+                <Item elevation={0} sx={{ background: 'linear-gradient(to right bottom, #e9fdff,#e9fdff)' }}>
+                  <Grid container spacing={2} sx={{ textAlign: 'center' }}>
+                    <Grid item xs={12} md={12} >
+                      <Typography variant="caption" display="block" gutterBottom>
+                        This Month Payment
+                      </Typography>
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
+                        {dashboardData?.totalInvoices?.filter(d => new Date(d.startdate).getMonth() === new Date().getMonth() && new Date(d.startdate).getFullYear() === new Date().getFullYear()).reduce((sum, d) => sum + d.totalamount, 0) || 0} Rs.
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} md={6}>
+                      <Typography variant="caption" display="block" gutterBottom>
+                        Received
+                      </Typography>
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#00a100' }}>
+                        {dashboardData?.totalInvoices?.filter(d => new Date(d.startdate).getMonth() === new Date().getMonth() && new Date(d.startdate).getFullYear() === new Date().getFullYear()).reduce((sum, d) => sum + d.paidamount, 0) || 0} Rs.
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} md={6}>
+                      <Typography variant="caption" display="block" gutterBottom>
+                        Left
+                      </Typography>
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#ff2525' }}>
+                        {(dashboardData?.totalInvoices?.filter(d => new Date(d.startdate).getMonth() === new Date().getMonth() && new Date(d.startdate).getFullYear() === new Date().getFullYear()).reduce((sum, d) => sum + d.totalamount, 0) || 0) - (dashboardData?.totalInvoices?.filter(d => new Date(d.startdate).getMonth() === new Date().getMonth() && new Date(d.startdate).getFullYear() === new Date().getFullYear()).reduce((sum, d) => sum + d.paidamount, 0) || 0)} Rs.
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Item>
+              </Grid>
+
+              <Grid item xs={6} md={6}>
+                <Item elevation={0} sx={{ background: 'linear-gradient(to right bottom, #fffceb, #fffceb)' }}>
+                  <Grid container spacing={2} sx={{ textAlign: 'center' }}>
+                    <Grid item xs={12} md={12} >
+                      <Typography variant="caption" display="block" gutterBottom>
+                        Total Payment
+                      </Typography>
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
+                        {dashboardData?.totalInvoices?.reduce((sum, d) => sum + d.totalamount, 0) || 0} Rs.
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} md={6}>
+                      <Typography variant="caption" display="block" gutterBottom>
+                        Received
+                      </Typography>
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#00a100' }}>
+                        {dashboardData?.totalInvoices?.reduce((sum, d) => sum + d.paidamount, 0) || 0} Rs.
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={6} md={6}>
+                      <Typography variant="caption" display="block" gutterBottom>
+                        Left
+                      </Typography>
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#ff2525' }}>
+                        {(dashboardData?.totalInvoices?.reduce((sum, d) => sum + d.totalamount, 0) || 0) - (dashboardData?.totalInvoices?.reduce((sum, d) => sum + d.paidamount, 0) || 0)} Rs.
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Item>
+              </Grid>
+
               <Grid item xs={6} md={6} >
-                <Item elevation={0} sx={{ backgroundColor: '#fff9dd' }}>
+                <Item elevation={0} sx={{ backgroundColor: '#f3f0fb' }}>
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={5}>
                       <Typography variant="caption" display="block" gutterBottom>
-                        Total Invoices
+                        Invoices
                       </Typography>
                       <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
                         {dashboardData.totalInvoices?.length || 0}
@@ -343,7 +367,7 @@ export default function AdminDashboard() {
                   <Grid container spacing={2}>
                     <Grid item xs={12} md={5}>
                       <Typography variant="caption" display="block" gutterBottom>
-                        Total Trainers
+                        Trainers
                       </Typography>
                       <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
                         {dashboardData.totalTrainers?.length || 0}
@@ -355,44 +379,35 @@ export default function AdminDashboard() {
                   </Grid>
                 </Item>
               </Grid>
-              <Grid item xs={6} md={6}>
-                <Item elevation={0} sx={{ backgroundColor: '#fff0e7' }}>
-
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={5}>
-                      <Typography variant="caption" display="block" gutterBottom>
-                        Supplements
-                      </Typography>
-                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                        {dashboardData.totalSupplements?.length || 0}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} md={7}>
-                      <Doughnut data={supplementactiveinactivechartdata} />
-                    </Grid>
-                  </Grid>
-
-                </Item>
-              </Grid>
-              <Grid item xs={6} md={6}>
-                <Item elevation={0} sx={{ backgroundColor: '#e9fdff' }}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={5}>
-                      <Typography variant="caption" display="block" gutterBottom>
-                        Memberships
-                      </Typography>
-                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                        {dashboardData.totalMemberships?.length || 0}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} md={7}>
-                      <Doughnut data={membershipactiveinactivechartdata} />
-                    </Grid>
-                  </Grid>
-                </Item>
-              </Grid>
             </Grid>
           </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Item elevation={0} sx={{ backgroundColor: '#f1f8ff' }}>
+              <Grid container spacing={3}>
+
+                <Grid item xs={6} md={2}>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    Members
+                  </Typography>
+                  <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
+                    {dashboardData.totalMembers?.length || 0}
+                  </Typography>
+
+                </Grid>
+                <Grid item xs={5} md={4} ml={6}>
+                  <Doughnut data={membermembershipstatusdata} />
+                  <Doughnut data={memberactiveinactivechartdata} />
+                </Grid>
+                <Grid item xs={5} md={4}>
+                  <Doughnut data={membergenderchartdata} />
+                  <Doughnut data={memberdietplanstatuschartdata} />
+                </Grid>
+              </Grid>
+            </Item>
+          </Grid>
+
+
 
           <Grid item xs={6} md={3}>
             <Item elevation={0} sx={{ backgroundColor: '#e9fdff' }}>
@@ -411,6 +426,57 @@ export default function AdminDashboard() {
               </Grid>
             </Item>
           </Grid>
+
+          <Grid item xs={6} md={3}>
+            <Item elevation={0} sx={{ backgroundColor: '#fff0e7' }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={5}>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    Supplements
+                  </Typography>
+                  <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
+                    {dashboardData.totalSupplements?.length || 0}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={7}>
+                  <Doughnut data={supplementactiveinactivechartdata} />
+                </Grid>
+              </Grid>
+
+            </Item>
+          </Grid>
+
+          <Grid item xs={6} md={3}>
+            <Item elevation={0} sx={{ backgroundColor: '#e9fdff' }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={5}>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    Memberships
+                  </Typography>
+                  <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
+                    {dashboardData.totalMemberships?.length || 0}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} md={7}>
+                  <Doughnut data={membershipactiveinactivechartdata} />
+                </Grid>
+              </Grid>
+            </Item>
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Item elevation={0} sx={{ backgroundColor: '#ffffff' }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={12}>
+                  <Typography variant="h6" display="block" gutterBottom>
+                    Age Analysis
+                  </Typography>
+                  <Bar data={agewisechartdata} />
+                </Grid>
+              </Grid>
+            </Item>
+          </Grid>
+
         </Grid>
       </Box>
 
