@@ -141,6 +141,7 @@ export default function QueryForm() {
                                     autoComplete='off'
                                     error={errors.phone && touched.phone}
                                     helperText={errors.phone}
+                                    value={values.phone}
                                     sx={{ width: '100%' }} />
                                 <br /><br />
                                 <Button type="submit" variant="contained" color="primary" disabled={isSubmitting} sx={{ width: '100%' }}>

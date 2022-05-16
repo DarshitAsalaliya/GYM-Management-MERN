@@ -28,7 +28,7 @@ exports.GetInvoiceList = async (req, res) => {
                     as: "member",
                 },
             }
-        ])
+        ]).sort({createdAt:-1})
 
         // Check Invoice Length
         if (invoiceList.length === 0) {
@@ -69,7 +69,7 @@ exports.GetInvoiceListByMember = async (req, res) => {
                     as: "member",
                 },
             }
-        ]);
+        ]).sort({createdAt:-1});
 
         // Check Invoice Length
         if (invoiceList.length === 0) {

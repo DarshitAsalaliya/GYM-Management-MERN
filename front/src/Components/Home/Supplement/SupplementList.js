@@ -51,7 +51,7 @@ export default function SupplementList(props) {
             <Divider />
             <Grid container spacing={2} sx={{ marginTop: '0.01%' }}>
                 {
-                    supplementList.map((obj) => <Grid item xs={6} md={props.md ? props.md : 2}><SupplementCard data={obj}/></Grid>)
+                    supplementList.map((obj,i) => <Grid item xs={6} md={props.md ? props.md : 2} key={i}><SupplementCard data={obj}/></Grid>)
                 }
             </Grid>
         </Box>

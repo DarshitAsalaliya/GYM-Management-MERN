@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 // Model
 const MemberModel = require('../models/MemberModel');
 const OtpModel = require('../models/OtpModel');
+const NotificationModel = require('../models/NotificationModel');
 
 // Util
 const { checkParameters, sendCredentialMail, sendOtpMail } = require('../middleware/utils');
@@ -39,6 +40,11 @@ exports.Registration = async (req, res) => {
         await newMember.save();
         const token = await newMember.generateAuthToken();
         sendCredentialMail(req.body.email, req.body.password);
+
+        // Add Notification
+        const newNotification = new NotificationModel({ notificationcontent: req.body.name + ' has joined the GYM.', ownerprofileid: req.user.id });
+        newNotification.save();
+
         return res.status(201).send({ newMember, token });
 
     } catch (e) {
@@ -242,6 +248,10 @@ exports.DeleteMember = async (req, res) => {
 
         // Delete Uploaded Files From Local Folder
         fs.unlink('./public/memberimages/' + data.image, (err) => { });
+
+        // Add Notification
+        const newNotification = new NotificationModel({ notificationcontent: data.name + ' has left the GYM.', ownerprofileid: req.user.id });
+        newNotification.save();
 
         return res.status(200).send(data);
     }

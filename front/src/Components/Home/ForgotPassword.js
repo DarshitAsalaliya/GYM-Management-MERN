@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import LockIcon from '@mui/icons-material/Lock';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Alert from '@mui/material/Alert';
-import LinearProgress from '@mui/material/LinearProgress';
 import EmailIcon from '@mui/icons-material/Email';
 
 import Tabs from '@mui/material/Tabs';
@@ -42,8 +38,6 @@ export default function ForgotPassword() {
     const { loading, error, success } = useSelector(state => state.userauth);
     const { forgotpasswordsuccess, forgotpassworderror } = useSelector(state => state.forgotpasswordsendotp);
 
-
-
     useEffect(() => {
         success && navigate("/Dashboard/Admin", { replace: true });
     }, [success, navigate]);
@@ -53,8 +47,18 @@ export default function ForgotPassword() {
         userEmail: ''
     });
 
+    const [userEmailError, setUserEmailError] = useState(false);
+
     // Form Field Change Events
     const handleChange = (e) => {
+
+        if (formData.userEmail !== "") {
+            setUserEmailError(false);
+        }
+        else {
+            setUserEmailError(true);
+        }
+
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
@@ -62,10 +66,10 @@ export default function ForgotPassword() {
     }
 
     // Tab Changed
-    const [userType, setUserType] = React.useState('Member');
-    const [tabIndex, setTabIndex] = React.useState(0);
+    const [userType, setUserType] = useState('Member');
+    const [tabIndex, setTabIndex] = useState(0);
 
-    const [formType, setFormType] = React.useState('ForgotForm');
+    const [formType, setFormType] = useState('ForgotForm');
 
     const handleChangeUserType = (event, newTabIndex) => {
         if (newTabIndex === 0) {
@@ -86,13 +90,17 @@ export default function ForgotPassword() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        // Reset
-        dispatch({
-            type: constants.FORGOT_PASSWORD_SEND_OTP_RESET
-        });
+        if (formData.userEmail === "") {
+            setUserEmailError(true);
+        }
+        else {
+            // Reset
+            dispatch({
+                type: constants.FORGOT_PASSWORD_SEND_OTP_RESET
+            });
 
-        dispatch(forgotPasswordSendOtp(userType, { email: formData.userEmail }));
-
+            dispatch(forgotPasswordSendOtp(userType, { email: formData.userEmail }));
+        }
     };
 
     useEffect(() => {
@@ -160,13 +168,15 @@ export default function ForgotPassword() {
                                 autoFocus
                                 variant="standard"
                                 onChange={handleChange}
+                                error={userEmailError}
+                                helperText={userEmailError ? 'Required!' : ' '}
                             />
 
                             <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
+                                sx={{ mt: 0, mb: 2 }}
                             >
                                 Send Code
                             </Button>

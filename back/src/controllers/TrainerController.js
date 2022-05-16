@@ -4,6 +4,7 @@ const cloudinary = require('cloudinary');
 // Model
 const TrainerModel = require('../models/TrainerModel');
 const OtpModel = require('../models/OtpModel');
+const NotificationModel = require('../models/NotificationModel');
 
 // Util
 const { checkParameters, sendCredentialMail, sendOtpMail } = require('../middleware/utils');
@@ -37,7 +38,12 @@ exports.Registration = async (req, res) => {
         const newTrainer = newTrainerObj;
         await newTrainer.save();
         const token = await newTrainer.generateAuthToken();
-        sendCredentialMail(req.body.email,req.body.password);
+        sendCredentialMail(req.body.email, req.body.password);
+
+        // Add Notification
+        const newNotification = new NotificationModel({ notificationcontent: req.body.name + ' Sir has joined the GYM.', ownerprofileid: req.user.id });
+        newNotification.save();
+
         return res.status(201).send({ newTrainer, token });
 
     } catch (e) {
@@ -190,6 +196,10 @@ exports.DeleteTrainer = async (req, res) => {
 
         // Delete Uploaded Files From Local Folder
         fs.unlink('./public/memberimages/' + data.image, (err) => { });
+
+        // Add Notification
+        const newNotification = new NotificationModel({ notificationcontent: req.body.name + ' Sir has left the GYM.', ownerprofileid: req.user.id });
+        newNotification.save();
 
         return res.status(200).send(data);
     }

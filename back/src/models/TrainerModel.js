@@ -55,10 +55,12 @@ const trainerSchema = new mongoose.Schema({
     },
     height: {
         type: Number,
+        default:0,
         required:[true, 'Trainer height is required..']
     },
     weight: {
         type: Number,
+        default:0,
         required:[true, 'Trainer weight is required..']
     },
     bloodgroup:{

@@ -23,6 +23,9 @@ import { checkLogin } from '../../Redux/actions/userAction';
 
 import { useNavigate } from "react-router-dom";
 
+// Constants
+import * as constants from '../../Redux/constants/userConstants';
+
 const theme = createTheme();
 
 export default function SignInSide() {
@@ -38,8 +41,27 @@ export default function SignInSide() {
         userPassword: ''
     });
 
+    // Error
+    const [userEmailError, setUserEmailError] = React.useState(false);
+    const [userPasswordError, setUserPasswordError] = React.useState(false);
+
     // Form Field Change Events
     const handleChange = (e) => {
+
+        if (formData.userEmail !== "") {
+            setUserEmailError(false);
+        }
+        else {
+            setUserEmailError(true);
+        }
+
+        if (formData.userPassword !== "") {
+            setUserPasswordError(false);
+        }
+        else {
+            setUserPasswordError(true);
+        }
+
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
@@ -65,7 +87,16 @@ export default function SignInSide() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        dispatch(checkLogin({ email: formData.userEmail.toLocaleLowerCase(), password: formData.userPassword }, userType));
+        if (formData.userEmail === "") {
+            setUserEmailError(true);
+        }
+
+        if (formData.userPassword === "") {
+            setUserPasswordError(true);
+        }
+        else {
+            dispatch(checkLogin({ email: formData.userEmail.toLocaleLowerCase(), password: formData.userPassword }, userType));
+        }
 
     };
 
@@ -82,7 +113,6 @@ export default function SignInSide() {
             setUserType('Admin');
         }
         setTabIndex(newTabIndex);
-
     };
 
     return (
@@ -102,7 +132,7 @@ export default function SignInSide() {
                         backgroundPosition: 'center',
                     }}
                 />
-                <Grid item xs={10} sm={8} md={4} sx={{ border: '1px solid #e9e6e6' }} square>
+                <Grid item xs={10} sm={8} md={4} sx={{ border: '1px solid #e9e6e6' }} >
                     <Box
                         sx={{
                             my: 2,
@@ -136,9 +166,11 @@ export default function SignInSide() {
                                 autoFocus
                                 variant="standard"
                                 onChange={handleChange}
+                                error={userEmailError}
+                                helperText={userEmailError ? 'Required!' : ' '}
                             />
                             <TextField
-                                margin="normal"
+                                margin="none"
                                 required
                                 fullWidth
                                 name="userPassword"
@@ -148,19 +180,21 @@ export default function SignInSide() {
                                 autoComplete="current-password"
                                 variant="standard"
                                 onChange={handleChange}
+                                error={userPasswordError}
+                                helperText={userPasswordError ? 'Required!' : ' '}
                             />
                             <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
+                                sx={{ mt: 0, mb: 2 }}
                             >
                                 Sign In
                             </Button>
                             <Grid container>
                                 <Grid item xs>
                                     <Link onClick={() => navigate('/ForgotPassword')} variant="body2" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
-                                        Forgot password?
+                                        Forgot Password?
                                     </Link>
                                 </Grid>
                             </Grid>

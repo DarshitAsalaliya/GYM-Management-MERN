@@ -11,6 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
@@ -138,7 +139,7 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} elevation={0} sx={{backgroundColor:'#4885ed'}}>
+      <AppBar position="fixed" open={open} elevation={0} sx={{ backgroundColor: '#4885ed' }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -156,6 +157,14 @@ export default function MiniDrawer() {
             Hii Trainer
           </Typography>
           <div>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+              onClick={() => navigate("./NotificationList", { replace: false })}
+            >
+              <NotificationsIcon />
+            </IconButton>
             <IconButton
               size="large"
               aria-label="account of current user"

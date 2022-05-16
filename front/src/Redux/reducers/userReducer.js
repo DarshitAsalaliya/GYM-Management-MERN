@@ -28,6 +28,8 @@ export const userAuthReducer = (state = {}, action) => {
             }
         case constants.NEW_LOGOUT_FAIL:
             return { ...state, loading: false, error: action.payload, isAuthenticated: false }
+        case constants.NEW_LOGIN_RESET:
+            return { ...state, isAuthenticated: false, error: false, loading: false }
         default:
             return state
     }

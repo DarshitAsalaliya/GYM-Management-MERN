@@ -287,7 +287,7 @@ export default function AdminDashboard() {
                   <Grid container spacing={2} sx={{ textAlign: 'center' }}>
                     <Grid item xs={12} md={12} >
                       <Typography variant="caption" display="block" gutterBottom>
-                        This Month Payment
+                        This Month Earning
                       </Typography>
                       <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
                         {dashboardData?.totalInvoices?.filter(d => new Date(d.startdate).getMonth() === new Date().getMonth() && new Date(d.startdate).getFullYear() === new Date().getFullYear()).reduce((sum, d) => sum + d.totalamount, 0) || 0} Rs.
@@ -318,7 +318,7 @@ export default function AdminDashboard() {
                   <Grid container spacing={2} sx={{ textAlign: 'center' }}>
                     <Grid item xs={12} md={12} >
                       <Typography variant="caption" display="block" gutterBottom>
-                        Total Payment
+                        Total Earning 
                       </Typography>
                       <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
                         {dashboardData?.totalInvoices?.reduce((sum, d) => sum + d.totalamount, 0) || 0} Rs.

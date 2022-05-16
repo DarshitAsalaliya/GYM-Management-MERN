@@ -17,7 +17,7 @@ exports.CreateLead = async (req, res) => {
 // Get All Lead
 exports.GetLeadList = async (req, res) => {
     try {
-        const leadList = await LeadModel.find();
+        const leadList = await LeadModel.find().sort({createdAt:-1});
 
         // Check Lead Length
         if (leadList.length === 0) {

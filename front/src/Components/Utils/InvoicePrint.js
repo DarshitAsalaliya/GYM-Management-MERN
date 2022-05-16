@@ -9,7 +9,7 @@ export default function InvoicePrint(props) {
     const pdfGenerate = () => {
         const doc = new jsPDF('landscape', 'px', 'a6', false);
 
-        doc.setFillColor(242, 242, 242);
+        doc.setFillColor("#FFFFFF");
         doc.rect(0, 0, 600, 600, "F");
 
         doc.addImage('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNKRPHNSYAedHfwe-GWXn9shsirWZhJk4T4rIRf9JKW52hXGIFzTc8Xf0plWDABmfnowA&usqp=CAU', 'PNG', 230, 155, 85, 70);

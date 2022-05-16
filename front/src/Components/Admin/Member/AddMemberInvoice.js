@@ -127,9 +127,15 @@ export default function AddMemberInvoice(props) {
     const ValidationSchema = Yup.object().shape({
         membershipid: Yup.string().required('Required'),
         startdate: Yup.date().required('Start Date is Required'),
-        expirydate: Yup.date().required('Expiry Date is Required'),
-        totalamount: Yup.number().positive('Invalid'),
-        paidamount: Yup.number().positive('Invalid'),
+        expirydate: Yup
+            .date()
+            .required('Expiry Date is Required')
+            .when(
+                "startdate",
+                (startdate, schema) => startdate && schema.min(startdate)),
+
+        totalamount: Yup.number().required().positive('Invalid'),
+        paidamount: Yup.number().max(Yup.ref('totalamount'), "Must be less than Total Amount"),
         paymentmode: Yup.string().required('Required')
     });
 
@@ -174,8 +180,12 @@ export default function AddMemberInvoice(props) {
             >
                 <Box sx={style}>
                     <Formik
-                        initialValues={{ membershipid: '', status: true, paymentmode: '', paymentdetail: '', startdate: '', expirydate: '', totalamount: 0, paidamount: 0 }}
+                        initialValues={{ membershipid: '', status: true, paymentmode: '', paymentdetail: '', startdate: new Date().toISOString().slice(0, 10), expirydate: '', totalamount: 0, paidamount: 0 }}
                         validationSchema={ValidationSchema}
+                        onChange={async (values, { setSubmitting }) => {
+                            values.memberprofileid = props.dataforupdate?._id
+
+                        }}
                         onSubmit={async (values, { setSubmitting }) => {
 
                             values.memberprofileid = props.dataforupdate?._id
@@ -207,6 +217,7 @@ export default function AddMemberInvoice(props) {
                             handleChange,
                             handleBlur,
                             handleSubmit,
+                            setFieldValue,
                             isSubmitting,
                             /* and other goodies */
                         }) => (
@@ -237,7 +248,16 @@ export default function AddMemberInvoice(props) {
                                                 label="Membership"
                                                 error={errors.membershipid && touched.membershipid}
                                                 helperText={errors.membershipid}
-                                                onChange={handleChange}
+
+                                                onChange={e => {
+                                                    handleChange(e);
+
+                                                    const selectedMembership = membershipList.find(d => d.id === e.target.value);
+
+                                                    setFieldValue("totalamount", selectedMembership.amount);
+                                                    setFieldValue("expirydate", new Date(new Date(values.startdate).setMonth(new Date(values.startdate).getMonth() + selectedMembership.duration)).toISOString().slice(0, 10))
+                                                }}
+
                                                 defaultValue=""
                                             >
                                                 {membershipList.map((obj) => {
@@ -252,11 +272,23 @@ export default function AddMemberInvoice(props) {
                                         <TextField
                                             id="startdate"
                                             type="date"
-                                            onChange={handleChange}
+                                            onChange={e => {
+                                                handleChange(e);
+
+                                                if (values?.membershipid) {
+
+                                                    const selectedMembership = membershipList.find(d => d.id === values.membershipid);
+
+                                                    setFieldValue("totalamount", selectedMembership.amount);
+                                                    setFieldValue("expirydate", new Date(new Date(values.startdate).setMonth(new Date(values.startdate).getMonth() + selectedMembership.duration)).toISOString().slice(0, 10))
+                                                }
+
+                                            }}
                                             name="startdate"
                                             variant="standard"
                                             error={errors.startdate && touched.startdate}
                                             helperText={errors.startdate || 'Start Date'}
+                                            value={values.startdate}
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={6}>
@@ -268,7 +300,10 @@ export default function AddMemberInvoice(props) {
                                             variant="standard"
                                             error={errors.expirydate && touched.expirydate}
                                             helperText={errors.expirydate || 'Expiry Date'}
-                                            sx={{ width: '100%' }} />
+                                            value={values.expirydate}
+                                            sx={{ width: '100%' }}
+                                            disabled
+                                        />
                                     </Grid>
                                     <Grid item xs={12} md={6}>
                                         <TextField
@@ -280,6 +315,7 @@ export default function AddMemberInvoice(props) {
                                             variant="standard"
                                             error={errors.totalamount && touched.totalamount}
                                             helperText={errors.totalamount}
+                                            value={values.totalamount}
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={6}>
@@ -292,6 +328,15 @@ export default function AddMemberInvoice(props) {
                                             variant="standard"
                                             error={errors.paidamount && touched.paidamount}
                                             helperText={errors.paidamount}
+                                            onChange={e => {
+                                                handleChange(e);
+
+                                                const selectedMembership = membershipList.find(d => d.id === e.target.value);
+
+                                                if (e.target.value === selectedMembership.amount) {
+                                                    setFieldValue("status", true);
+                                                }
+                                            }}
                                             sx={{ width: '100%' }} />
                                     </Grid>
 
@@ -329,7 +374,7 @@ export default function AddMemberInvoice(props) {
                                     </Grid>
                                     <Grid item xs={12} md={4}>
                                         <FormControlLabel
-                                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked={values.status} />}
                                             label="Paid"
                                             name="status"
                                             onChange={handleChange}

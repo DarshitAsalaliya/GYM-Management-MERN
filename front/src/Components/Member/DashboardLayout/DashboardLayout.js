@@ -12,6 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
@@ -156,6 +157,14 @@ export default function MiniDrawer() {
             Hii Member
           </Typography>
           <div>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+              onClick={() => navigate("./NotificationList", { replace: false })}
+            >
+              <NotificationsIcon />
+            </IconButton>
             <IconButton
               size="large"
               aria-label="account of current user"

@@ -144,8 +144,8 @@ export default function UpdateMember(props) {
         totime: Yup.string().required('To Time is Required'),
         dob: Yup.date().required('Date of Birth is Required'),
         doj: Yup.date().required('Date of Join is Required'),
-        height: Yup.number().positive('Invalid'),
-        weight: Yup.number().positive('Invalid')
+        // height: Yup.number().positive('Invalid'),
+        // weight: Yup.number().positive('Invalid')
     });
 
     useEffect(() => {
@@ -417,7 +417,7 @@ export default function UpdateMember(props) {
                                             onChange={handleChange}
                                             name="height"
                                             value={values.height}
-                                            label="Height"
+                                            label="Height (CM)"
                                             variant="standard"
                                             error={errors.height && touched.height}
                                             helperText={errors.height}
@@ -430,7 +430,7 @@ export default function UpdateMember(props) {
                                             onChange={handleChange}
                                             name="weight"
                                             value={values.weight}
-                                            label="weight"
+                                            label="Weight (KG)"
                                             variant="standard"
                                             error={errors.weight && touched.weight}
                                             helperText={errors.weight}

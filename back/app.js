@@ -57,4 +57,8 @@ app.use(leadRoute);
 const dashboardRoute = require('./src/routes/DashboardRoute');
 app.use(dashboardRoute);
 
+// Set Notification Router
+const notificationRoute = require('./src/routes/NotificationRoute');
+app.use(notificationRoute);
+
 app.listen(port, () => { });

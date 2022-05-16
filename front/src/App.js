@@ -27,7 +27,7 @@ import QueryForm from './Components/Home/QueryForm';
 import HomePage from './Components/Home/HomePage';
 import axios from 'axios';
 import ForgotPassword from './Components/Home/ForgotPassword';
-import EnterOTP from './Components/Home/EnterOTP';
+import NotificationList from './Components/Utils/Notification/NotificationList';
 
 function App() {
 
@@ -51,7 +51,7 @@ function App() {
             <Route path='Memberships' element={<MembershipList />} />
             <Route path='QueryForm' element={<QueryForm />} />
             <Route path='ForgotPassword' element={<ForgotPassword />} />
-            <Route path='EnterOTP' element={<EnterOTP />} />
+          
           </Route>
           <Route path='/Dashboard/Admin/' element={<AdminDashboardLayout />}>
             <Route path='' index element={<AdminDashboard />} />
@@ -63,17 +63,20 @@ function App() {
             <Route path='ManageSupplements' element={<ManageSupplements />} />
             <Route path='ManageInvoices' element={<ManageInvoices />} />
             <Route path='ManageLeads' element={<ManageLeads />} />
+            <Route path='NotificationList' element={<NotificationList />} />
           </Route>
           <Route path='/Dashboard/Trainer/' element={<TrainerDashboardLayout />}>
             <Route path='' index element={<TrainerDashboard />} />
             <Route path='TrainerProfile' element={<TrainerProfile />} />
             <Route path='ManageMembers' element={<TrainerManageMembers />} />
+            <Route path='NotificationList' element={<NotificationList />} />
           </Route>
           <Route path='/Dashboard/Member/' element={<MemberDashboardLayout />}>
             <Route path='' index element={<MemberDashboard />} />
             <Route path='MemberProfile' element={<MemberProfile />} />
             <Route path='ManageMembers' element={<MemberManageMembers />} />
             <Route path='ManageInvoices' element={<MemberManageInvoices />} />
+            <Route path='NotificationList' element={<NotificationList />} />
           </Route>
           <Route path='*' element={<h1>Error 404 Page not Found !!</h1>} />
         </Routes>

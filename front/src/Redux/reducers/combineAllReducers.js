@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { userAuthReducer, getLoggedUserDataReducer, changePasswordReducer, forgotPasswordSendOtpReducer,changePasswordAfterOtpReducer } from "./userReducer";
+import { userAuthReducer, getLoggedUserDataReducer, changePasswordReducer, forgotPasswordSendOtpReducer, changePasswordAfterOtpReducer } from "./userReducer";
 import { getAdminDashboardDataReducer, getTrainerDashboardDataReducer, getMemberDashboardDataReducer } from "./dashboardReducer";
 import { registerMemberReducer, deleteMemberReducer, getMemberListReducer, updateMemberReducer } from "./memberReducer";
 import { registerTrainerReducer, deleteTrainerReducer, getTrainerListReducer, updateTrainerReducer } from "./trainerReducer";
@@ -7,6 +7,7 @@ import { createMembershipReducer, deleteMembershipReducer, getMembershipListRedu
 import { createLeadReducer, deleteLeadReducer, getLeadListReducer, updateLeadReducer } from "./leadReducer";
 import { createSupplementReducer, deleteSupplementReducer, getSupplementListReducer, updateSupplementReducer } from "./supplementReducer";
 import { createInvoiceReducer, deleteInvoiceReducer, getInvoiceListReducer, updateInvoiceReducer } from "./invoiceReducer";
+import { getNotificationListReducer } from "./notificationReducer";
 
 const reducers = combineReducers({
     userauth: userAuthReducer,
@@ -17,7 +18,8 @@ const reducers = combineReducers({
     registermember: registerMemberReducer,
     changepassword: changePasswordReducer,
     forgotpasswordsendotp: forgotPasswordSendOtpReducer,
-    changepasswordafterotp:changePasswordAfterOtpReducer,
+    changepasswordafterotp: changePasswordAfterOtpReducer,
+    getnotificationlist: getNotificationListReducer,
     getmemberlist: getMemberListReducer,
     updatemember: updateMemberReducer,
     deletemember: deleteMemberReducer,
