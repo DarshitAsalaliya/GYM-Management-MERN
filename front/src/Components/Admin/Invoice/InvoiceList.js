@@ -36,6 +36,7 @@ export default function InvoiceList() {
             obj['invoiceid'] = obj['_id'];
             obj['membershipexpirydate'] = obj['expirydate'];
             obj['membername'] = obj['member'][0]?.name;
+            obj['paymentstatus'] = obj['status'] === true ? true : obj['totalamount'] - obj['paidamount']
             return obj;
         });
 
@@ -84,25 +85,31 @@ export default function InvoiceList() {
                             return `${valueFormatted}`;
                         }
                     },
-                    { field: 'paidamount', headerName: 'Paid Amount', width: 110 },
+                    {
+                        field: 'paidamount', headerName: 'Paid Amount', width: 110, valueFormatter: (params) => {
+                            const valueFormatted = params.value + ' Rs.';
+                            return `${valueFormatted}`;
+                        }
+                    },
+                    {
+                        field: 'paymentstatus',
+                        headerName: 'Payment Status',
+                        width: 150,
+                        renderCell: (params) => (
+
+                            params.value === true ? <Chip variant="outlined" color="success" size="small" label="Paid" /> : <Chip variant="outlined" color="error" size="small" label={`${params.value} ₹ Unpaid`} />
+
+                        ),
+                    },
                     {
                         field: 'membershipexpirydate',
                         headerName: 'Membership Status',
                         width: 150,
                         renderCell: (params) => (
-                            new Date(params.value).toLocaleDateString() < new Date().toLocaleDateString() ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" />
+                            new Date(params.value.slice(0, 10)) < new Date(new Date().toISOString().slice(0, 10)) ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" />
                         ),
                     },
-                    {
-                        field: 'status',
-                        headerName: 'Payment Status',
-                        width: 130,
-                        renderCell: (params) => (
-
-                            params.value === true ? <Chip variant="outlined" color="success" size="small" label="Paid" /> : <Chip variant="outlined" color="error" size="small" label="Unpaid" />
-
-                        ),
-                    },
+                    
                     { field: 'paymentmode', headerName: 'Payment Mode', width: 150 },
                     { field: 'paymentdetail', headerName: 'Payment Detail', width: 150 },
                     {

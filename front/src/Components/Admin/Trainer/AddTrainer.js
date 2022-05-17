@@ -132,7 +132,7 @@ export default function AddTrainer() {
             .required('Required')
             .min(6, 'Password is too short - should be 6 chars minimum.')
             .matches(/[a-zA-Z]/, 'Password should be contain letters and numbers.'),
-        phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, 'Phone Should be 10 chars minimum.').max(12, 'To Long!').required('Required'),
+        phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, 'Phone Should be 10 chars minimum.').max(10, 'To Long!').required('Required'),
         address: Yup.string().min(3, 'Too Short!').max(60, 'Too Long!'),
         dob: Yup.date().required('Date of Birth is Required'),
         doj: Yup.date().required('Date of Join is Required'),
@@ -160,7 +160,7 @@ export default function AddTrainer() {
             >
                 <Box sx={style}>
                     <Formik
-                        initialValues={{ name: '', email: '', password: '', status: true, gender: 'male', phone: '', address: '', dob: '', doj: '', bloodgroup: '', height: 0, weight: 0, salary: 0 }}
+                        initialValues={{ name: '', email: '', password: '', status: true, gender: 'male', phone: '', address: '', dob: '', doj: new Date().toISOString().slice(0,10), bloodgroup: '', height: 0, weight: 0, salary: 0 }}
                         validationSchema={ValidationSchema}
                         onSubmit={async (values, { setSubmitting }) => {
                             var formData = new FormData();
@@ -326,6 +326,7 @@ export default function AddTrainer() {
                                             variant="standard"
                                             error={errors.doj && touched.doj}
                                             helperText={errors.doj || 'Date of Join'}
+                                            value={values.doj}
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={4}>

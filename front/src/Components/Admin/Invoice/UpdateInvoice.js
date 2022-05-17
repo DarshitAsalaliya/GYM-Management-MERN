@@ -163,6 +163,11 @@ export default function UpdateMembership(props) {
                         validationSchema={ValidationSchema}
                         onSubmit={async (values, { setSubmitting }) => {
 
+                            if (values.totalamount === values.paidamount)
+                                values.status = true;
+                            else
+                                values.status = false;
+
                             // Update
                             await dispatch({
                                 type: constants.INVOICE_UPDATE_RESET
@@ -218,6 +223,7 @@ export default function UpdateMembership(props) {
                                                 onChange={handleChange}
                                                 value={values.membershipid}
                                                 defaultValue=""
+                                                disabled
                                             >
                                                 {membershipList.map((obj) => {
                                                     return <MenuItem value={obj.id} key={obj.id}>{obj.membershipname}</MenuItem>
@@ -237,6 +243,7 @@ export default function UpdateMembership(props) {
                                             value={values.startdate}
                                             error={errors.startdate && touched.startdate}
                                             helperText={errors.startdate || 'Start Date'}
+                                            disabled
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={6}>
@@ -249,6 +256,7 @@ export default function UpdateMembership(props) {
                                             value={values.expirydate}
                                             error={errors.expirydate && touched.expirydate}
                                             helperText={errors.expirydate || 'Expiry Date'}
+                                            
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={6}>
@@ -262,6 +270,7 @@ export default function UpdateMembership(props) {
                                             value={values.totalamount}
                                             error={errors.totalamount && touched.totalamount}
                                             helperText={errors.totalamount}
+                                            disabled
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={6}>
@@ -316,7 +325,7 @@ export default function UpdateMembership(props) {
                                     <Grid item xs={12} md={4}>
                                         <FormControlLabel
                                             control={<IOSSwitch sx={{ m: 1 }} defaultChecked={values.status} />}
-                                            label="Active"
+                                            label="Paid"
                                             name="status"
                                             onChange={handleChange}
                                             sx={{ width: '100%' }}

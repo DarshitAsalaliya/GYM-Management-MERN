@@ -73,7 +73,7 @@ export default function MembershipList() {
 
                         ),
                     },
-                    { field: 'description', headerName: 'Description', width: 150 },
+                    { field: 'description', headerName: 'Description', width: 350 },
                     {
                         field: 'editid',
                         headerName: 'Edit',

@@ -84,7 +84,7 @@ export default function AdminDashboard() {
     datasets: [
       {
         label: '# of Votes',
-        data: [dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate).toLocaleDateString() >= new Date().toLocaleDateString() && d?.invoices?.length > 0 && d?.status === true).length, dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate).toLocaleDateString() < new Date().toLocaleDateString() && d?.invoices?.length > 0 && d?.status === true).length],
+        data: [dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate.slice(0, 10)) >= new Date(new Date().toISOString().slice(0, 10)) && d?.invoices?.length > 0 && d?.status === true).length, dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate.slice(0, 10)) < new Date(new Date().toISOString().slice(0, 10)) && d?.invoices?.length > 0 && d?.status === true).length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
           'rgba(255, 99, 132, 0.5)',
@@ -103,7 +103,7 @@ export default function AdminDashboard() {
     datasets: [
       {
         label: '# of Votes',
-        data: [dashboardData.totalMembers?.filter(d => d.dietplan !== '{}').length, dashboardData.totalMembers?.filter(d => d.dietplan === '{}').length],
+        data: [dashboardData.totalMembers?.filter(d => d.dietplan!=='{}' && d.dietplan!==undefined).length, dashboardData.totalMembers?.filter(d => d.dietplan===undefined || d.dietplan === '{}').length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
           'rgba(255, 99, 132, 0.5)',
@@ -144,16 +144,16 @@ export default function AdminDashboard() {
                     {dashboardData.totalMembers?.length || 0}
                   </Typography>
                 </Grid>
-                <Grid item xs={12} md={2}>
+                <Grid item xs={6} md={2}>
                   <Doughnut data={membermembershipstatusdata} />
                 </Grid>
-                <Grid item xs={12} md={2}>
+                <Grid item xs={6} md={2}>
                   <Doughnut data={memberactiveinactivechartdata} />
                 </Grid>
-                <Grid item xs={12} md={2}>
+                <Grid item xs={6} md={2}>
                   <Doughnut data={membergenderchartdata} />
                 </Grid>
-                <Grid item xs={12} md={2}>
+                <Grid item xs={6} md={2}>
                   <Doughnut data={memberdietplanstatuschartdata} />
                 </Grid>
               </Grid>
@@ -161,7 +161,7 @@ export default function AdminDashboard() {
           </Grid>
 
 
-          
+
 
           {/* <Grid item xs={6} md={3}>
             <Item elevation={0} sx={{ backgroundColor: '#D0F2FF' }}>

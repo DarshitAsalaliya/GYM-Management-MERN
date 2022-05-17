@@ -37,6 +37,7 @@ export default function InvoiceList() {
         const filterData = data?.map(function (obj) {
             obj['editid'] = obj['_id'];
             obj['membershipexpirydate'] = obj['expirydate'];
+            obj['paymentstatus'] = obj['status'] === true ? true : obj['totalamount'] - obj['paidamount']
             return obj;
         });
 
@@ -80,16 +81,16 @@ export default function InvoiceList() {
                         headerName: 'Membership Status',
                         width: 150,
                         renderCell: (params) => (
-                            new Date(params.value).toLocaleDateString() < new Date().toLocaleDateString() ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" />
+                            new Date(params.value.slice(0,10)) < new Date(new Date().toISOString().slice(0,10)) ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" />
                         ),
                     },
                     {
-                        field: 'status',
+                        field: 'paymentstatus',
                         headerName: 'Payment Status',
-                        width: 130,
+                        width: 150,
                         renderCell: (params) => (
 
-                            params.value === true ? <Chip variant="outlined" color="success" size="small" label="Paid" /> : <Chip variant="outlined" color="error" size="small" label="Unpaid" />
+                            params.value === true ? <Chip variant="outlined" color="success" size="small" label="Paid" /> : <Chip variant="outlined" color="error" size="small" label={`${params.value} ₹ Unpaid`} />
 
                         ),
                     },

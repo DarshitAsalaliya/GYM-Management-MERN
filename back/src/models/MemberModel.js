@@ -64,6 +64,7 @@ const memberSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
+        unique: [true, 'Phone number must be unique..'],
         required: [true, 'Trainer phone number is required..']
     },
     address: {

@@ -47,7 +47,7 @@ export default function InvoicePrint(props) {
 
     return (
         <div>
-            <Button variant="outlined" color='info' onClick={pdfGenerate}>
+            <Button variant="outlined" color='warning' onClick={pdfGenerate}>
                 <PrintIcon fontSize="small" />
             </Button>
         </div>

@@ -45,7 +45,7 @@ exports.CreateSupplement = async (req, res) => {
             if (req.file) {
 
                 // Delete Uploaded File
-                fs.unlink('./public/memberimages/' + req.file.filename, (err) => {
+                fs.unlink('./public/images/' + req.file.filename, (err) => {
                     if (err) {
                         throw new Error(err.message);
                     }
@@ -108,7 +108,7 @@ exports.UpdateSupplement = async (req, res) => {
             if (req.file) {
 
                 // Delete Uploaded File
-                fs.unlink('./public/memberimages/' + req.file.filename, (err) => {
+                fs.unlink('./public/images/' + req.file.filename, (err) => {
                     if (err) {
                         throw new Error(err.message);
                     }
@@ -139,7 +139,7 @@ exports.DeleteSupplement = async (req, res) => {
         await cloudinary.v2.uploader.destroy('supplementimages/' + data.image);
 
         // Delete Uploaded Files From Local Folder
-        fs.unlink('./public/memberimages/' + data.image, (err) => { });
+        fs.unlink('./public/images/' + data.image, (err) => { });
 
         return res.status(200).send(data);
     }

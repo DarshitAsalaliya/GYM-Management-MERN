@@ -5,10 +5,7 @@ var path = require('path');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        if (req.url === '/api/Member/Registration')
-            cb(null, './public/memberimages');
-        else
-            cb(null, './public/memberimages');
+        cb(null, './public/images');
     },
     filename: function (req, file, cb) {
         //var uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname);
@@ -20,7 +17,7 @@ var storage = multer.diskStorage({
 var upload = multer({
     storage: storage,
     fileFilter: (req, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/webp") {
             cb(null, true);
         } else {
             cb(null, false);

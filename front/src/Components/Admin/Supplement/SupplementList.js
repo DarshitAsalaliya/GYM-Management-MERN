@@ -4,6 +4,9 @@ import Chip from '@mui/material/Chip';
 import Avatar from '@mui/material/Avatar';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import BoltIcon from '@mui/icons-material/Bolt';
+
+import ViewImage from '../../Utils/ViewImage';
+
 // DeleteSupplement
 import DeleteSupplement from './DeleteSupplement';
 
@@ -59,7 +62,7 @@ export default function SupplementList() {
                         sortable: false,
                         filterable: false,
                         renderCell: (params) => (
-                            params.value ? <Avatar src={params.value.image_url} /> : <Avatar sx={{ bgcolor: deepOrange[400] }}><BoltIcon /></Avatar>
+                            params.value ? <ViewImage imageurl={params.value.image_url} /> : <Avatar sx={{ bgcolor: deepOrange[400] }}><BoltIcon /></Avatar>
                         ),
                     },
                     {
@@ -79,7 +82,7 @@ export default function SupplementList() {
 
                         ),
                     },
-                    { field: 'description', headerName: 'Description', width: 200 },
+                    { field: 'description', headerName: 'Description', width: 450 },
                     {
                         field: 'editid',
                         headerName: 'Edit',

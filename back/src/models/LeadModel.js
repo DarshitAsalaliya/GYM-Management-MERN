@@ -7,7 +7,7 @@ const leadSchema = new mongoose.Schema({
         minlength: [3, 'Your Name must be longer than 2 characters'],
         trim: true
     },
-    description: {
+    query: {
         type: String
     },
     phone: {

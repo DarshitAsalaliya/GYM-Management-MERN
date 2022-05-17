@@ -138,14 +138,12 @@ export default function UpdateMember(props) {
             .matches(/[a-zA-Z]/, 'Password should be contain letters and numbers.'),
         workouttype: Yup.string().required('Required'),
         trainerprofileid: Yup.string().required('Required'),
-        phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, 'Phone Should be 10 chars minimum.').max(12, 'To Long!').required('Required'),
+        phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, 'Phone Should be 10 chars minimum.').max(10, 'To Long!').required('Required'),
         address: Yup.string().min(3, 'Too Short!').max(60, 'Too Long!'),
         fromtime: Yup.string().required('From Time is Required'),
         totime: Yup.string().required('To Time is Required'),
         dob: Yup.date().required('Date of Birth is Required'),
         doj: Yup.date().required('Date of Join is Required'),
-        // height: Yup.number().positive('Invalid'),
-        // weight: Yup.number().positive('Invalid')
     });
 
     useEffect(() => {

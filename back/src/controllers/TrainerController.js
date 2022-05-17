@@ -41,7 +41,7 @@ exports.Registration = async (req, res) => {
         sendCredentialMail(req.body.email, req.body.password);
 
         // Add Notification
-        const newNotification = new NotificationModel({ notificationcontent: req.body.name + ' Sir has joined the GYM.', ownerprofileid: req.user.id });
+        const newNotification = new NotificationModel({ notificationcontent: req.body.name + ' has joined the GYM.', ownerprofileid: req.user.id });
         newNotification.save();
 
         return res.status(201).send({ newTrainer, token });
@@ -51,7 +51,7 @@ exports.Registration = async (req, res) => {
             if (req.file) {
 
                 // Delete Uploaded File
-                fs.unlink('./public/memberimages/' + req.file.filename, (err) => {
+                fs.unlink('./public/images/' + req.file.filename, (err) => {
                     if (err) {
                         throw new Error(err.message);
                     }
@@ -164,7 +164,7 @@ exports.UpdateTrainer = async (req, res) => {
             if (req.file) {
 
                 // Delete Uploaded File
-                fs.unlink('./public/memberimages/' + req.file.filename, (err) => {
+                fs.unlink('./public/images/' + req.file.filename, (err) => {
                     if (err) {
                         throw new Error(err.message);
                     }
@@ -192,13 +192,13 @@ exports.DeleteTrainer = async (req, res) => {
         }
 
         // Delete Uploaded File From Cloudinary
-        await cloudinary.v2.uploader.destroy('memberimages/' + data.image);
+        await cloudinary.v2.uploader.destroy('images/' + data.image);
 
         // Delete Uploaded Files From Local Folder
-        fs.unlink('./public/memberimages/' + data.image, (err) => { });
+        fs.unlink('./public/images/' + data.image, (err) => { });
 
         // Add Notification
-        const newNotification = new NotificationModel({ notificationcontent: req.body.name + ' Sir has left the GYM.', ownerprofileid: req.user.id });
+        const newNotification = new NotificationModel({ notificationcontent: req.body.name + ' has left the GYM.', ownerprofileid: req.user.id });
         newNotification.save();
 
         return res.status(200).send(data);

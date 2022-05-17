@@ -86,7 +86,7 @@ exports.GetTrainerDashboardData = async (req, res) => {
 
 exports.GetMemberDashboardData = async (req, res) => {
     try {
-        const totalInvoices = await InvoiceModel.find({ memberprofileid: mongoose.Types.ObjectId(req.user.id) }).count();
+        const totalInvoices = await InvoiceModel.find({ memberprofileid: mongoose.Types.ObjectId(req.user.id) }).sort({createdAt:-1});
         return res.status(200).send({ totalInvoices });
     } catch (e) {
         return res.status(400).send({ error: e.message });

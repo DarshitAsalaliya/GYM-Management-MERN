@@ -173,7 +173,7 @@ export default function AdminDashboard() {
     datasets: [
       {
         label: '# of Votes',
-        data: [dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate).toLocaleDateString() >= new Date().toLocaleDateString() && d?.invoices?.length > 0 && d?.status === true).length, dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate).toLocaleDateString() < new Date().toLocaleDateString() && d?.invoices?.length > 0 && d?.status === true).length],
+        data: [dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate.slice(0, 10)) >= new Date(new Date().toISOString().slice(0, 10)) && d?.invoices?.length > 0 && d?.status === true).length, dashboardData.totalMembers?.filter(d => new Date(d?.invoices[d?.invoices?.length - 1]?.expirydate.slice(0, 10)) < new Date(new Date().toISOString().slice(0, 10)) && d?.invoices?.length > 0 && d?.status === true).length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
           'rgba(255, 99, 132, 0.5)',
@@ -192,7 +192,7 @@ export default function AdminDashboard() {
     datasets: [
       {
         label: '# of Votes',
-        data: [dashboardData.totalMembers?.filter(d => d.dietplan !== '{}').length, dashboardData.totalMembers?.filter(d => d.dietplan === '{}').length],
+        data: [dashboardData.totalMembers?.filter(d => d.dietplan!=='{}' && d.dietplan!==undefined).length, dashboardData.totalMembers?.filter(d => d.dietplan===undefined || d.dietplan === '{}').length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
           'rgba(255, 99, 132, 0.5)',
@@ -289,24 +289,24 @@ export default function AdminDashboard() {
                       <Typography variant="caption" display="block" gutterBottom>
                         This Month Earning
                       </Typography>
-                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                        {dashboardData?.totalInvoices?.filter(d => new Date(d.startdate).getMonth() === new Date().getMonth() && new Date(d.startdate).getFullYear() === new Date().getFullYear()).reduce((sum, d) => sum + d.totalamount, 0) || 0} Rs.
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#2c2c2c' }}>
+                        {dashboardData?.totalInvoices?.filter(d => new Date(d.startdate).getMonth() === new Date().getMonth() && new Date(d.startdate).getFullYear() === new Date().getFullYear()).reduce((sum, d) => sum + d.totalamount, 0) || 0} ₹
                       </Typography>
                     </Grid>
                     <Grid item xs={6} md={6}>
                       <Typography variant="caption" display="block" gutterBottom>
                         Received
                       </Typography>
-                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#00a100' }}>
-                        {dashboardData?.totalInvoices?.filter(d => new Date(d.startdate).getMonth() === new Date().getMonth() && new Date(d.startdate).getFullYear() === new Date().getFullYear()).reduce((sum, d) => sum + d.paidamount, 0) || 0} Rs.
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#369736' }}>
+                        {dashboardData?.totalInvoices?.filter(d => new Date(d.startdate).getMonth() === new Date().getMonth() && new Date(d.startdate).getFullYear() === new Date().getFullYear()).reduce((sum, d) => sum + d.paidamount, 0) || 0} ₹
                       </Typography>
                     </Grid>
                     <Grid item xs={6} md={6}>
                       <Typography variant="caption" display="block" gutterBottom>
                         Left
                       </Typography>
-                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#ff2525' }}>
-                        {(dashboardData?.totalInvoices?.filter(d => new Date(d.startdate).getMonth() === new Date().getMonth() && new Date(d.startdate).getFullYear() === new Date().getFullYear()).reduce((sum, d) => sum + d.totalamount, 0) || 0) - (dashboardData?.totalInvoices?.filter(d => new Date(d.startdate).getMonth() === new Date().getMonth() && new Date(d.startdate).getFullYear() === new Date().getFullYear()).reduce((sum, d) => sum + d.paidamount, 0) || 0)} Rs.
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#ff3e3e' }}>
+                        {(dashboardData?.totalInvoices?.filter(d => new Date(d.startdate).getMonth() === new Date().getMonth() && new Date(d.startdate).getFullYear() === new Date().getFullYear()).reduce((sum, d) => sum + d.totalamount, 0) || 0) - (dashboardData?.totalInvoices?.filter(d => new Date(d.startdate).getMonth() === new Date().getMonth() && new Date(d.startdate).getFullYear() === new Date().getFullYear()).reduce((sum, d) => sum + d.paidamount, 0) || 0)} ₹
                       </Typography>
                     </Grid>
                   </Grid>
@@ -314,30 +314,30 @@ export default function AdminDashboard() {
               </Grid>
 
               <Grid item xs={6} md={6}>
-                <Item elevation={0} sx={{ background: 'linear-gradient(to right bottom, #fffceb, #fffceb)' }}>
+                <Item elevation={0} sx={{ background: 'linear-gradient(to right bottom, #fff0e7, #fff0e7)' }}>
                   <Grid container spacing={2} sx={{ textAlign: 'center' }}>
                     <Grid item xs={12} md={12} >
                       <Typography variant="caption" display="block" gutterBottom>
-                        Total Earning 
+                        Total Earning
                       </Typography>
-                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                        {dashboardData?.totalInvoices?.reduce((sum, d) => sum + d.totalamount, 0) || 0} Rs.
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#2c2c2c' }}>
+                        {dashboardData?.totalInvoices?.reduce((sum, d) => sum + d.totalamount, 0) || 0} ₹
                       </Typography>
                     </Grid>
                     <Grid item xs={6} md={6}>
                       <Typography variant="caption" display="block" gutterBottom>
                         Received
                       </Typography>
-                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#00a100' }}>
-                        {dashboardData?.totalInvoices?.reduce((sum, d) => sum + d.paidamount, 0) || 0} Rs.
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#369736' }}>
+                        {dashboardData?.totalInvoices?.reduce((sum, d) => sum + d.paidamount, 0) || 0} ₹
                       </Typography>
                     </Grid>
                     <Grid item xs={6} md={6}>
                       <Typography variant="caption" display="block" gutterBottom>
                         Left
                       </Typography>
-                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#ff2525' }}>
-                        {(dashboardData?.totalInvoices?.reduce((sum, d) => sum + d.totalamount, 0) || 0) - (dashboardData?.totalInvoices?.reduce((sum, d) => sum + d.paidamount, 0) || 0)} Rs.
+                      <Typography variant="h6" gutterBottom component="div" sx={{ color: '#ff3e3e' }}>
+                        {(dashboardData?.totalInvoices?.reduce((sum, d) => sum + d.totalamount, 0) || 0) - (dashboardData?.totalInvoices?.reduce((sum, d) => sum + d.paidamount, 0) || 0)} ₹
                       </Typography>
                     </Grid>
                   </Grid>

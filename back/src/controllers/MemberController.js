@@ -53,7 +53,7 @@ exports.Registration = async (req, res) => {
             if (req.file) {
 
                 // Delete Uploaded File
-                fs.unlink('./public/memberimages/' + req.file.filename, (err) => {
+                fs.unlink('./public/images/' + req.file.filename, (err) => {
                     if (err) {
                         throw new Error(err.message);
                     }
@@ -216,7 +216,7 @@ exports.UpdateMember = async (req, res) => {
             if (req.file) {
 
                 // Delete Uploaded File
-                fs.unlink('./public/memberimages/' + req.file.filename, (err) => {
+                fs.unlink('./public/images/' + req.file.filename, (err) => {
                     if (err) {
                         throw new Error(err.message);
                     }
@@ -247,7 +247,7 @@ exports.DeleteMember = async (req, res) => {
         await cloudinary.v2.uploader.destroy('memberimages/' + data.image);
 
         // Delete Uploaded Files From Local Folder
-        fs.unlink('./public/memberimages/' + data.image, (err) => { });
+        fs.unlink('./public/images/' + data.image, (err) => { });
 
         // Add Notification
         const newNotification = new NotificationModel({ notificationcontent: data.name + ' has left the GYM.', ownerprofileid: req.user.id });

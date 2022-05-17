@@ -52,7 +52,7 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '80%',
-    height: '85%',
+    height: '90%',
     bgcolor: 'background.paper',
     boxShadow: 24,
     overflow: 'scroll',
@@ -254,7 +254,7 @@ export default function UpdateMember(props) {
                                             name="sundaybreakfast"
                                             defaultValue={values.sundaybreakfast}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -265,7 +265,7 @@ export default function UpdateMember(props) {
                                             name="sundaylunch"
                                             value={values.sundaylunch}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -276,7 +276,7 @@ export default function UpdateMember(props) {
                                             name="sundaydinner"
                                             value={values.sundaydinner}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -287,7 +287,7 @@ export default function UpdateMember(props) {
                                             name="sundaysnacks"
                                             value={values.sundaysnacks}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2}>
@@ -303,7 +303,7 @@ export default function UpdateMember(props) {
                                             name="mondaybreakfast"
                                             value={values.mondaybreakfast}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -314,7 +314,7 @@ export default function UpdateMember(props) {
                                             name="mondaylunch"
                                             value={values.mondaylunch}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -325,7 +325,7 @@ export default function UpdateMember(props) {
                                             name="mondaydinner"
                                             value={values.mondaydinner}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -336,7 +336,7 @@ export default function UpdateMember(props) {
                                             name="mondaysnacks"
                                             value={values.mondaysnacks}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2}>
@@ -352,7 +352,7 @@ export default function UpdateMember(props) {
                                             name="tuesdaybreakfast"
                                             value={values.tuesdaybreakfast}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -363,7 +363,7 @@ export default function UpdateMember(props) {
                                             name="tuesdaylunch"
                                             value={values.tuesdaylunch}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -374,7 +374,7 @@ export default function UpdateMember(props) {
                                             name="tuesdaydinner"
                                             value={values.tuesdaydinner}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -385,7 +385,7 @@ export default function UpdateMember(props) {
                                             name="tuesdaysnacks"
                                             value={values.tuesdaysnacks}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2}>
@@ -401,7 +401,7 @@ export default function UpdateMember(props) {
                                             name="wednesdaybreakfast"
                                             value={values.wednesdaybreakfast}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -412,7 +412,7 @@ export default function UpdateMember(props) {
                                             name="wednesdaylunch"
                                             value={values.wednesdaylunch}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -423,7 +423,7 @@ export default function UpdateMember(props) {
                                             name="wednesdaydinner"
                                             value={values.wednesdaydinner}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -434,7 +434,7 @@ export default function UpdateMember(props) {
                                             name="wednesdaysnacks"
                                             value={values.wednesdaysnacks}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2}>
@@ -450,7 +450,7 @@ export default function UpdateMember(props) {
                                             name="thursdaybreakfast"
                                             value={values.thursdaybreakfast}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -461,7 +461,7 @@ export default function UpdateMember(props) {
                                             name="thursdaylunch"
                                             value={values.thursdaylunch}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -472,7 +472,7 @@ export default function UpdateMember(props) {
                                             name="thursdaydinner"
                                             value={values.thursdaydinner}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -483,7 +483,7 @@ export default function UpdateMember(props) {
                                             name="thursdaysnacks"
                                             value={values.thursdaysnacks}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2}>
@@ -499,7 +499,7 @@ export default function UpdateMember(props) {
                                             name="fridaybreakfast"
                                             value={values.fridaybreakfast}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -510,7 +510,7 @@ export default function UpdateMember(props) {
                                             name="fridaylunch"
                                             value={values.fridaylunch}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -521,7 +521,7 @@ export default function UpdateMember(props) {
                                             name="fridaydinner"
                                             value={values.fridaydinner}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -532,7 +532,7 @@ export default function UpdateMember(props) {
                                             name="fridaysnacks"
                                             value={values.fridaysnacks}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2}>
@@ -548,7 +548,7 @@ export default function UpdateMember(props) {
                                             name="saturdaybreakfast"
                                             value={values.saturdaybreakfast}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -559,7 +559,7 @@ export default function UpdateMember(props) {
                                             name="saturdaylunch"
                                             value={values.saturdaylunch}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -570,7 +570,7 @@ export default function UpdateMember(props) {
                                             name="saturdaydinner"
                                             value={values.saturdaydinner}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} md={2.5}>
@@ -581,7 +581,7 @@ export default function UpdateMember(props) {
                                             name="saturdaysnacks"
                                             value={values.saturdaysnacks}
                                             onChange={handleChange}
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%',padding: '5px',border:'none',borderBottom:'1px solid gray',color:'#464646' }}
                                         />
                                     </Grid>
 
@@ -590,7 +590,7 @@ export default function UpdateMember(props) {
                                     </Grid>
                                     <Grid item xs={12} md={4}>
                                         <Button type="submit" variant="contained" color="info" startIcon={<CheckIcon />} disabled={isSubmitting} sx={{ width: '80%' }}>
-                                            Update
+                                            Update Diet Plan
                                         </Button>
                                     </Grid>
                                     <Grid item xs={12} md={4}>

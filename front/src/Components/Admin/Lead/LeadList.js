@@ -67,7 +67,7 @@ export default function LeadList() {
                         field: 'query',
                         headerName: 'Query',
                         description: 'Query',
-                        width: 270
+                        width: 350
                     },
                     { field: 'phone', headerName: 'Phone', width: 150 },
 

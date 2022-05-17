@@ -7,6 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Chip from '@mui/material/Chip';
 import BoyIcon from '@mui/icons-material/Boy';
 import GirlIcon from '@mui/icons-material/Girl';
+import Tooltip from '@mui/material/Tooltip';
 
 import '../../Utils/GlobalStyle.css';
 // Constants
@@ -82,34 +83,33 @@ export default function MemberDietPlan() {
                     {
                         field: 'breakfast',
                         headerName: 'Breakfast',
-                        width: 250,
+                        width: 320,
                         renderCell: (params) => (
-                            <div style={{ maxWidth: '100px', }}>{params.value}</div>
+                            <div title={params.value}>{params.value.length>40?params.value.slice(0,40) + '..' : params.value.slice(0,40)}</div>
                         ),
-
                     },
                     {
                         field: 'lunch',
                         headerName: 'Lunch',
-                        width: 250,
+                        width: 320,
                         renderCell: (params) => (
-                            <div style={{ maxWidth: '100px', }}>{params.value}</div>
+                            <div title={params.value}>{params.value.length>40?params.value.slice(0,40) + '..' : params.value.slice(0,40)}</div>
                         ),
                     },
                     {
                         field: 'dinner',
                         headerName: 'Dinner',
-                        width: 250,
+                        width: 320,
                         renderCell: (params) => (
-                            <div style={{ maxWidth: '100px', }}>{params.value}</div>
+                            <div title={params.value}>{params.value.length>40?params.value.slice(0,40) + '..' : params.value.slice(0,40)}</div>
                         ),
                     },
                     {
                         field: 'snacks',
                         headerName: 'Snacks',
-                        width: 250,
+                        width: 320,
                         renderCell: (params) => (
-                            <div style={{ maxWidth: '100px', }}>{params.value}</div>
+                            <div title={params.value}>{params.value.length>40?params.value.slice(0,40) + '..' : params.value.slice(0,40)}</div>
                         ),
                     },
                 ]}

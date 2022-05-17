@@ -190,6 +190,11 @@ export default function AddMemberInvoice(props) {
 
                             values.memberprofileid = props.dataforupdate?._id
 
+                            if (values.totalamount === values.paidamount)
+                                values.status = true;
+                            else
+                                values.status = false;
+
                             // Add
                             await dispatch({
                                 type: constants.NEW_INVOICE_RESET
@@ -316,6 +321,7 @@ export default function AddMemberInvoice(props) {
                                             error={errors.totalamount && touched.totalamount}
                                             helperText={errors.totalamount}
                                             value={values.totalamount}
+                                            disabled
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={6}>
@@ -331,9 +337,9 @@ export default function AddMemberInvoice(props) {
                                             onChange={e => {
                                                 handleChange(e);
 
-                                                const selectedMembership = membershipList.find(d => d.id === e.target.value);
+                                                const selectedMembership = membershipList.find(d => d.id === values.membershipid);
 
-                                                if (e.target.value === selectedMembership.amount) {
+                                                if (e.target.value == selectedMembership?.amount) {
                                                     setFieldValue("status", true);
                                                 }
                                             }}

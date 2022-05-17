@@ -55,12 +55,12 @@ export default function SignInSide() {
             setUserEmailError(true);
         }
 
-        if (formData.userPassword !== "") {
-            setUserPasswordError(false);
-        }
-        else {
-            setUserPasswordError(true);
-        }
+        // if (formData.userPassword !== "") {
+        //     setUserPasswordError(false);
+        // }
+        // else {
+        //     setUserPasswordError(true);
+        // }
 
         setFormData({
             ...formData,

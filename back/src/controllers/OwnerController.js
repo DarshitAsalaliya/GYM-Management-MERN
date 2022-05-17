@@ -34,7 +34,7 @@ exports.Registration = async (req, res) => {
         return res.status(201).send({ newOwner, token });
     } catch (e) {
         // Delete Uploaded File
-        fs.unlink('./public/memberimages/' + req.file.filename, (err) => { });
+        fs.unlink('./public/images/' + req.file.filename, (err) => { });
 
         // Delete Uploaded File From Cloudinary
         await cloudinary.v2.uploader.destroy('ownerimages/' + req.file.filename);

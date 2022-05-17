@@ -46,8 +46,8 @@ export default function MemberList() {
             obj['invoiceid'] = obj['_id'];
             obj['editid'] = obj['_id'];
             obj['expirydate'] = obj['invoices'][obj['invoices']?.length - 1]?.expirydate;
-            obj['dietplansetornot'] = obj['dietplan']!=='{}' ? 'Set' : 'Not Set';
-            obj['membershipstatus'] = obj['invoices']?.length > 0 ? new Date(obj['invoices'][obj['invoices']?.length - 1]?.expirydate).toLocaleDateString() < new Date().toLocaleDateString() ? 'expired' : 'valid' : 'invoice not found';
+            obj['dietplansetornot'] = (obj['dietplan'] && obj['dietplan'] !== '{}') ? 'Set' : 'Not Set';
+            obj['membershipstatus'] = obj['invoices']?.length > 0 ? new Date(obj['invoices'][obj['invoices']?.length - 1]?.expirydate.slice(0, 10)) < new Date(new Date().toISOString().slice(0, 10)) ? 'expired' : 'valid' : 'invoice not found';
             return obj;
         });
 
@@ -63,21 +63,6 @@ export default function MemberList() {
             return <Chip variant="outlined" color="warning" size="small" label="Invoice Not Found" />;
     }
 
-    // useEffect(() => {
-
-    //     dispatch(getMemberList());
-
-    // }, [dispatch,getlistsuccess])
-
-    // useEffect(() => {
-
-    //     const filterData = data?.map(function (obj) {
-    //         obj['invoiceid'] = obj['_id'];
-    //         obj['editid'] = obj['_id'];
-    //         return obj;
-    //     });
-    //     data && setMemberList(filterData);
-    // }, [data])
 
     return (
         <div style={{ height: 450, width: '100%', marginTop: '1%' }}>

@@ -55,11 +55,19 @@ export default function NotificationList(props) {
                     </Grid>
                     <Grid item xs={6} md={4} sx={{ textAlign: 'right' }}>
                     </Grid>
+                    <Grid item xs={12} md={5} sx={{ height: 450, overflowY: 'scroll' }}>
+                        {
+                            notificationList.map((obj, i) => <NotificationCard data={obj} key={i} />)
+                        }
+
+                        {notificationList.length === 0 && 'No any update!!'}
+                    </Grid>
+                    <Grid item xs={12} md={7} sx={{ textAlign: 'center', opacity: 0.9, display: { xs: 'none', md: 'block' } }}>
+                        <img src="https://static.vecteezy.com/system/resources/previews/004/968/527/non_2x/enable-reminder-notification-permission-pop-up-button-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-etc-vector.jpg" alt="Query" width="60%" height="auto" />
+                    </Grid>
                 </Grid>
             </Box>
-            {
-                notificationList.map((obj, i) => <NotificationCard data={obj} key={i} />)
-            }
+
         </>
     );
 }

@@ -46,9 +46,9 @@ export default function QueryForm() {
             .required('Required'),
         query: Yup.string()
             .min(3, 'Too Short!')
-            .max(50, 'Too Long!')
+            .max(60, 'Too Long!')
             .required('Required'),
-        phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, 'Phone Should be 10 chars minimum.').max(12, 'To Long!').required('Required'),
+        phone: Yup.string().matches(phoneRegExp, 'Phone number is not valid').min(10, 'Phone Should be 10 chars minimum.').max(10, 'To Long!').required('Required'),
     });
 
     useEffect(() => {
@@ -62,17 +62,17 @@ export default function QueryForm() {
 
             <Grid container spacing={2}>
                 <Grid item xs={12} md={12}>
-                    <Typography variant="h6" sx={{ color: '#474747',textAlign:'center' }}>
+                    <Typography variant="h6" sx={{ color: '#474747', textAlign: 'center' }}>
                         Query Form
                     </Typography>
                     <Divider />
                 </Grid>
+                <Grid item xs={12} md={4} sx={{ opacity: 0.9, display: { md: 'block', xs: 'none' } }}>
+                    <img src="https://leesexoticbirds.com/wp-content/uploads/2021/01/enquiry-now.png" width="100%" height="auto" />
+                </Grid>
                 <Grid item xs={12} md={4}>
 
-                </Grid>
-                <Grid item xs={12} md={4} >
-
-                    {registersuccess && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message="Added Successfully.." severity="success" />}
+                    {registersuccess && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message="Your Query Submitted.. We Will Contact Very Soon.." severity="success" />}
 
                     <Formik
                         initialValues={{ name: '', query: '', phone: '' }}
@@ -145,11 +145,12 @@ export default function QueryForm() {
                                     sx={{ width: '100%' }} />
                                 <br /><br />
                                 <Button type="submit" variant="contained" color="primary" disabled={isSubmitting} sx={{ width: '100%' }}>
-                                    Save
+                                    Submit
                                 </Button>
                             </form>
                         )}
                     </Formik>
+
                 </Grid>
                 <Grid item xs={12} md={4}>
 
