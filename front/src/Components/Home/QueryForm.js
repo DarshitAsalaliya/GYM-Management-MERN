@@ -1,16 +1,10 @@
-import { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Chip from '@mui/material/Chip';
-import Avatar from '@mui/material/Avatar';
-import { deepOrange, deepPurple } from '@mui/material/colors';
-import BoltIcon from '@mui/icons-material/Bolt';
+import { useEffect } from 'react';
 
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
 // Grid
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
 // Constants
@@ -27,7 +21,6 @@ import SnackbarMsg from '../Utils/SnackbarMsg';
 
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import * as yup from 'yup';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
@@ -39,6 +32,8 @@ export default function QueryForm() {
     const { registerloading, registererror, registersuccess } = useSelector(state => state.createlead);
 
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+    
+    // Validation
     const ValidationSchema = Yup.object().shape({
         name: Yup.string()
             .min(3, 'Too Short!')
@@ -102,7 +97,6 @@ export default function QueryForm() {
                             handleBlur,
                             handleSubmit,
                             isSubmitting
-                            /* and other goodies */
                         }) => (
                             <form onSubmit={handleSubmit}>
                                 <TextField

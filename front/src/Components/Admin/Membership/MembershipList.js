@@ -15,12 +15,14 @@ import UpdateMembership from './UpdateMembership';
 
 export default function MembershipList() {
 
+    // State
     const [membershipList, setMembershipList] = useState([]);
 
     const dispatch = useDispatch();
 
     const { data, getlistsuccess } = useSelector(state => state.getmembershiplist);
 
+    // Load Data
     useEffect(() => {
 
         loadMembershipList();

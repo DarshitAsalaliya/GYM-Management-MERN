@@ -17,7 +17,6 @@ exports.CreateInvoice = async (req, res) => {
 // Get All Invoice
 exports.GetInvoiceList = async (req, res) => {
     try {
-        //const invoiceList = await InvoiceModel.find();
 
         const invoiceList = await InvoiceModel.aggregate([
             {
@@ -28,7 +27,7 @@ exports.GetInvoiceList = async (req, res) => {
                     as: "member",
                 },
             }
-        ]).sort({createdAt:-1})
+        ]).sort({ createdAt: -1 })
 
         // Check Invoice Length
         if (invoiceList.length === 0) {
@@ -41,7 +40,7 @@ exports.GetInvoiceList = async (req, res) => {
     }
 }
 
-// Get All Invoice
+// Get Invoice By Member
 exports.GetInvoiceListByMember = async (req, res) => {
     try {
 
@@ -51,8 +50,6 @@ exports.GetInvoiceListByMember = async (req, res) => {
         else {
             id = req.user._id
         }
-
-        //const invoiceList = await InvoiceModel.find({ memberprofileid: id });
 
         const invoiceList = await InvoiceModel.aggregate([
             {
@@ -69,7 +66,7 @@ exports.GetInvoiceListByMember = async (req, res) => {
                     as: "member",
                 },
             }
-        ]).sort({createdAt:-1});
+        ]).sort({ createdAt: -1 });
 
         // Check Invoice Length
         if (invoiceList.length === 0) {

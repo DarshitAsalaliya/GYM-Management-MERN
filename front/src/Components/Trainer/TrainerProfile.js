@@ -1,31 +1,22 @@
 import { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
 import { Button, CardContent } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import { deepOrange, deepPurple } from '@mui/material/colors';
-import PersonIcon from '@mui/icons-material/Person';
-import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { Formik } from 'formik';
 import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import CheckIcon from '@mui/icons-material/Check';
 import SnackbarMsg from '../Utils/SnackbarMsg';
 import UpdateTrainer from './Trainer/UpdateTrainer';
 // Card
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
-import IconButton from '@mui/material/IconButton';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // Style
 import '../Utils/GlobalStyle.css';
 
 // Grid
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
 // Constants
@@ -39,8 +30,6 @@ import { useSelector, useDispatch } from 'react-redux';
 // Action
 import { getLoggedUserData, changePassword } from '../../Redux/actions/userAction';
 
-const { REACT_APP_BASE_URL } = process.env;
-
 export default function AdminProfile() {
 
   const [userData, setUserData] = useState([]);
@@ -51,24 +40,22 @@ export default function AdminProfile() {
   const { changepasswordsuccess, changepassworderror } = useSelector(state => state.changepassword);
   const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatetrainer);
 
+  // Load Data
   useEffect(() => {
-
     dispatch(getLoggedUserData('Trainer'));
-
   }, [updatesuccess]);
 
   useEffect(() => {
-
     userdata && setUserData(userdata);
-
   }, [userdata]);
 
-
+  // Reset
   useEffect(() => {
     dispatch({ type: constants.CHANGE_PASSWORD_RESET });
     dispatch({ type: trainerconstants.TRAINER_UPDATE_RESET });
   }, [])
 
+  // Validation
   const ValidationSchema = Yup.object().shape({
     password: Yup.string().required('Required'),
     newpassword: Yup.string()
@@ -104,7 +91,7 @@ export default function AdminProfile() {
                 />
                 <Divider />
                 <CardContent>
-                  
+
                   <Typography variant="body2" display="block" gutterBottom>
                     <b>Status:</b> {userData?.status ? 'Active' : 'Inactive'} | <b>Gender:</b> {userData?.gender?.toUpperCase()}
                   </Typography>
@@ -177,7 +164,6 @@ export default function AdminProfile() {
                     handleBlur,
                     handleSubmit,
                     isSubmitting,
-                    /* and other goodies */
                   }) => (
                     <form onSubmit={handleSubmit}>
 

@@ -109,6 +109,7 @@ export default function UpdateMembership(props) {
 
     const { updateinvoiceerror, updateinvoicesuccess } = useSelector(state => state.updateinvoice);
 
+    // Validation
     const ValidationSchema = Yup.object().shape({
         membershipid: Yup.string().required('Required'),
         startdate: Yup.date().required('Date of Birth is Required'),
@@ -124,8 +125,7 @@ export default function UpdateMembership(props) {
         }
     }, [updateinvoicesuccess]);
 
-    // Fetch Membership List
-
+    // State
     const [membershipList, setMembershipList] = useState([]);
 
     const fetchData = async () => {
@@ -141,6 +141,7 @@ export default function UpdateMembership(props) {
         setMembershipList(filterData);
     }
 
+    // Fetch Membership List
     useEffect(() => {
         fetchData();
     }, []);
@@ -188,7 +189,6 @@ export default function UpdateMembership(props) {
                             errors,
                             touched,
                             handleChange,
-                            handleBlur,
                             handleSubmit,
                             isSubmitting,
                             /* and other goodies */
@@ -256,7 +256,7 @@ export default function UpdateMembership(props) {
                                             value={values.expirydate}
                                             error={errors.expirydate && touched.expirydate}
                                             helperText={errors.expirydate || 'Expiry Date'}
-                                            
+                                            disabled
                                             sx={{ width: '100%' }} />
                                     </Grid>
                                     <Grid item xs={12} md={6}>

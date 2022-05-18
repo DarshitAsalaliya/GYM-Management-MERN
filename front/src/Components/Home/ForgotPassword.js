@@ -47,6 +47,7 @@ export default function ForgotPassword() {
         userEmail: ''
     });
 
+    // Error State
     const [userEmailError, setUserEmailError] = useState(false);
 
     // Form Field Change Events
@@ -103,18 +104,17 @@ export default function ForgotPassword() {
         }
     };
 
+    // Open Enter OTP Form
     useEffect(() => {
         forgotpasswordsuccess && setFormType('EnterOTPForm');
     }, [forgotpasswordsuccess, navigate]);
 
+    // Reset
     useEffect(() => {
         setFormType('ForgotForm');
-
-        // Reset
         dispatch({
             type: constants.FORGOT_PASSWORD_SEND_OTP_RESET
         });
-
     }, []);
 
     return (

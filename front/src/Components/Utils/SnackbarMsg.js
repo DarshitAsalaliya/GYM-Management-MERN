@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
@@ -14,7 +13,7 @@ export default function SnackbarMsg(props) {
         vertical: props.vertical,
         horizontal: props.horizontal,
         message: props.message,
-        severity:props.severity
+        severity: props.severity
     });
 
     const { vertical, horizontal, open } = msg;

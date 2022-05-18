@@ -26,6 +26,7 @@ export default function DeleteSupplement(props) {
         setOpen(true);
     };
 
+    // Delete Function
     const handleDelete = async () => {
 
         // Delete Reset

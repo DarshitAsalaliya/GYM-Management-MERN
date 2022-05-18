@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import jsPDF from 'jspdf';
 import Button from '@mui/material/Button';
 import PrintIcon from '@mui/icons-material/Print';

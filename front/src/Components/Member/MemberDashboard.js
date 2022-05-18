@@ -11,7 +11,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 // Action
 import { getMemberDashboardData } from '../../Redux/actions/dashboardAction';
-import { getLoggedUserData } from '../../Redux/actions/userAction';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -27,8 +26,9 @@ export default function AdminDashboard() {
 
   const dispatch = useDispatch();
 
-  const { memberdashboarddata, getmemberdashboarddatasuccess } = useSelector(state => state.memberdashboarddata);
+  const { memberdashboarddata } = useSelector(state => state.memberdashboarddata);
 
+  // Load Data
   useEffect(() => {
     dispatch(getMemberDashboardData());
   }, [dispatch])
@@ -37,7 +37,7 @@ export default function AdminDashboard() {
     memberdashboarddata && setDashboardData(memberdashboarddata);
   }, [memberdashboarddata])
 
-  // Check Invoice
+  // Check Membership Status
   var membershipStatus = <Chip variant="outlined" color="warning" size="small" label="Invoice Not Found" />
 
   if (memberdashboarddata?.totalInvoices?.length > 0)

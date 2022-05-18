@@ -5,13 +5,6 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
-import CardMembershipIcon from '@mui/icons-material/CardMembership';
-
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -26,8 +19,10 @@ import {
   Title,
 } from 'chart.js';
 
+// Chart Type
 import { Doughnut, Bar } from 'react-chartjs-2'
 
+// Register ChartJS
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -44,16 +39,22 @@ export default function AdminDashboard() {
 
   const dispatch = useDispatch();
 
-  const { admindashboarddata, getadmindashboarddatasuccess } = useSelector(state => state.admindashboarddata);
+  const { admindashboarddata } = useSelector(state => state.admindashboarddata);
 
+  // Load Data
   useEffect(() => {
     dispatch(getAdminDashboardData());
   }, [dispatch])
 
+  // Set Data
   useEffect(() => {
     admindashboarddata && setDashboardData(admindashboarddata);
   }, [admindashboarddata])
 
+
+  // Prepare Data For Chart 
+
+  // Member Active / Inactive Data
   const memberactiveinactivechartdata = {
     labels: ['Active  ', 'Inactive'],
     datasets: [
@@ -73,6 +74,7 @@ export default function AdminDashboard() {
     ],
   };
 
+  // Member Gender Wise Data
   const membergenderchartdata = {
     labels: ['Male    ', 'Female'],
     datasets: [
@@ -92,6 +94,7 @@ export default function AdminDashboard() {
     ],
   };
 
+  // Trainer Active / Inactive Data
   const traineractiveinactivechartdata = {
     labels: ['Active  ', 'Inactive'],
     datasets: [
@@ -111,6 +114,7 @@ export default function AdminDashboard() {
     ],
   };
 
+  // Membership Active / Inactive Data
   const membershipactiveinactivechartdata = {
     labels: ['Active  ', 'Inactive'],
     datasets: [
@@ -130,6 +134,7 @@ export default function AdminDashboard() {
     ],
   };
 
+  // Supplement Active / Inactive Data
   const supplementactiveinactivechartdata = {
     labels: ['Active  ', 'Inactive'],
     datasets: [
@@ -149,6 +154,7 @@ export default function AdminDashboard() {
     ],
   };
 
+  // Invoice Paid / Unpaid Data
   const invoicechartpaidstatusdata = {
     labels: ['Paid    ', 'Unpaid'],
     datasets: [
@@ -168,6 +174,7 @@ export default function AdminDashboard() {
     ],
   };
 
+  // Member Membership Status
   const membermembershipstatusdata = {
     labels: ['Valid Membership    ', 'Expired Membership'],
     datasets: [
@@ -187,12 +194,13 @@ export default function AdminDashboard() {
     ],
   };
 
+  // Member Diet Plan
   const memberdietplanstatuschartdata = {
     labels: ['Diet Plan Set       ', 'Diet Plan Not Set'],
     datasets: [
       {
         label: '# of Votes',
-        data: [dashboardData.totalMembers?.filter(d => d.dietplan!=='{}' && d.dietplan!==undefined).length, dashboardData.totalMembers?.filter(d => d.dietplan===undefined || d.dietplan === '{}').length],
+        data: [dashboardData.totalMembers?.filter(d => d.dietplan !== '{}' && d.dietplan !== undefined).length, dashboardData.totalMembers?.filter(d => d.dietplan === undefined || d.dietplan === '{}').length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
           'rgba(255, 99, 132, 0.5)',
@@ -206,6 +214,7 @@ export default function AdminDashboard() {
     ],
   };
 
+  // Member Age Wise Data
   const female10 = dashboardData?.totalMembers?.filter(d => (new Date().getFullYear() - parseInt(d.dob.slice(0, 4))) <= 10 && d.gender === 'female').length;
   const male10 = dashboardData?.totalMembers?.filter(d => (new Date().getFullYear() - parseInt(d.dob.slice(0, 4))) <= 10 && d.gender === 'male').length;
 
@@ -227,6 +236,7 @@ export default function AdminDashboard() {
   const female60 = dashboardData?.totalMembers?.filter(d => (new Date().getFullYear() - parseInt(d.dob.slice(0, 4))) >= 60 && d.gender === 'female').length;
   const male60 = dashboardData?.totalMembers?.filter(d => (new Date().getFullYear() - parseInt(d.dob.slice(0, 4))) >= 60 && d.gender === 'male').length;
 
+  // Age Wise Data
   const agewisechartdata = {
     labels: ['<= 10', '10-20', '20-30', '30-40', '40-50', '50-60', '>= 60'],
     datasets: [
@@ -243,6 +253,7 @@ export default function AdminDashboard() {
     ],
   };
 
+  // Lead Data
   const leadchartdata = {
     labels: ['Completed  ', 'Pending      '],
     datasets: [
@@ -278,7 +289,6 @@ export default function AdminDashboard() {
         </Grid>
 
         <Grid container rowSpacing={{ xs: 1, sm: 2, md: 1 }} columnSpacing={{ xs: 1, sm: 2, md: 1 }}>
-
           <Grid item xs={12} md={6}>
             <Grid container rowSpacing={{ xs: 1, sm: 2, md: 1 }} columnSpacing={{ xs: 1, sm: 2, md: 1 }}>
 

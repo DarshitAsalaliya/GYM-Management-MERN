@@ -7,13 +7,13 @@ const auth = require('../middleware/auth');
 // Import From Controller
 const InvoiceController = require('../controllers/InvoiceController');
 
-// Create Topic
+// Create Invoice
 router.post('/api/Invoice/CreateInvoice', auth, InvoiceController.CreateInvoice);
 
-// Get All Topic
+// Get All Invoice
 router.get('/api/Invoice/GetInvoiceList', auth, InvoiceController.GetInvoiceList);
 
-// Get By Member
+// Get Invoice By Member
 router.get('/api/Invoice/GetInvoiceListByMember/:memberprofileid?', auth, InvoiceController.GetInvoiceListByMember);
 
 // Update Invoice

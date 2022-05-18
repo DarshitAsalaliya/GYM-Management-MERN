@@ -16,12 +16,14 @@ import { getLeadList } from '../../../Redux/actions/leadAction';
 
 export default function LeadList() {
 
+    // State
     const [leadList, setLeadList] = useState([]);
 
     const dispatch = useDispatch();
 
     const { data, getlistsuccess } = useSelector(state => state.getleadlist);
 
+    // Load Data
     useEffect(() => {
 
         loadLeadList();

@@ -107,8 +107,6 @@ const IOSSwitch = styled((props) => (
     },
 }));
 
-
-
 export default function AddMember() {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -124,6 +122,7 @@ export default function AddMember() {
 
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
+    // Validation
     const ValidationSchema = Yup.object().shape({
         name: Yup.string()
             .min(3, 'Too Short!')
@@ -151,7 +150,6 @@ export default function AddMember() {
     }, [registersuccess]);
 
     // Fetch Trainer List
-
     const [trainerList, setTrainerList] = useState([]);
 
     const fetchData = async () => {

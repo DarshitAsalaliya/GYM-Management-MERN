@@ -3,19 +3,16 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import AddIcon from '@mui/icons-material/Add';
 import { Formik } from 'formik';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import Avatar from '@mui/material/Avatar';
-import { deepOrange, deepPurple } from '@mui/material/colors';
+import { deepOrange } from '@mui/material/colors';
 import PersonIcon from '@mui/icons-material/Person';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -30,14 +27,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import * as constants from '../../../Redux/constants/memberConstants';
 
 // Validator
-import validator from 'validator';
 import * as Yup from 'yup';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { updateMember, getMemberList } from '../../../Redux/actions/memberAction';
+import { updateMember } from '../../../Redux/actions/memberAction';
 
 // Snackbar
 import SnackbarMsg from '../../Utils/SnackbarMsg';
@@ -127,6 +123,7 @@ export default function UpdateMember(props) {
 
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
+    // Validation
     const ValidationSchema = Yup.object().shape({
         name: Yup.string()
             .min(3, 'Too Short!')
@@ -143,9 +140,7 @@ export default function UpdateMember(props) {
         fromtime: Yup.string().required('From Time is Required'),
         totime: Yup.string().required('To Time is Required'),
         dob: Yup.date().required('Date of Birth is Required'),
-        doj: Yup.date().required('Date of Join is Required'),
-        height: Yup.number().positive('Invalid'),
-        weight: Yup.number().positive('Invalid')
+        doj: Yup.date().required('Date of Join is Required')
     });
 
     useEffect(() => {
@@ -154,8 +149,7 @@ export default function UpdateMember(props) {
         }
     }, [updatesuccess]);
 
-    // Fetch Trainer List
-
+    // Fetch Active Trainer List
     const [trainerList, setTrainerList] = useState([]);
 
     const fetchData = async () => {
@@ -228,7 +222,6 @@ export default function UpdateMember(props) {
                             handleSubmit,
                             setFieldValue,
                             isSubmitting,
-                            /* and other goodies */
                         }) => (
                             <form onSubmit={handleSubmit}>
 

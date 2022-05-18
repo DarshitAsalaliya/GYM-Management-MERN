@@ -12,7 +12,6 @@ const { mongoose } = require('mongoose');
 // Get Admin Dashboard Data
 exports.GetAdminDashboardData = async (req, res) => {
     try {
-
         const totalMembers = await MemberModel.aggregate([
             {
                 $lookup: {
@@ -31,7 +30,7 @@ exports.GetAdminDashboardData = async (req, res) => {
                 },
             }
         ])
-    
+
         const totalTrainers = await TrainerModel.find();
         const totalMemberships = await MembershipModel.find();
         const totalSupplements = await SupplementModel.find();
@@ -44,16 +43,10 @@ exports.GetAdminDashboardData = async (req, res) => {
     }
 }
 
+// Get Trainer Dashboard Data
 exports.GetTrainerDashboardData = async (req, res) => {
     try {
-        //const totalMembers = await MemberModel.find({}).count();
-
         const totalMembers = await MemberModel.aggregate([
-            // {
-            //     $match: {
-            //         trainerprofileid: mongoose.Types.ObjectId(req.user.id)
-            //     }
-            // },
             {
                 $match:
                 {
@@ -84,9 +77,10 @@ exports.GetTrainerDashboardData = async (req, res) => {
     }
 }
 
+// Get Member Dashboard Data
 exports.GetMemberDashboardData = async (req, res) => {
     try {
-        const totalInvoices = await InvoiceModel.find({ memberprofileid: mongoose.Types.ObjectId(req.user.id) }).sort({createdAt:-1});
+        const totalInvoices = await InvoiceModel.find({ memberprofileid: mongoose.Types.ObjectId(req.user.id) }).sort({ createdAt: -1 });
         return res.status(200).send({ totalInvoices });
     } catch (e) {
         return res.status(400).send({ error: e.message });

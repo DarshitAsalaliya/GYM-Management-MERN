@@ -24,12 +24,12 @@ export const checkLogin = (credential, usertype) => async (dispatch) => {
         // Set Token
         localStorage.setItem("token", data.token);
 
-        // if (usertype === 'Member')
-        //     localStorage.setItem("id", 2);
-        // else if (usertype === 'Trainer')
-        //     localStorage.setItem("id", 1);
-        // else if (usertype === 'Admin')
-        //     localStorage.setItem("id", 0);
+        if (usertype === 'Member')
+            localStorage.setItem("id", 2);
+        else if (usertype === 'Trainer')
+            localStorage.setItem("id", 1);
+        else if (usertype === 'Admin')
+            localStorage.setItem("id", 0);
 
         dispatch({
             type: constants.NEW_LOGIN_SUCCESS,
@@ -66,7 +66,7 @@ export const userLogout = (usertype) => async (dispatch) => {
 
         // Set Token
         localStorage.removeItem("token");
-
+        localStorage.removeItem("id");
 
     } catch (error) {
 
@@ -105,7 +105,7 @@ export const getLoggedUserData = (usertype) => async (dispatch) => {
 
         dispatch({
             type: constants.LOGGED_USERDATA_FAIL,
-            payload: error.response.data.error
+            payload: error.response?.data?.error
         })
     }
 }

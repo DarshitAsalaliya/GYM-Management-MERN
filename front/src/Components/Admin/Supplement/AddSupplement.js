@@ -21,6 +21,7 @@ import InputLabel from '@mui/material/InputLabel';
 // Constants
 import * as constants from '../../../Redux/constants/supplementConstants';
 
+// Yup
 import * as Yup from 'yup';
 
 // Redux
@@ -109,6 +110,7 @@ export default function AddSupplement() {
         display: 'none',
     });
 
+    // Validation
     const ValidationSchema = Yup.object().shape({
         supplementname: Yup.string()
             .min(3, 'Too Short!')

@@ -26,6 +26,7 @@ export default function DeleteInvoice(props) {
         setOpen(true);
     };
 
+    // Delete Function
     const handleDelete = async () => {
 
         // Delete Reset

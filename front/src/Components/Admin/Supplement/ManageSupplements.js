@@ -23,6 +23,7 @@ export default function ManageSupplements() {
     const { updatesuccess } = useSelector(state => state.updatesupplement);
     const { deletesuccess } = useSelector(state => state.deletesupplement);
 
+    // Reset
     useEffect(() => {
         dispatch({
             type: constants.NEW_SUPPLEMENT_RESET

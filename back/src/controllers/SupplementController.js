@@ -12,9 +12,9 @@ const { checkParameters } = require('../middleware/utils');
 // Create New Supplement
 exports.CreateSupplement = async (req, res) => {
     try {
-       
+
         if (req.file) {
-           
+
             // Upload Image To Cloudinary
             const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
                 folder: 'supplementimages',

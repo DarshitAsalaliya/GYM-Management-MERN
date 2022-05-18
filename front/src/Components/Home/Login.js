@@ -3,7 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
-import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockIcon from '@mui/icons-material/Lock';
@@ -11,20 +10,15 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Alert from '@mui/material/Alert';
 import LinearProgress from '@mui/material/LinearProgress';
-import LoginIcon from '@mui/icons-material/Login';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
 import { useSelector, useDispatch } from 'react-redux';
-import SnackbarMsg from '../Utils/SnackbarMsg';
 
 // Action
 import { checkLogin } from '../../Redux/actions/userAction';
 
 import { useNavigate } from "react-router-dom";
-
-// Constants
-import * as constants from '../../Redux/constants/userConstants';
 
 const theme = createTheme();
 
@@ -54,13 +48,6 @@ export default function SignInSide() {
         else {
             setUserEmailError(true);
         }
-
-        // if (formData.userPassword !== "") {
-        //     setUserPasswordError(false);
-        // }
-        // else {
-        //     setUserPasswordError(true);
-        // }
 
         setFormData({
             ...formData,
@@ -114,6 +101,18 @@ export default function SignInSide() {
         }
         setTabIndex(newTabIndex);
     };
+
+    useEffect(() => {
+        if (localStorage.getItem("id") === '2') {
+            navigate("/Dashboard/Member", { replace: true });
+        }
+        else if (localStorage.getItem("id") === '1') {
+            navigate("/Dashboard/Trainer", { replace: true });
+        }
+        else if (localStorage.getItem("id") === '0') {
+            navigate("/Dashboard/Admin", { replace: true });
+        }
+    }, [navigate]);
 
     return (
 

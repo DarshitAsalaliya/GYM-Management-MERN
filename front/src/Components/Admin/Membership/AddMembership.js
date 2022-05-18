@@ -21,6 +21,7 @@ import InputLabel from '@mui/material/InputLabel';
 // Constants
 import * as constants from '../../../Redux/constants/membershipConstants';
 
+// Yup
 import * as Yup from 'yup';
 
 // Redux
@@ -106,6 +107,7 @@ export default function AddMembership() {
 
     const { registererror, registersuccess } = useSelector(state => state.createmembership);
 
+    // Validation
     const ValidationSchema = Yup.object().shape({
         membershipname: Yup.string()
             .min(3, 'Too Short!')

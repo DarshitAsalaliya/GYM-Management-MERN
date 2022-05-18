@@ -10,16 +10,16 @@ const upload = require('../middleware/multer');
 // Import From Controller
 const MemberController = require('../controllers/MemberController');
 
-// Create GenerateToken
+// Member Registration
 router.post('/api/Member/Registration', [auth, upload.single('image')], MemberController.Registration);
 
 // Login
 router.post('/api/Member/Login', MemberController.Login);
 
-// Get
+// Get Member List
 router.get('/api/Member/GetMemberList/', auth, MemberController.GetAllMember);
 
-// Get By Trainer
+// Get Member By Trainer
 router.get('/api/Member/GetMemberListByTrainer/:trainerprofileid?', auth, MemberController.GetMemberListByTrainer);
 
 // Update

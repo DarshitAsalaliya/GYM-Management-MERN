@@ -16,7 +16,9 @@ const { checkParameters, sendCredentialMail, sendOtpMail } = require('../middlew
 exports.Registration = async (req, res) => {
     try {
 
+        // Check File
         if (req.file) {
+
             // Upload Image To Cloudinary
             const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
                 folder: 'memberimages',
@@ -28,6 +30,7 @@ exports.Registration = async (req, res) => {
                     throw new Error(e.message);
                 }
             });
+
             // Save Member with Image
             newMemberObj = new MemberModel({ ...req.body, ownerprofileid: req.user.id, image: { public_id: uploadResult.public_id, image_url: uploadResult.secure_url } });
         }
@@ -82,6 +85,7 @@ exports.Login = async (req, res) => {
 
         const user = await MemberModel.findByCredentials(req.body.email, req.body.password);
         const token = await user.generateAuthToken();
+
         return res.send({ user: await user.getPublicProfile(), token });
     } catch (e) {
         return res.status(400).send({ error: e.message });
@@ -123,7 +127,7 @@ exports.GetAllMember = async (req, res) => {
     }
 }
 
-// Get All Member
+// Get Members By Trainer
 exports.GetMemberListByTrainer = async (req, res) => {
     try {
 
@@ -263,8 +267,6 @@ exports.DeleteMember = async (req, res) => {
 // Profile
 
 exports.MemberProfile = async (req, res) => {
-
-
     try {
         const _id = req.user.id;
         const data = await MemberModel.findById(_id);
@@ -274,6 +276,8 @@ exports.MemberProfile = async (req, res) => {
         }
 
         const newObject = data.toObject();
+
+        newObject.type = 'Member';
 
         delete newObject.password;
         delete newObject.tokens;
@@ -316,6 +320,7 @@ exports.ChangePassword = async (req, res) => {
     }
 }
 
+// Forgot Password
 exports.ForgotPasswordSendOtp = async (req, res) => {
     try {
         const user = await MemberModel.find({ email: req.body.email });
@@ -339,8 +344,11 @@ exports.ForgotPasswordSendOtp = async (req, res) => {
     }
 };
 
+// Verify OTP & Change Password
 exports.ChangePasswordAfterOtp = async (req, res) => {
     const data = await OtpModel.find({ otp: req.body.otp, email: req.body.email });
+
+    // Check OTP
     if (data.length === 0) {
         res.status(400).send({ error: "Invalid OTP, Sorry.." });
     } else {
@@ -359,6 +367,7 @@ exports.ChangePasswordAfterOtp = async (req, res) => {
         userData.password = newpassword;
         await userData.save();
 
+        // Send Mail
         sendCredentialMail(req.body.email, newpassword);
 
         res.status(200).send({ data: "New password sent to your email.." });

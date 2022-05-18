@@ -4,10 +4,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import Link from '@mui/material/Link';
-import { CardActionArea, stepConnectorClasses } from '@mui/material';
 import Tooltip from '@mui/material/Tooltip';
 
 export default function SupplementCard(props) {

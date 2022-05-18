@@ -22,7 +22,10 @@ export default function ManageLeads() {
     const { updatesuccess } = useSelector(state => state.updatelead);
     const { deletesuccess } = useSelector(state => state.deletelead);
 
+    // Reset
     useEffect(() => {
+
+        // Lead Reset
         dispatch({
             type: constants.NEW_LEAD_RESET
         });

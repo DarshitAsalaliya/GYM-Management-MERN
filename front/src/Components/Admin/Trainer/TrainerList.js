@@ -35,6 +35,7 @@ export default function TrainerList() {
 
     const { data, getlistloading, getlisterror, getlistsuccess } = useSelector(state => state.gettrainerlist);
 
+    // Load Data
     useEffect(() => {
 
         loadTrainerList();

@@ -3,7 +3,7 @@ const NotificationModel = require('../models/NotificationModel');
 
 // API Using Async Await
 
-// Get All Lead
+// Get Notification List
 exports.GetNotificationList = async (req, res) => {
     try {
         const notificationList = await NotificationModel.find().sort({createdAt:-1});

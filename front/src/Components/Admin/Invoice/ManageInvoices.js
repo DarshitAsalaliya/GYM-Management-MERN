@@ -28,6 +28,7 @@ export default function ManageInvoices() {
     const { updateinvoicesuccess } = useSelector(state => state.updateinvoice);
     const { deleteinvoicesuccess } = useSelector(state => state.deleteinvoice);
 
+    // Reset 
     useEffect(() => {
         dispatch({
             type: constants.NEW_INVOICE_RESET
@@ -72,7 +73,6 @@ export default function ManageInvoices() {
                     </Grid>
                 </Grid>
             </Box>
-
 
             <InvoiceList />
         </>

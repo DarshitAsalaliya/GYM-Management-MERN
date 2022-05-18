@@ -127,6 +127,7 @@ export default function UpdateMember(props) {
 
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
+    // Validation
     const ValidationSchema = Yup.object().shape({
         name: Yup.string()
             .min(3, 'Too Short!')
@@ -153,7 +154,6 @@ export default function UpdateMember(props) {
     }, [updatesuccess]);
 
     // Fetch Trainer List
-
     const [trainerList, setTrainerList] = useState([]);
 
     const fetchData = async () => {

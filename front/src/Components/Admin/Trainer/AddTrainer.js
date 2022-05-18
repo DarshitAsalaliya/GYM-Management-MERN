@@ -27,21 +27,16 @@ import InputLabel from '@mui/material/InputLabel';
 import * as constants from '../../../Redux/constants/trainerConstants';
 
 // Validator
-import validator from 'validator';
 import * as Yup from 'yup';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { registerTrainer, getTrainerList } from '../../../Redux/actions/trainerAction';
+import { registerTrainer } from '../../../Redux/actions/trainerAction';
 
 // Snackbar
 import SnackbarMsg from '../../Utils/SnackbarMsg';
-
-// Axios
-import axios from 'axios';
-const { REACT_APP_BASE_URL } = process.env;
 
 const style = {
     position: 'absolute',
@@ -122,6 +117,7 @@ export default function AddTrainer() {
 
     const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
+    // Validation
     const ValidationSchema = Yup.object().shape({
         name: Yup.string()
             .min(3, 'Too Short!')
@@ -136,8 +132,6 @@ export default function AddTrainer() {
         address: Yup.string().min(3, 'Too Short!').max(60, 'Too Long!'),
         dob: Yup.date().required('Date of Birth is Required'),
         doj: Yup.date().required('Date of Join is Required'),
-        // height: Yup.number().positive('Invalid'),
-        // weight: Yup.number().positive('Invalid')
     });
 
     useEffect(() => {

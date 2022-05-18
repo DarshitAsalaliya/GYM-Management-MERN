@@ -23,6 +23,7 @@ export default function ManageMemberships() {
     const { updatesuccess } = useSelector(state => state.updatemembership);
     const { deletesuccess } = useSelector(state => state.deletemembership);
 
+    // Reset
     useEffect(() => {
         dispatch({
             type: constants.NEW_MEMBERSHIP_RESET

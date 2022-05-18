@@ -1,8 +1,4 @@
-import React, { useEffect } from 'react';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import SendIcon from '@mui/icons-material/Send';
-import Stack from '@mui/material/Stack';
+import React from 'react';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -13,8 +9,6 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 
 // Grid
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
 const theme = createTheme({

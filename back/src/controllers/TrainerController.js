@@ -209,7 +209,6 @@ exports.DeleteTrainer = async (req, res) => {
 }
 
 // Profile
-
 exports.TrainerProfile = async (req, res) => {
 
     try {
@@ -221,6 +220,8 @@ exports.TrainerProfile = async (req, res) => {
         }
 
         const newObject = data.toObject();
+
+        newObject.type = 'Trainer';
 
         delete newObject.password;
         delete newObject.tokens;
@@ -263,6 +264,7 @@ exports.ChangePassword = async (req, res) => {
     }
 }
 
+// Forogot Password
 exports.ForgotPasswordSendOtp = async (req, res) => {
     try {
         const user = await TrainerModel.find({ email: req.body.email });
@@ -286,8 +288,11 @@ exports.ForgotPasswordSendOtp = async (req, res) => {
     }
 };
 
+// Verify OTP & Change Password
 exports.ChangePasswordAfterOtp = async (req, res) => {
     const data = await OtpModel.find({ otp: req.body.otp, email: req.body.email });
+    
+    // Check OTP
     if (data.length === 0) {
         res.status(400).send({ error: "Invalid OTP, Sorry.." });
     } else {
@@ -306,6 +311,7 @@ exports.ChangePasswordAfterOtp = async (req, res) => {
         userData.password = newpassword;
         await userData.save();
 
+        // Send Mail
         sendCredentialMail(req.body.email, newpassword);
 
         res.status(200).send({ data: "New password sent to your email.." });

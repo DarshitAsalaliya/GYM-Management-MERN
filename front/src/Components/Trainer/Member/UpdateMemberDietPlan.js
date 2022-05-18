@@ -1,50 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import AddIcon from '@mui/icons-material/Add';
 import { Formik } from 'formik';
-import TextField from '@mui/material/TextField';
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import Avatar from '@mui/material/Avatar';
-import { deepOrange, deepPurple } from '@mui/material/colors';
-import PersonIcon from '@mui/icons-material/Person';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
 
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 import EditIcon from '@mui/icons-material/Edit';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
 // Constants
 import * as constants from '../../../Redux/constants/memberConstants';
 
 // Validator
-import validator from 'validator';
 import * as Yup from 'yup';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { updateMember, getMemberList } from '../../../Redux/actions/memberAction';
+import { updateMember } from '../../../Redux/actions/memberAction';
 
 // Snackbar
 import SnackbarMsg from '../../Utils/SnackbarMsg';
 
-// Axios
-import axios from 'axios';
-const { REACT_APP_BASE_URL } = process.env;
 
 const style = {
     position: 'absolute',
@@ -59,59 +39,6 @@ const style = {
     p: 4,
 };
 
-const IOSSwitch = styled((props) => (
-    <Switch focusVisibleClassName=".Mui-focusVisible" disableRipple {...props} />
-))(({ theme }) => ({
-    width: 42,
-    height: 26,
-    padding: 0,
-    '& .MuiSwitch-switchBase': {
-        padding: 0,
-        margin: 2,
-        transitionDuration: '300ms',
-        '&.Mui-checked': {
-            transform: 'translateX(16px)',
-            color: '#fff',
-            '& + .MuiSwitch-track': {
-                backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#65C466',
-                opacity: 1,
-                border: 0,
-            },
-            '&.Mui-disabled + .MuiSwitch-track': {
-                opacity: 0.5,
-            },
-        },
-        '&.Mui-focusVisible .MuiSwitch-thumb': {
-            color: '#33cf4d',
-            border: '6px solid #fff',
-        },
-        '&.Mui-disabled .MuiSwitch-thumb': {
-            color:
-                theme.palette.mode === 'light'
-                    ? theme.palette.grey[100]
-                    : theme.palette.grey[600],
-        },
-        '&.Mui-disabled + .MuiSwitch-track': {
-            opacity: theme.palette.mode === 'light' ? 0.7 : 0.3,
-        },
-    },
-    '& .MuiSwitch-thumb': {
-        boxSizing: 'border-box',
-        width: 22,
-        height: 22,
-    },
-    '& .MuiSwitch-track': {
-        borderRadius: 26 / 2,
-        backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
-        opacity: 1,
-        transition: theme.transitions.create(['background-color'], {
-            duration: 500,
-        }),
-    },
-}));
-
-
-
 export default function UpdateMember(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -120,12 +47,6 @@ export default function UpdateMember(props) {
     const dispatch = useDispatch();
 
     const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatemember);
-
-    const Input = styled('input')({
-        display: 'block',
-    });
-
-    const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
     const ValidationSchema = Yup.object().shape({
 
@@ -137,6 +58,7 @@ export default function UpdateMember(props) {
         }
     }, [updatesuccess]);
 
+    // Get Diet Plan
     const dietplan = props.dataforupdate?.dietplan && JSON.parse(props.dataforupdate.dietplan);
 
     return (

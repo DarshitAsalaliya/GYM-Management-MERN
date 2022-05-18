@@ -11,13 +11,11 @@ const auth = async (req, res, next) => {
         const token = req.header('Authorization').replace('Bearer ', '');
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+        // Check User
         user = await OwnerModel.findOne({ _id: decoded._id, 'tokens.token': token });
-
         if (!user) {
             user = await TrainerModel.findOne({ _id: decoded._id, 'tokens.token': token });
-
             if (!user) {
-
                 user = await MemberModel.findOne({ _id: decoded._id, 'tokens.token': token });
                 if (!user) {
                     throw new Error();

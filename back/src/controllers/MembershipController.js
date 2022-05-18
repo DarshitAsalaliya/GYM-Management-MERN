@@ -30,7 +30,7 @@ exports.GetMembershipList = async (req, res) => {
     }
 }
 
-// Get All Membership
+// Get All Active Membership
 exports.GetActiveMembershipList = async (req, res) => {
     try {
         const membershipList = await MembershipModel.find({status:true});

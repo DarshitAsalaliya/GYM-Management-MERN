@@ -1,31 +1,22 @@
 import { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
 import { Button, CardContent } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import { deepOrange, deepPurple } from '@mui/material/colors';
-import PersonIcon from '@mui/icons-material/Person';
-import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { Formik } from 'formik';
 import TextField from '@mui/material/TextField';
-import MenuItem from '@mui/material/MenuItem';
-import CheckIcon from '@mui/icons-material/Check';
 import SnackbarMsg from '../Utils/SnackbarMsg';
 
 // Card
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardActions from '@mui/material/CardActions';
-import IconButton from '@mui/material/IconButton';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // Style
 import '../Utils/GlobalStyle.css';
 
 // Grid
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import UpdateMember from './Member/UpdateMember';
 // Constants
@@ -40,8 +31,6 @@ import { useSelector, useDispatch } from 'react-redux';
 // Action
 import { getLoggedUserData, changePassword } from '../../Redux/actions/userAction';
 
-const { REACT_APP_BASE_URL } = process.env;
-
 export default function MemberProfile() {
 
   const [userData, setUserData] = useState([]);
@@ -50,19 +39,15 @@ export default function MemberProfile() {
 
   const { userdata, getdatasuccess } = useSelector(state => state.loggeduserdata);
   const { changepasswordsuccess, changepassworderror } = useSelector(state => state.changepassword);
-  const { data, getlistloading, getlisterror, getlistsuccess } = useSelector(state => state.getmemberlist);
   const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatemember);
 
+  // Load Data
   useEffect(() => {
-
     dispatch(getLoggedUserData('Member'));
-
   }, [updatesuccess]);
 
   useEffect(() => {
-
     userdata && setUserData(userdata);
-
   }, [userdata]);
 
 
@@ -71,6 +56,7 @@ export default function MemberProfile() {
     dispatch({ type: memberconstants.MEMBER_UPDATE_RESET });
   }, [])
 
+  // Validation
   const ValidationSchema = Yup.object().shape({
     password: Yup.string().required('Required'),
     newpassword: Yup.string()

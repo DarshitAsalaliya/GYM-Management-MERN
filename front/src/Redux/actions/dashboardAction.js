@@ -21,7 +21,7 @@ export const getAdminDashboardData = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: constants.GET_ADMIN_DASHBOARD_DATA_FAIL,
-            payload: error.response.data
+            payload: error.response?.data
         })
     }
 }
@@ -45,7 +45,7 @@ export const getTrainerDashboardData = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: constants.GET_TRAINER_DASHBOARD_DATA_FAIL,
-            payload: error.response.data
+            payload: error.response?.data
         })
     }
 }
@@ -69,7 +69,7 @@ export const getMemberDashboardData = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: constants.GET_MEMBER_DASHBOARD_DATA_FAIL,
-            payload: error.response.data
+            payload: error.response?.data
         })
     }
 }

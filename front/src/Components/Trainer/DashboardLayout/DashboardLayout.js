@@ -26,7 +26,7 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { getLoggedUserData, userLogout } from '../../../Redux/actions/userAction';
+import { userLogout } from '../../../Redux/actions/userAction';
 
 const drawerWidth = 240;
 
@@ -113,6 +113,13 @@ export default function MiniDrawer() {
       navigate("/Login", { replace: true });
     }
   }, [isAuthenticated, navigate]);
+
+  // Check User Type
+  useEffect(() => {
+    if (localStorage.getItem("id") !== '1') {
+      navigate("/Login", { replace: true });
+    }
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);

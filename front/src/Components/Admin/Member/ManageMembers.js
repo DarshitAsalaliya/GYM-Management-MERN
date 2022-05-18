@@ -1,8 +1,4 @@
 import React, { useEffect } from 'react';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import SendIcon from '@mui/icons-material/Send';
-import Stack from '@mui/material/Stack';
 import AddMember from './AddMember';
 import MemberList from './MemberList';
 import SnackbarMsg from '../../Utils/SnackbarMsg';
@@ -13,7 +9,6 @@ import '../../Utils/GlobalStyle.css';
 
 // Grid
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
 // Constants
@@ -33,6 +28,7 @@ export default function ManageMembers() {
     const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatemember);
     const { deleteloading, deleteerror, deletesuccess } = useSelector(state => state.deletemember);
 
+    // Reset
     useEffect(() => {
         dispatch({
             type: constants.NEW_MEMBER_RESET
@@ -64,6 +60,7 @@ export default function ManageMembers() {
                         <Typography variant="h6" component="div" className='moduleHeading'>
                             Manage Member
                         </Typography>
+                     
                     </Grid>
                     <Grid item xs={6} md={4} sx={{ textAlign: 'right' }}>
                         <AddMember />

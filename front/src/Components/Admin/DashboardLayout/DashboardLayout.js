@@ -26,7 +26,7 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 // Action
-import { getLoggedUserData, userLogout } from '../../../Redux/actions/userAction';
+import { userLogout } from '../../../Redux/actions/userAction';
 
 const drawerWidth = 240;
 
@@ -97,22 +97,34 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function MiniDrawer() {
 
+  // Dispatch
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // UseSelector
   const { isAuthenticated } = useSelector(state => state.userauth);
 
   const theme = useTheme();
 
+  // State
   const [open, setOpen] = React.useState(false);
-
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+  // Check Authentication
   useEffect(() => {
     if (!isAuthenticated && !localStorage.getItem("token")) {
       navigate("/Login", { replace: true });
     }
+    
   }, [isAuthenticated, navigate]);
+
+
+  // Check User Type
+  useEffect(() => {
+    if (localStorage.getItem("id") !== '0') {
+      navigate("/Login", { replace: true });
+    }
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);

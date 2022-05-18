@@ -6,7 +6,7 @@ const OwnerModel = require('../models/OwnerModel');
 const OtpModel = require('../models/OtpModel');
 
 // Util
-const { checkParameters,sendOtpMail } = require('../middleware/utils');
+const { checkParameters, sendOtpMail } = require('../middleware/utils');
 
 // API Using Async Await
 
@@ -53,6 +53,7 @@ exports.Login = async (req, res) => {
 
         const user = await OwnerModel.findByCredentials(req.body.email, req.body.password);
         const token = await user.generateAuthToken();
+
         return res.status(200).send({ user: await user.getPublicProfile(), token });
     } catch (e) {
         return res.status(400).send({ error: e.message });
@@ -74,6 +75,7 @@ exports.Logout = async (req, res) => {
     }
 }
 
+// Profile
 exports.AdminProfile = async (req, res) => {
 
     try {
@@ -87,6 +89,7 @@ exports.AdminProfile = async (req, res) => {
 
         const newObject = data.toObject();
 
+        newObject.type = 'Admin';
         delete newObject.password;
         delete newObject.tokens;
 
@@ -115,6 +118,7 @@ exports.ChangePassword = async (req, res) => {
     }
 }
 
+// Forgot Password
 exports.ForgotPasswordSendOtp = async (req, res) => {
     try {
         const user = await OwnerModel.find({ email: req.body.email });
@@ -138,8 +142,11 @@ exports.ForgotPasswordSendOtp = async (req, res) => {
     }
 };
 
+// Verify OTP & Change Password
 exports.ChangePasswordAfterOtp = async (req, res) => {
     const data = await OtpModel.find({ otp: req.body.otp, email: req.body.email });
+
+    // Check OTP
     if (data.length === 0) {
         res.status(400).send({ error: "Invalid OTP, Sorry.." });
     } else {
@@ -158,6 +165,7 @@ exports.ChangePasswordAfterOtp = async (req, res) => {
         userData.password = newpassword;
         await userData.save();
 
+        // Send Mail
         sendCredentialMail(req.body.email, newpassword);
 
         res.status(200).send({ data: "New password sent to your email.." });

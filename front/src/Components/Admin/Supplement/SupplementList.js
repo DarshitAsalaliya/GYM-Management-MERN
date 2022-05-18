@@ -16,6 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // Action
 import { getSupplementList } from '../../../Redux/actions/supplementAction';
 
+// Update Supplement
 import UpdateSupplement from './UpdateSupplement';
 
 export default function SupplementList() {
@@ -26,6 +27,7 @@ export default function SupplementList() {
 
     const { data, getlistsuccess } = useSelector(state => state.getsupplementlist);
 
+    // Load Data
     useEffect(() => {
 
         loadSupplementList();

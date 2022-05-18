@@ -25,16 +25,13 @@ export default function NotificationList(props) {
 
     const { data, getlistsuccess } = useSelector(state => state.getnotificationlist);
 
+    // Load Data
     useEffect(() => {
-
         loadNotificationList();
-
     }, [getlistsuccess]);
 
     useEffect(() => {
-
         dispatch({ type: constants.NOTIFICATION_LIST_RESET });
-
     }, []);
 
     const loadNotificationList = async () => {

@@ -10,7 +10,7 @@ const upload = require('../middleware/multer');
 // Import From Controller
 const OwnerController = require('../controllers/OwnerController');
 
-// Create GenerateToken
+// Owner Registration
 router.post('/api/Owner/Registration', upload.single('image'), OwnerController.Registration);
 
 // Login

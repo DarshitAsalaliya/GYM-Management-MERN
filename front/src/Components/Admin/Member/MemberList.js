@@ -7,6 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import Chip from '@mui/material/Chip';
 import BoyIcon from '@mui/icons-material/Boy';
 import GirlIcon from '@mui/icons-material/Girl';
+import ViewImage from '../../Utils/ViewImage';
 
 // Constants
 import * as constants from '../../../Redux/constants/memberConstants';
@@ -34,6 +35,7 @@ export default function MemberList() {
 
     const { data, getlistloading, getlisterror, getlistsuccess } = useSelector(state => state.getmemberlist);
 
+    // Load Data
     useEffect(() => {
 
         loadMemberList();
@@ -48,13 +50,14 @@ export default function MemberList() {
             obj['invoiceid'] = obj['_id'];
             obj['editid'] = obj['_id'];
             obj['expirydate'] = obj['invoices'][obj['invoices']?.length - 1]?.expirydate;
-            obj['membershipstatus'] = obj['invoices']?.length > 0 ? new Date(obj['invoices'][obj['invoices']?.length - 1]?.expirydate.slice(0,10)) < new Date(new Date().toISOString().slice(0,10)) ? 'expired' : 'valid' : 'invoice not found';
+            obj['membershipstatus'] = obj['invoices']?.length > 0 ? new Date(obj['invoices'][obj['invoices']?.length - 1]?.expirydate.slice(0, 10)) < new Date(new Date().toISOString().slice(0, 10)) ? 'expired' : 'valid' : 'invoice not found';
             return obj;
         });
 
         data && setMemberList(filterData);
     };
 
+    // Get Membership Status Function
     const getMembershipStatus = (type) => {
         if (type === 'expired')
             return <Chip variant="outlined" color="error" size="small" label="Expired" />
@@ -64,6 +67,7 @@ export default function MemberList() {
             return <Chip variant="outlined" color="warning" size="small" label="Invoice Not Found" />;
     }
 
+    // Cutom Toolbar
     const CustomToolbar = () => {
         return (
             <GridToolbarContainer>
@@ -93,7 +97,7 @@ export default function MemberList() {
                         sortable: false,
                         filterable: false,
                         renderCell: (params) => (
-                            params.value ? <Avatar src={params.value.image_url} /> : <Avatar sx={{ bgcolor: deepOrange[400] }}><PersonIcon /></Avatar>
+                            params.value ? <ViewImage imageurl={params.value.image_url} /> : <Avatar sx={{ bgcolor: deepOrange[400] }}><PersonIcon /></Avatar>
                         ),
                     },
                     {

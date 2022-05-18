@@ -13,60 +13,62 @@ const checkParameters = (bodyObject, parameterArray) => {
   }
 }
 
-
 // Send Mail
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: '17bmiit118@gmail.com',
-    pass: 'Have@Your#Cake$And%'
+    user: process.env.SMTP_MAIL,
+    pass: process.env.SMTP_PASSWORD
   }
 });
+
+// Send Credential
 const sendCredentialMail = (toMail, password) => {
 
   const mailOptions = {
-    from: '17bmiit118@gmail.com',
+    from: process.env.SMTP_MAIL,
     to: toMail,
     subject: 'GYM Credentials',
-    html: `<!DOCTYPE html>
+    html:
+      `<!DOCTYPE html>
         <html>
         <head>
-        <style>
-        table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 50%;
-        }
-        
-        td, th {
-          border: 1px solid #dddddd;
-          text-align: left;
-          padding: 8px;
-        }
-        
-        tr:nth-child(even) {
-          background-color: #dddddd;
-        }
-        </style>
+          <style>
+              table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 50%;
+              }
+              
+              td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+              }
+              
+              tr:nth-child(even) {
+                background-color: #dddddd;
+              }
+          </style>
         </head>
         <body>
         
-        <table>
-          <tr>
-            <th colspan="2">Credential</th>
-          </tr>
-          <tr>
-            <th>Email</th>
-            <th>Password</th>
-          </tr>
-          <tr>
-            <td>${toMail}</td>
-            <td>${password}</td>
-          </tr>
-        </table>
-        
+          <table>
+              <tr>
+                <th colspan="2">Credential</th>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <th>Password</th>
+              </tr>
+              <tr>
+                <td>${toMail}</td>
+                <td>${password}</td>
+              </tr>
+          </table>
+          
         </body>
         </html>`
   };
@@ -80,44 +82,44 @@ const sendCredentialMail = (toMail, password) => {
   });
 }
 
+// Send OTP
 const sendOtpMail = (toMail, otp) => {
-
+  console.log(process.env.SMTP_PASSWORD);
   const mailOptions = {
-    from: '17bmiit118@gmail.com',
+    from: process.env.SMTP_MAIL,
     to: toMail,
     subject: 'OTP For Forgot Password',
-    html: `<!DOCTYPE html>
+    html:
+      `<!DOCTYPE html>
       <html>
       <head>
-      <style>
-      table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 50%;
-      }
-      
-      td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-      }
-      
-      tr:nth-child(even) {
-        background-color: #dddddd;
-      }
-      </style>
+        <style>
+            table {
+              font-family: arial, sans-serif;
+              border-collapse: collapse;
+              width: 50%;
+            }
+            
+            td, th {
+              border: 1px solid #dddddd;
+              text-align: left;
+              padding: 8px;
+            }
+            
+            tr:nth-child(even) {
+              background-color: #dddddd;
+            }
+        </style>
       </head>
       <body>
-      
-      <table>
-        <tr>
-          <th>OTP</th>
-        </tr>
-        <tr>
-          <td>${otp}</td>
-        </tr>
-      </table>
-      
+        <table>
+          <tr>
+            <th>OTP</th>
+          </tr>
+          <tr>
+            <td>${otp}</td>
+          </tr>
+        </table>
       </body>
       </html>`
   };

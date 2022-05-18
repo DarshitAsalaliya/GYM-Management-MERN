@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import PasswordIcon from '@mui/icons-material/Password';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Alert from '@mui/material/Alert';
 import LinearProgress from '@mui/material/LinearProgress';
-
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 
 import { useNavigate } from "react-router-dom";
 
@@ -48,12 +42,11 @@ export default function EnterOTP(props) {
         success && navigate("/Dashboard/Admin", { replace: true });
     }, [success, navigate]);
 
+    // Reset
     useEffect(() => {
-        // Reset
         dispatch({
             type: constants.CHANGE_PASSWORD_AFTER_OTP_RESET
         });
-
     }, []);
 
     // Form Data State
@@ -110,7 +103,6 @@ export default function EnterOTP(props) {
         });
 
         dispatch(forgotPasswordSendOtp(userType, { email: props.data?.userEmail }));
-
     }
 
     useEffect(() => {
@@ -154,18 +146,6 @@ export default function EnterOTP(props) {
                         </Typography>
 
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 0 }}>
-                            {/* <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="userOTP"
-                                label="Enter OTP"
-                                name="userOTP"
-                                autoComplete="off"
-                                autoFocus
-                                variant="standard"
-                                onChange={handleChange}
-                            /> */}
 
                             <OTPInput value={OTP} name="userOTP" id="userOTP" onChange={setOTP} autoFocus OTPLength={4} otpType="number" disabled={false} />
 

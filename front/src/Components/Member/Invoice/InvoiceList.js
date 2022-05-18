@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Chip from '@mui/material/Chip';
 
-// DeleteInvoice
-import DeleteInvoice from './DeleteInvoice';
-
 // Print Invoice
 import InvoicePrint from '../../Utils/InvoicePrint';
 
@@ -13,8 +10,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 // Action
 import { getInvoiceList } from '../../../Redux/actions/invoiceAction';
-
-import UpdateInvoice from './UpdateInvoice';
 
 export default function InvoiceList() {
 

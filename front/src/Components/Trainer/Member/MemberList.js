@@ -7,12 +7,10 @@ import PersonIcon from '@mui/icons-material/Person';
 import Chip from '@mui/material/Chip';
 import BoyIcon from '@mui/icons-material/Boy';
 import GirlIcon from '@mui/icons-material/Girl';
+import ViewImage from '../../Utils/ViewImage';
 
 // Constants
 import * as constants from '../../../Redux/constants/memberConstants';
-
-// DeleteMember
-import DeleteMember from './DeleteMember';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -22,8 +20,6 @@ import { getMemberList } from '../../../Redux/actions/memberAction';
 
 import UpdateMemberDietPlan from './UpdateMemberDietPlan';
 
-const { REACT_APP_BASE_URL } = process.env;
-
 export default function MemberList() {
 
     const [memberList, setMemberList] = useState([]);
@@ -32,6 +28,7 @@ export default function MemberList() {
 
     const { data, getlistloading, getlisterror, getlistsuccess } = useSelector(state => state.getmemberlist);
 
+    // Load Data
     useEffect(() => {
 
         loadMemberList();
@@ -63,7 +60,6 @@ export default function MemberList() {
             return <Chip variant="outlined" color="warning" size="small" label="Invoice Not Found" />;
     }
 
-
     return (
         <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
             <DataGrid
@@ -82,7 +78,7 @@ export default function MemberList() {
                         sortable: false,
                         filterable: false,
                         renderCell: (params) => (
-                            params.value ? <Avatar src={params.value.image_url} /> : <Avatar sx={{ bgcolor: deepOrange[400] }}><PersonIcon /></Avatar>
+                            params.value ? <ViewImage imageurl={params.value.image_url} /> : <Avatar sx={{ bgcolor: deepOrange[400] }}><PersonIcon /></Avatar>
                         ),
                     },
                     {

@@ -14,10 +14,6 @@ import ClearIcon from '@mui/icons-material/Clear';
 import Avatar from '@mui/material/Avatar';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import BoltIcon from '@mui/icons-material/Bolt';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
 import EditIcon from '@mui/icons-material/Edit';
 
 // Constants
@@ -111,6 +107,7 @@ export default function UpdateSupplement(props) {
         display: 'block',
     });
 
+    // Validation
     const ValidationSchema = Yup.object().shape({
         supplementname: Yup.string()
             .min(3, 'Too Short!')

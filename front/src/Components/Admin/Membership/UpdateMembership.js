@@ -105,6 +105,7 @@ export default function UpdateMembership(props) {
 
     const { updateerror, updatesuccess } = useSelector(state => state.updatemembership);
 
+    // Validation
     const ValidationSchema = Yup.object().shape({
         membershipname: Yup.string()
             .min(3, 'Too Short!')

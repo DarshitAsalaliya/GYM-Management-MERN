@@ -51,22 +51,20 @@ export default function AdminProfile() {
   const { userdata, getdatasuccess } = useSelector(state => state.loggeduserdata);
   const { changepasswordsuccess, changepassworderror } = useSelector(state => state.changepassword);
 
+  // Load Data
   useEffect(() => {
-
     dispatch(getLoggedUserData('Admin'));
-
   }, []);
 
   useEffect(() => {
-
     userdata && setUserData(userdata);
-
   }, [userdata]);
 
   useEffect(() => {
     dispatch({ type: constants.CHANGE_PASSWORD_RESET });
   }, [])
 
+  // Validation
   const ValidationSchema = Yup.object().shape({
     password: Yup.string().required('Required'),
     newpassword: Yup.string()

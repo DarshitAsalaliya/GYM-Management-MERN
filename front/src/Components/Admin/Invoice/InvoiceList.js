@@ -15,12 +15,14 @@ import UpdateInvoice from './UpdateInvoice';
 
 export default function InvoiceList() {
 
+    // State
     const [invoiceList, setInvoiceList] = useState([]);
 
     const dispatch = useDispatch();
 
     const { data, getlistsuccess } = useSelector(state => state.getinvoicelist);
 
+    // Load Data
     useEffect(() => {
 
         loadInvoiceList();

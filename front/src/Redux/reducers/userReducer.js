@@ -11,7 +11,7 @@ export const userAuthReducer = (state = {}, action) => {
             return {
                 ...state,
                 loading: false,
-                isAuthenticated: true
+                isAuthenticated: true,
             }
         case constants.NEW_LOGIN_FAIL:
             return {
@@ -55,6 +55,7 @@ export const getLoggedUserDataReducer = (state = {}, action) => {
                 getdataloading: false,
                 getdataerror: action.payload,
                 getdatasuccess: false,
+                userdata: { type: 'Invalid' }
             }
         case constants.LOGGED_USERDATA_RESET:
             return { ...state, getdataloading: false, getdataerror: false, getdatasuccess: false }

@@ -33,6 +33,7 @@ export default function AdminDashboard() {
 
   const { trainerdashboarddata, gettrainerdashboarddatasuccess } = useSelector(state => state.trainerdashboarddata);
 
+  // Load Data
   useEffect(() => {
     dispatch(getTrainerDashboardData());
   }, [dispatch])
@@ -41,6 +42,7 @@ export default function AdminDashboard() {
     trainerdashboarddata && setDashboardData(trainerdashboarddata);
   }, [trainerdashboarddata])
 
+  // Member Active / Inactive Data
   const memberactiveinactivechartdata = {
     labels: ['Active  ', 'Inactive'],
     datasets: [
@@ -60,6 +62,7 @@ export default function AdminDashboard() {
     ],
   };
 
+  // Member Gender Wise Data
   const membergenderchartdata = {
     labels: ['Male    ', 'Female'],
     datasets: [
@@ -79,6 +82,7 @@ export default function AdminDashboard() {
     ],
   };
 
+  // Member Membership Status Data
   const membermembershipstatusdata = {
     labels: ['Valid Membership    ', 'Expired Membership'],
     datasets: [
@@ -98,12 +102,13 @@ export default function AdminDashboard() {
     ],
   };
 
+  // Member Diet Plan Data
   const memberdietplanstatuschartdata = {
     labels: ['Diet Plan Set       ', 'Diet Plan Not Set'],
     datasets: [
       {
         label: '# of Votes',
-        data: [dashboardData.totalMembers?.filter(d => d.dietplan!=='{}' && d.dietplan!==undefined).length, dashboardData.totalMembers?.filter(d => d.dietplan===undefined || d.dietplan === '{}').length],
+        data: [dashboardData.totalMembers?.filter(d => d.dietplan !== '{}' && d.dietplan !== undefined).length, dashboardData.totalMembers?.filter(d => d.dietplan === undefined || d.dietplan === '{}').length],
         backgroundColor: [
           'rgba(0, 128, 0, 0.4)',
           'rgba(255, 99, 132, 0.5)',
@@ -118,7 +123,6 @@ export default function AdminDashboard() {
   };
 
   return (
-
     <>
       <Box sx={{ width: '100%' }}>
         <Grid container spacing={2}>
@@ -134,9 +138,9 @@ export default function AdminDashboard() {
 
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12} md={12} >
-            <Item elevation={0} sx={{ backgroundColor: '' }}>
+            <Item elevation={0} >
               <Grid container spacing={2}>
-                <Grid item xs={12} md={2}>
+                <Grid item xs={12} md={3} sx={{ backgroundColor: '#fff0e7' }}>
                   <Typography variant="caption" display="block" gutterBottom>
                     Assigned Members
                   </Typography>
@@ -156,61 +160,12 @@ export default function AdminDashboard() {
                 <Grid item xs={6} md={2}>
                   <Doughnut data={memberdietplanstatuschartdata} />
                 </Grid>
+                <Grid item xs={6} md={1}>
+
+                </Grid>
               </Grid>
             </Item>
           </Grid>
-
-
-
-
-          {/* <Grid item xs={6} md={3}>
-            <Item elevation={0} sx={{ backgroundColor: '#D0F2FF' }}>
-
-              <Typography variant="caption" display="block" gutterBottom>
-                Total Trainers
-              </Typography>
-              <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                {dashboardData.totalTrainers || 0}
-              </Typography>
-
-            </Item>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Item elevation={0} sx={{ backgroundColor: '#FFF7CD' }}>
-
-              <Typography variant="caption" display="block" gutterBottom>
-                Total Memberships
-              </Typography>
-              <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                {dashboardData.totalMemberships || 0}
-              </Typography>
-
-            </Item>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Item elevation={0} sx={{ backgroundColor: '#FFE7D9' }}>
-
-              <Typography variant="caption" display="block" gutterBottom>
-                Total Supplements
-              </Typography>
-              <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                {dashboardData.totalSupplements || 0}
-              </Typography>
-
-            </Item>
-          </Grid>
-          <Grid item xs={6} md={3}>
-            <Item elevation={0} sx={{ backgroundColor: '#FFF7CD' }}>
-
-              <Typography variant="caption" display="block" gutterBottom>
-                Total Invoices
-              </Typography>
-              <Typography variant="h6" gutterBottom component="div" sx={{ color: '#181616' }}>
-                {dashboardData.totalInvoices || 0}
-              </Typography>
-
-            </Item>
-          </Grid> */}
         </Grid>
       </Box>
 

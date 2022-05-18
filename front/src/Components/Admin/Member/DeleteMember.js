@@ -33,6 +33,7 @@ export default function DeleteMember(props) {
         setOpen(true);
     };
 
+    // Delete Function
     const handleDelete = async () => {
 
         // Delete Reset

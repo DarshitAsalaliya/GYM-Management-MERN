@@ -1,15 +1,8 @@
 import { useEffect, useState } from 'react';
 import { DataGrid, GridToolbarContainer, GridToolbarExport } from '@mui/x-data-grid';
-import { Button } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import { deepOrange, deepPurple } from '@mui/material/colors';
-import PersonIcon from '@mui/icons-material/Person';
-import Chip from '@mui/material/Chip';
-import BoyIcon from '@mui/icons-material/Boy';
-import GirlIcon from '@mui/icons-material/Girl';
-import Tooltip from '@mui/material/Tooltip';
 
 import '../../Utils/GlobalStyle.css';
+
 // Constants
 import * as constants from '../../../Redux/constants/userConstants';
 
@@ -39,7 +32,7 @@ export default function MemberDietPlan() {
 
     }, [userdata]);
 
-    const dietplan = userData?.dietplan && JSON.parse(userData.dietplan);
+    const dietplan = userData?.dietplan && JSON.parse(userData?.dietplan);
 
     const dietList = [
         { id: 1, day: 'Sunday', breakfast: dietplan?.sundaybreakfast, lunch: dietplan?.sundaylunch, dinner: dietplan?.sundaydinner, snacks: dietplan?.sundaysnacks, },
@@ -85,7 +78,7 @@ export default function MemberDietPlan() {
                         headerName: 'Breakfast',
                         width: 320,
                         renderCell: (params) => (
-                            <div title={params.value}>{params.value.length>40?params.value.slice(0,40) + '..' : params.value.slice(0,40)}</div>
+                            <div title={params.value}>{params.value?.length>40?params.value?.slice(0,40) + '..' : params.value?.slice(0,40)}</div>
                         ),
                     },
                     {
@@ -93,7 +86,7 @@ export default function MemberDietPlan() {
                         headerName: 'Lunch',
                         width: 320,
                         renderCell: (params) => (
-                            <div title={params.value}>{params.value.length>40?params.value.slice(0,40) + '..' : params.value.slice(0,40)}</div>
+                            <div title={params.value}>{params.value?.length>40?params.value?.slice(0,40) + '..' : params.value?.slice(0,40)}</div>
                         ),
                     },
                     {
@@ -101,7 +94,7 @@ export default function MemberDietPlan() {
                         headerName: 'Dinner',
                         width: 320,
                         renderCell: (params) => (
-                            <div title={params.value}>{params.value.length>40?params.value.slice(0,40) + '..' : params.value.slice(0,40)}</div>
+                            <div title={params.value}>{params.value?.length>40?params.value?.slice(0,40) + '..' : params.value?.slice(0,40)}</div>
                         ),
                     },
                     {
@@ -109,7 +102,7 @@ export default function MemberDietPlan() {
                         headerName: 'Snacks',
                         width: 320,
                         renderCell: (params) => (
-                            <div title={params.value}>{params.value.length>40?params.value.slice(0,40) + '..' : params.value.slice(0,40)}</div>
+                            <div title={params.value}>{params.value?.length>40?params.value?.slice(0,40) + '..' : params.value?.slice(0,40)}</div>
                         ),
                     },
                 ]}

@@ -1,8 +1,4 @@
 import React, { useEffect } from 'react';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import SendIcon from '@mui/icons-material/Send';
-import Stack from '@mui/material/Stack';
 import AddTrainer from './AddTrainer';
 import TrainerList from './TrainerList';
 import SnackbarMsg from '../../Utils/SnackbarMsg';
@@ -12,7 +8,6 @@ import '../../Utils/GlobalStyle.css';
 
 // Grid
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 
 // Constants
@@ -31,6 +26,7 @@ export default function ManageTrainers() {
     const { updateloading, updateerror, updatesuccess } = useSelector(state => state.updatetrainer);
     const { deleteloading, deleteerror, deletesuccess } = useSelector(state => state.deletetrainer);
 
+    // Reset
     useEffect(() => {
         dispatch({
             type: constants.NEW_TRAINER_RESET
