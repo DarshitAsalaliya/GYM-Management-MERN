@@ -19,11 +19,15 @@ cloudinary.config({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
 
+// CORS
+app.use(cors());
+
 // Connection
 require('./src/db/connection');
 
-// CORS
-app.use(cors());
+app.get('/',(req,res)=>{
+    res.send('Welcome');
+});
 
 // Set Owner Router
 const ownerRoute = require('./src/routes/OwnerRoute');
