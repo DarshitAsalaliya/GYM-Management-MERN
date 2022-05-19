@@ -10,7 +10,7 @@ import Tooltip from '@mui/material/Tooltip';
 
 export default function SupplementCard(props) {
   return (
-    <Card sx={{ maxWidth: 345, border: '1px solid #e9e6e6' }} elevation={0}>
+    <Card sx={{ maxWidth: 345, border: '1px solid #e9e6e6', '&:hover': { boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)' } }} elevation={0}>
 
       <CardMedia
         component="img"
@@ -27,7 +27,7 @@ export default function SupplementCard(props) {
           {props.data?.price} ₹
         </Typography>
         <Tooltip title={props.data?.description}>
-          <Typography variant="body2" color="text.secondary" sx={{height: 45}}>
+          <Typography variant="body2" color="text.secondary" sx={{ height: 45 }}>
             {props.data?.description.length <= 50 ? props.data?.description.slice(0, 50) : props.data?.description.slice(0, 50) + '..'}
           </Typography>
         </Tooltip>

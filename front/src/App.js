@@ -22,7 +22,7 @@ import AddMember from './Components/Admin/Member/AddMember';
 import HomeLayout from './Components/Home/HomeLayout/HomeLayout';
 import Login from './Components/Home/Login';
 import SupplementList from './Components/Home/Supplement/SupplementList';
-import MembershipList from './Components/Home/MembershipList';
+import MembershipList from './Components/Home/Membership/MembershipList';
 import QueryForm from './Components/Home/QueryForm';
 import HomePage from './Components/Home/HomePage';
 import axios from 'axios';

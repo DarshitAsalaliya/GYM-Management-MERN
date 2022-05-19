@@ -2,12 +2,17 @@ import React from 'react';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import ImageList from './ImageList';
+
 // Grid
 import Grid from '@mui/material/Grid';
 import { Divider } from '@mui/material';
 
 import Fab from '@mui/material/Fab';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+
+import '../Utils/GlobalStyle.css';
+
 const theme = createTheme({
     typography: {
         fontFamily: 'unset',
@@ -26,7 +31,7 @@ export default function HomePage() {
 
                 <Grid container spacing={2} sx={{ color: '#464646' }}>
                     <Grid xs={12} p={6} pb={0}>
-                        <Typography variant="h3" component="h2" sx={{ textAlign: 'center' }}>
+                        <Typography variant="h3" component="h2" sx={{ textAlign: 'center' }} className='zoom-in-zoom-out'>
                             WE ARE GYM AND FITNESS
                         </Typography>
                         <Typography variant="h4" component="h2" sx={{ textAlign: 'center' }}>
@@ -34,8 +39,11 @@ export default function HomePage() {
                         </Typography>
                     </Grid>
 
-                    
-
+                    <Grid xs={12} p={6} pb={0}>
+                        <ImageList />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={2} sx={{ color: '#464646' }} mt={-10}>
                     <Grid xs={12} md={7} pt={15} pl={5}>
                         <Typography variant="h4" component="h2" sx={{ textAlign: 'center' }}>
                             OUR PEOPLE
@@ -53,7 +61,8 @@ export default function HomePage() {
                     <Grid xs={12} md={5}>
                         <img src='https://png.pngtree.com/png-vector/20190903/ourlarge/pngtree-set-of-gym-workout-people-png-image_1718229.jpg' width='100%' />
                     </Grid>
-
+                </Grid>
+                <Grid container spacing={2} sx={{ color: '#464646' }} mt={-5}>
                     <Grid xs={12} p={6} pt={0}>
                         <Typography variant="h4" component="h2" sx={{ textAlign: 'center' }}>
                             OUR VALUES
