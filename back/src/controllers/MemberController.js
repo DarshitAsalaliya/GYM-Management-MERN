@@ -189,7 +189,7 @@ exports.UpdateMember = async (req, res) => {
         if (req.file) {
 
             // Delete Existing Image From Cloudinary
-            data.image.public_id && await cloudinary.v2.uploader.destroy(data.image.public_id);
+            data.image.public_id && await cloudinary.v2.uploader.destroy(data.image?.public_id);
 
             // Upload New Image To Cloudinary
             const uploadResult = await cloudinary.v2.uploader.upload(req.file.path, {
@@ -248,10 +248,10 @@ exports.DeleteMember = async (req, res) => {
         }
 
         // Delete Uploaded File From Cloudinary
-        await cloudinary.v2.uploader.destroy('memberimages/' + data.image);
+        await cloudinary.v2.uploader.destroy(data.image?.public_id);
 
         // Delete Uploaded Files From Local Folder
-        fs.unlink('./public/images/' + data.image, (err) => { });
+        fs.unlink('./public/images/' + data.image?.public_id.split('/')[1], (err) => { });
 
         // Add Notification
         const newNotification = new NotificationModel({ notificationcontent: data.name + ' has left the GYM.', ownerprofileid: req.user.id });

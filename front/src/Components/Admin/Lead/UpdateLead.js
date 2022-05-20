@@ -19,6 +19,7 @@ import { updateLead } from '../../../Redux/actions/leadAction';
 export default function DeleteLead(props) {
 
     const [open, setOpen] = useState(false);
+    const [loader, setLoader] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -27,6 +28,8 @@ export default function DeleteLead(props) {
     };
 
     const handleChange = async () => {
+
+        setLoader(true);
 
         // Delete Reset
         await dispatch({
@@ -40,7 +43,9 @@ export default function DeleteLead(props) {
             type: constants.LEAD_LIST_RESET
         });
 
+        setLoader(false);
         setOpen(false);
+        
     };
 
     const handleClose = () => {
@@ -73,7 +78,7 @@ export default function DeleteLead(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleChange} autoFocus>
+                    <Button onClick={handleChange} autoFocus disabled={loader}>
                         Change
                     </Button>
                 </DialogActions>

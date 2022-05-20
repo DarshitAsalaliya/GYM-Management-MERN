@@ -16,20 +16,32 @@ export default function DrawerMenuList() {
 
   const navigate = useNavigate();
 
+  const [selectedIndex, setSelectedIndex] = React.useState();
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+
+    if (index === 0)
+      navigate("./", { replace: true });
+    else if (index === 1)
+      navigate("./ManageMembers", { replace: true });
+  
+  };
+
   return (
     <List
       sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton onClick={() => navigate("./", { replace: true })}>
+      <ListItemButton selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0)}>
         <ListItemIcon>
           <HomeIcon />
         </ListItemIcon>
         <ListItemText primary="Dashboard" className='sideMenuTextStyle' />
       </ListItemButton>
 
-      <ListItemButton onClick={() => navigate("./ManageMembers", { replace: true })}>
+      <ListItemButton selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)}>
         <ListItemIcon>
           <PersonIcon />
         </ListItemIcon>

@@ -85,7 +85,7 @@ export default function AdminDashboard() {
             </Item>
 
           </Grid>
-          <Grid item xs={12} md={9} sx={{ marginTop: { xs: '0px', md: '-35px' } }} >
+          <Grid item xs={12} md={9} sx={{ marginTop: { xs: '0px', md: '-8.5vh' } }} >
             <SupplementList md="3" />
           </Grid>
         </Grid>

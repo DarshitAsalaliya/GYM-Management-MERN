@@ -38,13 +38,13 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '55%',
-    height: '80%',
+    width: { md: '40%', xs: '90%' },
+    height: { md: '80%', xs: '80%' },
     bgcolor: 'background.paper',
     boxShadow: 24,
     overflow: 'scroll',
     p: 4,
-    
+
 };
 
 const IOSSwitch = styled((props) => (
@@ -127,7 +127,7 @@ export default function AddMembership() {
         <div>
             {registererror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={registererror} severity="error" />}
 
-            <Button onClick={handleOpen} variant="outlined" startIcon={<AddIcon />} size='small'>
+            <Button onClick={handleOpen} variant="contained" startIcon={<AddIcon />} size='small'>
                 Add Membership
             </Button>
             <Modal

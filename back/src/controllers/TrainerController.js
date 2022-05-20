@@ -192,10 +192,10 @@ exports.DeleteTrainer = async (req, res) => {
         }
 
         // Delete Uploaded File From Cloudinary
-        await cloudinary.v2.uploader.destroy('images/' + data.image);
+        await cloudinary.v2.uploader.destroy(data.image?.public_id);
 
         // Delete Uploaded Files From Local Folder
-        fs.unlink('./public/images/' + data.image, (err) => { });
+        fs.unlink('./public/images/' + data.image?.public_id.split('/')[1], (err) => { });
 
         // Add Notification
         const newNotification = new NotificationModel({ notificationcontent: req.body.name + ' has left the GYM.', ownerprofileid: req.user.id });
@@ -291,7 +291,7 @@ exports.ForgotPasswordSendOtp = async (req, res) => {
 // Verify OTP & Change Password
 exports.ChangePasswordAfterOtp = async (req, res) => {
     const data = await OtpModel.find({ otp: req.body.otp, email: req.body.email });
-    
+
     // Check OTP
     if (data.length === 0) {
         res.status(400).send({ error: "Invalid OTP, Sorry.." });

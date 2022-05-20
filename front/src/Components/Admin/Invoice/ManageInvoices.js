@@ -67,7 +67,7 @@ export default function ManageInvoices() {
                         </Typography>
                     </Grid>
                     <Grid item xs={6} md={4} sx={{ textAlign: 'right' }}>
-                        <Button onClick={navigateToMemberList} variant="outlined" startIcon={<AddIcon />} size='small'>
+                        <Button onClick={navigateToMemberList} variant="contained" startIcon={<AddIcon />} size='small'>
                             Add Invoice
                         </Button>
                     </Grid>

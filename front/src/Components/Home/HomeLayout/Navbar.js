@@ -121,20 +121,20 @@ const Navbar = () => {
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         <Button>
-                            <NavLink to="/Memberships" className='Nav-Item'>Memberships</NavLink>
+                            <NavLink to="/Memberships" style={({ isActive }) => { return { fontWeight: isActive ? 'bold' : '' } }} className='Nav-Item'>Memberships</NavLink>
                         </Button>
                         <Button>
-                            <NavLink to="/Supplements" className='Nav-Item'>Supplements</NavLink>
+                            <NavLink to="/Supplements" style={({ isActive }) => { return { fontWeight: isActive ? 'bold' : '' } }} className='Nav-Item'>Supplements</NavLink>
                         </Button>
                         <Button>
-                            <NavLink to="/QueryForm" className='Nav-Item'>Query</NavLink>
+                            <NavLink to="/QueryForm" style={({ isActive }) => { return { fontWeight: isActive ? 'bold' : '' } }} className='Nav-Item'>Query</NavLink>
                         </Button>
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Login">
                             <MenuItem onClick={handleCloseNavMenu} >
-                                <NavLink to="/Login" className='Nav-Item'>Login</NavLink>
+                                <NavLink to="/Login" style={({ isActive }) => { return { fontWeight: isActive ? 'bold' : '' } }} className='Nav-Item'>Login</NavLink>
                             </MenuItem>
                         </Tooltip>
                     </Box>

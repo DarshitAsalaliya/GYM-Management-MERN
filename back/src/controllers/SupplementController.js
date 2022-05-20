@@ -136,10 +136,10 @@ exports.DeleteSupplement = async (req, res) => {
         }
 
         // Delete Uploaded File From Cloudinary
-        await cloudinary.v2.uploader.destroy('supplementimages/' + data.image);
+        await cloudinary.v2.uploader.destroy(data.image?.public_id);
 
         // Delete Uploaded Files From Local Folder
-        fs.unlink('./public/images/' + data.image, (err) => { });
+        fs.unlink('./public/images/' + data.image?.public_id.split('/')[1], (err) => { });
 
         return res.status(200).send(data);
     }

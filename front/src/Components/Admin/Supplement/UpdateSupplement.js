@@ -35,8 +35,8 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '55%',
-    height: '85%',
+    width: { md: '40%', xs: '90%' },
+    height: { md: '85%', xs: '85%' },
     bgcolor: 'background.paper',
     boxShadow: 24,
     overflow: 'scroll',
@@ -192,7 +192,7 @@ export default function UpdateSupplement(props) {
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={12} md={12} sx={{ textAlign: 'left' }}>
-                                    {props.dataforupdate?.image?.image_url ? <Avatar src={props.dataforupdate.image.image_url} sx={{ width: 60, height: 60 }} /> : <Avatar sx={{ bgcolor: deepOrange[400] }}><BoltIcon /></Avatar>}
+                                        {props.dataforupdate?.image?.image_url ? <Avatar src={props.dataforupdate.image.image_url} sx={{ width: 60, height: 60 }} /> : <Avatar sx={{ bgcolor: deepOrange[400] }}><BoltIcon /></Avatar>}
                                         <label htmlFor="contained-button-file">
                                             <Input accept="image/*" id="contained-button-file" name="image" type="file" onChange={(event) => {
                                                 setFieldValue("file", event.currentTarget.files[0]);

@@ -173,7 +173,7 @@ export default function AddMember() {
         <div>
             {registererror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={registererror} severity="error" />}
 
-            <Button onClick={handleOpen} variant="outlined" startIcon={<AddIcon />} size='small'>
+            <Button onClick={handleOpen} variant="contained" startIcon={<AddIcon />} size='small'>
                 Add Member
             </Button>
             <Modal

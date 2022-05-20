@@ -144,7 +144,7 @@ export default function AddTrainer() {
         <div>
             {registererror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={registererror} severity="error" />}
 
-            <Button onClick={handleOpen} variant="outlined" startIcon={<AddIcon />} size='small'>
+            <Button onClick={handleOpen} variant="contained" startIcon={<AddIcon />} size='small'>
                 Add Trainer
             </Button>
             <Modal
@@ -154,7 +154,7 @@ export default function AddTrainer() {
             >
                 <Box sx={style}>
                     <Formik
-                        initialValues={{ name: '', email: '', password: '', status: true, gender: 'male', phone: '', address: '', dob: '', doj: new Date().toISOString().slice(0,10), bloodgroup: '', height: 0, weight: 0, salary: 0 }}
+                        initialValues={{ name: '', email: '', password: '', status: true, gender: 'male', phone: '', address: '', dob: '', doj: new Date().toISOString().slice(0, 10), bloodgroup: '', height: 0, weight: 0, salary: 0 }}
                         validationSchema={ValidationSchema}
                         onSubmit={async (values, { setSubmitting }) => {
                             var formData = new FormData();

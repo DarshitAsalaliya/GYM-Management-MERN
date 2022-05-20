@@ -19,6 +19,7 @@ import { deleteSupplement } from '../../../Redux/actions/supplementAction';
 export default function DeleteSupplement(props) {
 
     const [open, setOpen] = useState(false);
+    const [loader, setLoader] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -28,7 +29,7 @@ export default function DeleteSupplement(props) {
 
     // Delete Function
     const handleDelete = async () => {
-
+        setLoader(true);
         // Delete Reset
         await dispatch({
             type: constants.SUPPLEMENT_DELETE_RESET
@@ -41,6 +42,7 @@ export default function DeleteSupplement(props) {
             type: constants.SUPPLEMENT_LIST_RESET
         });
 
+        setLoader(false);
         setOpen(false);
     };
 
@@ -70,7 +72,7 @@ export default function DeleteSupplement(props) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleDelete} autoFocus>
+                    <Button onClick={handleDelete} autoFocus disabled={loader}>
                         Delete
                     </Button>
                 </DialogActions>

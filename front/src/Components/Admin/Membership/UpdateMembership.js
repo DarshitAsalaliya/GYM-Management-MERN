@@ -37,8 +37,8 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '55%',
-    height: '80%',
+    width: { md: '40%', xs: '90%' },
+    height: { md: '80%', xs: '80%' },
     bgcolor: 'background.paper',
     boxShadow: 24,
     overflow: 'scroll',
@@ -263,9 +263,7 @@ export default function UpdateMembership(props) {
                                             Update
                                         </Button>
                                     </Grid>
-                                    <Grid item xs={12} md={4}>
 
-                                    </Grid>
                                 </Grid>
                             </form>
                         )}

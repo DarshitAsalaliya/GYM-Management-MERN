@@ -41,8 +41,8 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '60%',
-    height: '70%',
+    width: {md:'55%',xs:'90%'},
+    height: {md:'70%',xs:'80%'},
     bgcolor: 'background.paper',
     boxShadow: 24,
     overflow: 'scroll',
@@ -200,7 +200,7 @@ export default function UpdateMembership(props) {
                                         <Grid container spacing={3} >
                                             <Grid item xs={10} md={8} sx={{ textAlign: 'left' }}>
                                                 <Typography variant="h6" gutterBottom component="div" >
-                                                    Update Membership
+                                                    Update Invoice
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={2} md={4} sx={{ textAlign: 'right' }}>

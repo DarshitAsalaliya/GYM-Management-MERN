@@ -38,8 +38,8 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '55%',
-    height: '82%',
+    width: { md: '40%', xs: '90%' },
+    height: { md: '80%', xs: '80%' },
     bgcolor: 'background.paper',
     boxShadow: 24,
     overflow: 'scroll',
@@ -116,7 +116,8 @@ export default function AddSupplement() {
             .min(3, 'Too Short!')
             .max(50, 'Too Long!')
             .required('Required'),
-        price: Yup.number().positive('Invalid')
+        price: Yup.number().positive('Invalid'),
+        image: Yup.mixed().required('Image is required'),
     });
 
     useEffect(() => {
@@ -129,7 +130,7 @@ export default function AddSupplement() {
         <div>
             {registererror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={registererror} severity="error" />}
 
-            <Button onClick={handleOpen} variant="outlined" startIcon={<AddIcon />} size='small'>
+            <Button onClick={handleOpen} variant="contained" startIcon={<AddIcon />} size='small'>
                 Add Supplement
             </Button>
             <Modal
@@ -202,6 +203,9 @@ export default function AddSupplement() {
                                             <Button variant="contained" component="span">
                                                 Upload Image
                                             </Button>
+                                            <Typography variant="subtitle2" sx={{ color: '#D32F2F' }}>
+                                                {errors.image}
+                                            </Typography>
                                         </label>
                                     </Grid>
                                     <Grid item xs={12} md={12}>
