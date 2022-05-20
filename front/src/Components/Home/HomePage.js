@@ -39,13 +39,15 @@ export default function HomePage() {
                         </Typography>
                     </Grid>
 
-                    <Grid xs={12} p={6} pb={0}>
+                    <Grid xs={12} p={8} pb={0}>
                         <ImageList />
                     </Grid>
                 </Grid>
-                <Grid container spacing={2} sx={{ color: '#464646' }} mt={-10}>
-                    <Grid xs={12} md={7} pt={15} pl={5}>
-                        <Typography variant="h4" component="h2" sx={{ textAlign: 'center' }}>
+
+
+                <Grid container spacing={2} sx={{ color: '#464646' }} mt={1}>
+                    <Grid xs={12} md={8} p={5}>
+                        <Typography variant="h4" component="h2" sx={{ textAlign: 'center', verticalAlign: 'middle' }}>
                             OUR PEOPLE
                         </Typography>
                         <Divider />
@@ -58,10 +60,12 @@ export default function HomePage() {
                         </Typography>
                     </Grid>
 
-                    <Grid xs={12} md={5}>
-                        <img src='https://png.pngtree.com/png-vector/20190903/ourlarge/pngtree-set-of-gym-workout-people-png-image_1718229.jpg' width='100%' />
+                    <Grid xs={12} md={4}>
+                        <img src='https://png.pngtree.com/png-vector/20190903/ourlarge/pngtree-set-of-gym-workout-people-png-image_1718229.jpg' width='99%' />
                     </Grid>
                 </Grid>
+
+
                 <Grid container spacing={2} sx={{ color: '#464646' }} mt={-5}>
                     <Grid xs={12} p={6} pt={0}>
                         <Typography variant="h4" component="h2" sx={{ textAlign: 'center' }}>
@@ -77,7 +81,7 @@ export default function HomePage() {
                         <img src='https://img.freepik.com/free-vector/young-people-standing-talking-each-other-speech-bubble-smartphone-girl-flat-vector-illustration-communication-discussion_74855-8741.jpg?w=740&t=st=1652344411~exp=1652345011~hmac=2d983cce200cb1bff491db2456d2f480df442536630abb9c600350f0d39ce218' width='100%' />
                     </Grid>
 
-                    <Grid xs={12} md={7} pt={5} pl={5}>
+                    <Grid xs={12} md={7} pt={3} pl={5}>
                         <Typography variant="h4" component="h2" sx={{ textAlign: 'center' }}>
                             OUR CULTURE
                         </Typography>
@@ -90,7 +94,7 @@ export default function HomePage() {
                     </Grid>
 
                     <Grid xs={12} md={12}>
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119059.04409367226!2d72.70240264756087!3d21.16850485785246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be05273c684c4a1%3A0xb50ed2baeacb2fa4!2sAV%20Fitness!5e0!3m2!1sen!2sin!4v1652510795179!5m2!1sen!2sin" width="99.5%" height="450" loading="lazy"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d119059.04409367226!2d72.70240264756087!3d21.16850485785246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be05273c684c4a1%3A0xb50ed2baeacb2fa4!2sAV%20Fitness!5e0!3m2!1sen!2sin!4v1652510795179!5m2!1sen!2sin" width="99%" height="450" loading="lazy"></iframe>
                     </Grid>
 
                 </Grid>

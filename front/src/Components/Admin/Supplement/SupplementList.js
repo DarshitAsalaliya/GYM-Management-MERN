@@ -22,6 +22,7 @@ import UpdateSupplement from './UpdateSupplement';
 export default function SupplementList() {
 
     const [supplementList, setSupplementList] = useState([]);
+    const [loader,setLoader] = useState(true);
 
     const dispatch = useDispatch();
 
@@ -44,10 +45,11 @@ export default function SupplementList() {
         });
 
         data && setSupplementList(filterData);
+        data && setLoader(false);
     };
 
     return (
-        <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
+        <div style={{ height: '75vh', width: '100%', marginTop: '1%' }}>
             <DataGrid
                 sx={{
                     '.MuiDataGrid-columnHeaderTitle': {
@@ -107,6 +109,7 @@ export default function SupplementList() {
                     },
                 ]}
                 rows={supplementList}
+                loading={loader}
             />
         </div>
     );

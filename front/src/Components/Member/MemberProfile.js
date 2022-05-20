@@ -6,6 +6,7 @@ import Divider from '@mui/material/Divider';
 import { Formik } from 'formik';
 import TextField from '@mui/material/TextField';
 import SnackbarMsg from '../Utils/SnackbarMsg';
+import LinearProgress from '@mui/material/LinearProgress';
 
 // Card
 import Card from '@mui/material/Card';
@@ -34,6 +35,7 @@ import { getLoggedUserData, changePassword } from '../../Redux/actions/userActio
 export default function MemberProfile() {
 
   const [userData, setUserData] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -48,6 +50,7 @@ export default function MemberProfile() {
 
   useEffect(() => {
     userdata && setUserData(userdata);
+    userdata && setLoader(false);
   }, [userdata]);
 
 
@@ -84,7 +87,7 @@ export default function MemberProfile() {
             <Box sx={{ flexGrow: 1 }}>
 
               <Card sx={{ maxWidth: 345 }} variant="outlined">
-
+                {loader && <LinearProgress />}
                 <CardHeader
                   avatar={
                     <Avatar alt="Cindy Baker" src={userData?.image?.image_url} sx={{ width: 80, height: 80 }} />

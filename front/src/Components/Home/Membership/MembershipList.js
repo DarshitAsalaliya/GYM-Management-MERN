@@ -36,7 +36,6 @@ export default function MembershipList(props) {
             <Divider />
 
             <Grid container spacing={2} sx={{ marginTop: '0.01%' }}>
-                <Grid item xs={6} md={props.md ? props.md : 2} ></Grid>
                 {
                     membershipList.map((obj, i) => <Grid item xs={6} md={props.md ? props.md : 2} key={i}><MembershipCard data={obj} /></Grid>)
                 }

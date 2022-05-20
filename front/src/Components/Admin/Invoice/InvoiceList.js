@@ -17,8 +17,10 @@ export default function InvoiceList() {
 
     // State
     const [invoiceList, setInvoiceList] = useState([]);
+    const [loader,setLoader] = useState(true);
 
     const dispatch = useDispatch();
+    
 
     const { data, getlistsuccess } = useSelector(state => state.getinvoicelist);
 
@@ -43,6 +45,7 @@ export default function InvoiceList() {
         });
 
         data && setInvoiceList(filterData);
+        data && setLoader(false);
     };
 
     const CustomToolbar = () => {
@@ -54,7 +57,7 @@ export default function InvoiceList() {
     }
 
     return (
-        <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
+        <div style={{ height: '75vh', width: '100%', marginTop: '1%' }}>
             <DataGrid
                 components={{
                     Toolbar: CustomToolbar,
@@ -146,6 +149,7 @@ export default function InvoiceList() {
                     },
                 ]}
                 rows={invoiceList}
+                loading={loader}
             />
         </div>
     );

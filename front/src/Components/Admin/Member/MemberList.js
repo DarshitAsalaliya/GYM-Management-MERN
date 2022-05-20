@@ -30,6 +30,7 @@ const { REACT_APP_BASE_URL } = process.env;
 export default function MemberList() {
 
     const [memberList, setMemberList] = useState([]);
+    const [loader,setLoader] = useState(true);
 
     const dispatch = useDispatch();
 
@@ -55,6 +56,8 @@ export default function MemberList() {
         });
 
         data && setMemberList(filterData);
+
+        data && setLoader(false);
     };
 
     // Get Membership Status Function
@@ -77,7 +80,7 @@ export default function MemberList() {
     }
 
     return (
-        <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
+        <div style={{ height: '75vh', width: '100%', marginTop: '1%' }}>
             <DataGrid
                 components={{
                     Toolbar: CustomToolbar,
@@ -195,6 +198,7 @@ export default function MemberList() {
                     },
                 ]}
                 rows={memberList}
+                loading={loader}
             />
         </div>
     );

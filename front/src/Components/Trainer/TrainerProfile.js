@@ -7,6 +7,7 @@ import { Formik } from 'formik';
 import TextField from '@mui/material/TextField';
 import SnackbarMsg from '../Utils/SnackbarMsg';
 import UpdateTrainer from './Trainer/UpdateTrainer';
+import LinearProgress from '@mui/material/LinearProgress';
 // Card
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -33,6 +34,7 @@ import { getLoggedUserData, changePassword } from '../../Redux/actions/userActio
 export default function AdminProfile() {
 
   const [userData, setUserData] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -47,6 +49,7 @@ export default function AdminProfile() {
 
   useEffect(() => {
     userdata && setUserData(userdata);
+    userdata && setLoader(false);
   }, [userdata]);
 
   // Reset
@@ -82,6 +85,7 @@ export default function AdminProfile() {
             </Typography>
             <Box sx={{ flexGrow: 1 }}>
               <Card sx={{ maxWidth: 345 }} variant="outlined">
+              {loader && <LinearProgress />}
                 <CardHeader
                   avatar={
                     <Avatar alt="Cindy Baker" src={userData?.image?.image_url} sx={{ width: 80, height: 80 }} />

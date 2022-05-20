@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import LinearProgress from '@mui/material/LinearProgress';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
@@ -28,6 +29,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AdminDashboard() {
 
   const [dashboardData, setDashboardData] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -40,6 +42,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     trainerdashboarddata && setDashboardData(trainerdashboarddata);
+    trainerdashboarddata && setLoader(false);
   }, [trainerdashboarddata])
 
   // Member Active / Inactive Data
@@ -135,7 +138,7 @@ export default function AdminDashboard() {
 
           </Grid>
         </Grid>
-
+        {loader && <LinearProgress />}
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12} md={12} >
             <Item elevation={0} >

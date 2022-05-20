@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import SupplementList from '../Home/Supplement/SupplementList';
 import { Chip } from '@mui/material';
+import LinearProgress from '@mui/material/LinearProgress';
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -23,6 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function AdminDashboard() {
 
   const [dashboardData, setDashboardData] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -35,6 +37,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     memberdashboarddata && setDashboardData(memberdashboarddata);
+    memberdashboarddata && setLoader(false);
   }, [memberdashboarddata])
 
   // Check Membership Status
@@ -60,6 +63,7 @@ export default function AdminDashboard() {
 
         <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12} md={3}>
+            {loader && <LinearProgress />}
             <Item elevation={0} sx={{ backgroundColor: '#FFFFFF' }}>
 
               <Typography variant="caption" display="block" gutterBottom>

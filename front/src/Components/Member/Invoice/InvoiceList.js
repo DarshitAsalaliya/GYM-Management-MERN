@@ -14,6 +14,7 @@ import { getInvoiceList } from '../../../Redux/actions/invoiceAction';
 export default function InvoiceList() {
 
     const [invoiceList, setInvoiceList] = useState([]);
+    const [loader, setLoader] = useState(true);
 
     const dispatch = useDispatch();
 
@@ -37,11 +38,12 @@ export default function InvoiceList() {
         });
 
         data && setInvoiceList(filterData);
+        data && setLoader(false);
     };
 
 
     return (
-        <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
+        <div style={{ height: '75vh', width: '100%', marginTop: '1%' }}>
             <DataGrid
                 sx={{
                     '.MuiDataGrid-columnHeaderTitle': {
@@ -76,7 +78,7 @@ export default function InvoiceList() {
                         headerName: 'Membership Status',
                         width: 150,
                         renderCell: (params) => (
-                            new Date(params.value.slice(0,10)) < new Date(new Date().toISOString().slice(0,10)) ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" />
+                            new Date(params.value.slice(0, 10)) < new Date(new Date().toISOString().slice(0, 10)) ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" />
                         ),
                     },
                     {
@@ -98,11 +100,12 @@ export default function InvoiceList() {
                         sortable: false,
                         filterable: false,
                         renderCell: (params) => (
-                            <InvoicePrint data={invoiceList.find(obj => obj._id === params.value)}/>
+                            <InvoicePrint data={invoiceList.find(obj => obj._id === params.value)} />
                         ),
                     },
                 ]}
                 rows={invoiceList}
+                loading={loader}
             />
         </div>
     );

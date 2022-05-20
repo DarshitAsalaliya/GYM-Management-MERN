@@ -6,25 +6,23 @@ import Grid from '@mui/material/Grid';
 
 export default function StandardImageList() {
     return (
-        <ImageList sx={{ width: '100%', height: { md: 400 } }} cols={1} >
 
-            <Grid container spacing={2} sx={{ color: '#464646' }}>
+        <Grid container spacing={1} sx={{ color: '#464646' }}>
 
-                {itemData.map((item, i) => (
-                    <Grid xs={6} md={2} p={0.5} key={i}>
-                        <ImageListItem key={item.img}>
-                            <img
-                                src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                                srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                                alt={item.title}
-                                loading="lazy"
-                            />
-                        </ImageListItem>
-                    </Grid>
-                ))}
+            {itemData.map((item, i) => (
+                <Grid xs={6} md={2} p={0.5} key={i} sx={{ textAlign: 'center', '&:hover': { opacity: 0.8 } }}>
+                    <img
+                        src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
+                        srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        alt={item.title}
+                        loading="lazy"
+                        width="100%"
+                    />
+                </Grid>
+            ))}
 
-            </Grid>
-        </ImageList>
+        </Grid>
+
     );
 }
 

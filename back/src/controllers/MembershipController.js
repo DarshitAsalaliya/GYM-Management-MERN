@@ -33,7 +33,7 @@ exports.GetMembershipList = async (req, res) => {
 // Get All Active Membership
 exports.GetActiveMembershipList = async (req, res) => {
     try {
-        const membershipList = await MembershipModel.find({status:true});
+        const membershipList = await MembershipModel.find({status:true}).sort({duration:1});
 
         // Check Membership Length
         if (membershipList.length === 0) {

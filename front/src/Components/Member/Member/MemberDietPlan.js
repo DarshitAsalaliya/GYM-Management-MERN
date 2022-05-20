@@ -15,6 +15,7 @@ import { getLoggedUserData } from '../../../Redux/actions/userAction';
 export default function MemberDietPlan() {
 
     const [userData, setUserData] = useState([]);
+    const [loader, setLoader] = useState(true);
 
     const dispatch = useDispatch();
 
@@ -29,7 +30,7 @@ export default function MemberDietPlan() {
     useEffect(() => {
 
         userdata && setUserData(userdata);
-
+        userdata && setLoader(false);
     }, [userdata]);
 
     const dietplan = userData?.dietplan && JSON.parse(userData?.dietplan);
@@ -54,7 +55,7 @@ export default function MemberDietPlan() {
 
     return (
 
-        <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
+        <div style={{ height: '75vh', width: '100%', marginTop: '1%' }}>
             <DataGrid
                 components={{
                     Toolbar: CustomToolbar,
@@ -107,6 +108,7 @@ export default function MemberDietPlan() {
                     },
                 ]}
                 rows={dietList}
+                loading={loader}
             />
         </div>
 

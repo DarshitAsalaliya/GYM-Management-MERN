@@ -12,6 +12,7 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import CheckIcon from '@mui/icons-material/Check';
 import SnackbarMsg from '../Utils/SnackbarMsg';
+import LinearProgress from '@mui/material/LinearProgress';
 
 // Navbar
 import { useNavigate } from 'react-router-dom';
@@ -45,6 +46,7 @@ const { REACT_APP_BASE_URL } = process.env;
 export default function AdminProfile() {
 
   const [userData, setUserData] = useState([]);
+  const [loader, setLoader] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -58,6 +60,7 @@ export default function AdminProfile() {
 
   useEffect(() => {
     userdata && setUserData(userdata);
+    userdata && setLoader(false);
   }, [userdata]);
 
   useEffect(() => {
@@ -85,11 +88,14 @@ export default function AdminProfile() {
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
+           
             <Typography variant="h6" component="div" className='moduleHeading'>
               Admin Profile
             </Typography>
+            
             <Box sx={{ flexGrow: 1 }}>
               <Card sx={{ maxWidth: 345 }} variant="outlined">
+              {loader && <LinearProgress />}
                 <CardHeader
                   avatar={
                     <Avatar alt="Cindy Baker" src={userData?.image?.image_url} sx={{ width: 80, height: 80 }} />

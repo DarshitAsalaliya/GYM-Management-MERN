@@ -9,7 +9,7 @@ export default function NotificationCard(props) {
     const [expanded, setExpanded] = React.useState(false);
 
     return (
-        <Card sx={{ maxWidth: 350, border: '1px solid #e9e6e6', textAlign: 'center' }} elevation={0} key={props?.data?._id} >
+        <Card sx={{ maxWidth: '100%', border: '1px solid #e9e6e6', textAlign: 'center' }} elevation={0} key={props?.data?._id} >
             <CardHeader
 
                 avatar={

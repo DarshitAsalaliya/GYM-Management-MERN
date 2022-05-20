@@ -30,6 +30,7 @@ const { REACT_APP_BASE_URL } = process.env;
 export default function TrainerList() {
 
     const [trainerList, setTrainerList] = useState([]);
+    const [loader,setLoader] = useState(true);
 
     const dispatch = useDispatch();
 
@@ -52,10 +53,11 @@ export default function TrainerList() {
         });
 
         data && setTrainerList(filterData);
+        data && setLoader(false);
     };
 
     return (
-        <div style={{ height: 450, width: '100%', marginTop: '1%' }}>
+        <div style={{ height: '75vh', width: '100%', marginTop: '1%' }}>
             <DataGrid
                 sx={{
                     '.MuiDataGrid-columnHeaderTitle': {
@@ -143,6 +145,7 @@ export default function TrainerList() {
                     },
                 ]}
                 rows={trainerList}
+                loading={loader}
             />
         </div>
     );
