@@ -202,7 +202,7 @@ export default function MiniDrawer() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={() => navigate("./AdminProfile", { replace: false })}>Profile</MenuItem>
+              <MenuItem onClick={() => {setAnchorEl(null); navigate("./AdminProfile", { replace: false })}}>Profile</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>

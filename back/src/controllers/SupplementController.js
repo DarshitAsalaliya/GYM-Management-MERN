@@ -26,11 +26,11 @@ exports.CreateSupplement = async (req, res) => {
                     throw new Error(e.message);
                 }
             });
-            // Save Member with Image
+            // Save Supplement with Image
             newSupplementObj = new SupplementModel({ ...req.body, ownerprofileid: req.user.id, image: { public_id: uploadResult.public_id, image_url: uploadResult.secure_url } });
         }
         else {
-            // Save Member
+            // Save Supplement
             newSupplementObj = new SupplementModel({ ...req.body, ownerprofileid: req.user.id });
         }
 

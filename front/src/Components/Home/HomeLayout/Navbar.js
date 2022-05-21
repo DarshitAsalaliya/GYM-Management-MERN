@@ -89,13 +89,13 @@ const Navbar = () => {
                         >
 
                             <MenuItem>
-                                <NavLink to="/Supplements" className='Nav-Item-SM'>Supplements</NavLink>
+                                <NavLink to="/Supplements" onClick={handleCloseNavMenu} className='Nav-Item-SM'>Supplements</NavLink>
                             </MenuItem>
                             <MenuItem>
-                                <NavLink to="/Memberships" className='Nav-Item-SM'>Memberships</NavLink>
+                                <NavLink to="/Memberships" onClick={handleCloseNavMenu} className='Nav-Item-SM'>Memberships</NavLink>
                             </MenuItem>
                             <MenuItem>
-                                <NavLink to="/QueryForm" className='Nav-Item-SM'>Query</NavLink>
+                                <NavLink to="/QueryForm" onClick={handleCloseNavMenu} className='Nav-Item-SM'>Query</NavLink>
                             </MenuItem>
                         </Menu>
                     </Box>

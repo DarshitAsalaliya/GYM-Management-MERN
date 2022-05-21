@@ -117,7 +117,6 @@ export default function AddSupplement() {
             .max(50, 'Too Long!')
             .required('Required'),
         price: Yup.number().positive('Invalid'),
-        image: Yup.mixed().required('Image is required'),
     });
 
     useEffect(() => {
@@ -197,15 +196,12 @@ export default function AddSupplement() {
                                     </Grid>
                                     <Grid item xs={12} md={12} sx={{ textAlign: 'left' }}>
                                         <label htmlFor="contained-button-file">
-                                            <Input accept="image/*" id="contained-button-file" name="image" type="file" onChange={(event) => {
+                                            <Input accept="image/*" id="contained-button-file" name="image" type="file" onBlur={handleBlur} onChange={(event) => {
                                                 setFieldValue("file", event.currentTarget.files[0]);
                                             }} />
                                             <Button variant="contained" component="span">
                                                 Upload Image
                                             </Button>
-                                            <Typography variant="subtitle2" sx={{ color: '#D32F2F' }}>
-                                                {errors.image}
-                                            </Typography>
                                         </label>
                                     </Grid>
                                     <Grid item xs={12} md={12}>
