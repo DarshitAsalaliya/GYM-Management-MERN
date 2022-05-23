@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,memo } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -23,7 +23,7 @@ import { deleteMember, getMemberList } from '../../../Redux/actions/memberAction
 import axios from 'axios';
 const { REACT_APP_BASE_URL } = process.env;
 
-export default function DeleteMember(props) {
+export default memo(function DeleteMember(props) {
 
     const [open, setOpen] = useState(false);
     const [loader, setLoader] = useState(false);
@@ -87,4 +87,4 @@ export default function DeleteMember(props) {
             </Dialog>
         </div>
     );
-}
+});

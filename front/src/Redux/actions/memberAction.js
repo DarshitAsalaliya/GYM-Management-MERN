@@ -33,7 +33,7 @@ export const registerMember = (formData) => async (dispatch) => {
     }
 }
 
-export const getMemberList = (trainerprofileid = null) => async (dispatch) => {
+export const getMemberList = (page = 1, size = 10, trainerprofileid = null) => async (dispatch) => {
     try {
 
         dispatch({
@@ -41,11 +41,11 @@ export const getMemberList = (trainerprofileid = null) => async (dispatch) => {
         })
 
         let requestURL = null;
-      
+
         if (trainerprofileid)
-            requestURL = REACT_APP_BASE_URL + 'api/Member/GetMemberListByTrainer/';
+            requestURL = REACT_APP_BASE_URL + 'api/Member/GetMemberListByTrainer?page=' + page + '&size=' + size;
         else
-            requestURL = REACT_APP_BASE_URL + 'api/Member/GetMemberList/';
+            requestURL = REACT_APP_BASE_URL + 'api/Member/GetMemberList?page=' + page + '&size=' + size;
 
         // Request
         const { data } = await axios.get(requestURL);

@@ -13,40 +13,77 @@ import { getInvoiceList } from '../../../Redux/actions/invoiceAction';
 
 import UpdateInvoice from './UpdateInvoice';
 
+// Axios
+import axios from 'axios';
+const { REACT_APP_BASE_URL } = process.env;
+
 export default function InvoiceList() {
 
     // State
     const [invoiceList, setInvoiceList] = useState([]);
-    const [loader,setLoader] = useState(true);
+    const [totalRecord, setTotalRecord] = useState(0);
+
+    const [page, setPage] = useState(1);
+    const [size, setSize] = useState(10);
+    const [loader, setLoader] = useState(true);
 
     const dispatch = useDispatch();
-    
 
     const { data, getlistsuccess } = useSelector(state => state.getinvoicelist);
 
     // Load Data
+
     useEffect(() => {
 
-        loadInvoiceList();
+        dispatch(getInvoiceList(page, size));
 
-    }, [getlistsuccess]);
+    }, [getlistsuccess, page]);
 
-    const loadInvoiceList = async () => {
+    useEffect(() => {
 
-        await dispatch(getInvoiceList());
+        if (data?.invoiceList === undefined) {
+            page !== 1 && setPage(page - 1);
+            return;
+        }
+
+        const filterData = data?.invoiceList;
+
+        const tempData = filterData?.map(function (obj) {
+            return {
+                ...obj,
+                editid: obj['_id'],
+                invoiceid: obj['_id'],
+                membershipexpirydate: obj['expirydate'],
+                membername: obj['member'][0]?.name,
+                paymentstatus: obj['status'] === true ? true : obj['totalamount'] - obj['paidamount']
+            }
+        });
+
+        data && setInvoiceList(tempData);
+        data && setTotalRecord(data.totalRecord);
+        data && setLoader(false);
+
+    }, [getlistsuccess, page, data])
+
+    // State
+    const [membershipList, setMembershipList] = useState([]);
+
+    const fetchData = async () => {
+        const { data } = await axios.get(REACT_APP_BASE_URL + 'api/Membership/GetActiveMembershipList');
 
         const filterData = data?.map(function (obj) {
-            obj['editid'] = obj['_id'];
-            obj['invoiceid'] = obj['_id'];
-            obj['membershipexpirydate'] = obj['expirydate'];
-            obj['membername'] = obj['member'][0]?.name;
-            obj['paymentstatus'] = obj['status'] === true ? true : obj['totalamount'] - obj['paidamount']
+            obj['id'] = obj['_id'];
+            delete obj['_id'];
             return obj;
         });
 
-        data && setInvoiceList(filterData);
-        data && setLoader(false);
+        setMembershipList(filterData);
     };
+
+    // Fetch Membership List
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const CustomToolbar = () => {
         return (
@@ -114,7 +151,7 @@ export default function InvoiceList() {
                             new Date(params.value.slice(0, 10)) < new Date(new Date().toISOString().slice(0, 10)) ? <Chip variant="outlined" color="error" size="small" label="Expired" /> : <Chip variant="outlined" color="success" size="small" label="Valid" />
                         ),
                     },
-                    
+
                     { field: 'paymentmode', headerName: 'Payment Mode', width: 150 },
                     { field: 'paymentdetail', headerName: 'Payment Detail', width: 150 },
                     {
@@ -134,7 +171,7 @@ export default function InvoiceList() {
                         sortable: false,
                         filterable: false,
                         renderCell: (params) => (
-                            <UpdateInvoice dataforupdate={invoiceList.find(obj => obj.editid === params.value)} />
+                            <UpdateInvoice dataforupdate={invoiceList.find(obj => obj.editid === params.value)} membershipList={membershipList} />
                         ),
                     },
                     {
@@ -150,6 +187,11 @@ export default function InvoiceList() {
                 ]}
                 rows={invoiceList}
                 loading={loader}
+                pageSize={size}
+                rowCount={totalRecord}
+                rowsPerPageOptions={[size]}
+                paginationMode="server"
+                onPageChange={(newPage) => { setLoader(true); setPage(newPage + 1) }}
             />
         </div>
     );

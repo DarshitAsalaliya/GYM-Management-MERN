@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,memo } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 // Action
 import { deleteMembership } from '../../../Redux/actions/membershipAction';
 
-export default function DeleteMembership(props) {
+export default memo(function DeleteMembership(props) {
 
     const [open, setOpen] = useState(false);
     const [loader, setLoader] = useState(false);
@@ -78,4 +78,4 @@ export default function DeleteMembership(props) {
             </Dialog>
         </div>
     );
-}
+});

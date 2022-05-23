@@ -11,7 +11,7 @@ export const createInvoiceReducer = (state = {}, action) => {
             return {
                 ...state,
                 createinvoiceloading: false,
-                createinvoicedata:action.payload,
+                createinvoicedata: action.payload,
                 createinvoicesuccess: true
             }
         case constants.NEW_INVOICE_FAIL:
@@ -65,7 +65,7 @@ export const updateInvoiceReducer = (state = {}, action) => {
             return {
                 ...state,
                 updateinvoiceloading: false,
-                updatedinvoicedata:action.payload,
+                updatedinvoicedata: action.payload,
                 updateinvoicesuccess: true
             }
         case constants.INVOICE_UPDATE_FAIL:
@@ -74,7 +74,7 @@ export const updateInvoiceReducer = (state = {}, action) => {
             }
         case constants.INVOICE_UPDATE_RESET:
             return {
-                ...state, updateinvoiceloading: false, updateinvoicesuccess: false, updateinvoiceerror:false
+                ...state, updateinvoiceloading: false, updateinvoicesuccess: false, updateinvoiceerror: false
             }
         default:
             return state
@@ -92,7 +92,7 @@ export const deleteInvoiceReducer = (state = {}, action) => {
             return {
                 ...state,
                 deleteinvoiceloading: false,
-                deletedinvoicedata:action.payload,
+                deletedinvoicedata: action.payload,
                 deleteinvoicesuccess: true
             }
         case constants.INVOICE_DELETE_FAIL:
@@ -101,7 +101,7 @@ export const deleteInvoiceReducer = (state = {}, action) => {
             }
         case constants.INVOICE_DELETE_RESET:
             return {
-                ...state, deleteinvoiceloading: false, deleteinvoicesuccess: false, deleteinvoiceerror:false
+                ...state, deleteinvoiceloading: false, deleteinvoicesuccess: false, deleteinvoiceerror: false
             }
         default:
             return state

@@ -115,7 +115,7 @@ export default function MiniDrawer() {
     if (!isAuthenticated && !localStorage.getItem("token")) {
       navigate("/Login", { replace: true });
     }
-    
+
   }, [isAuthenticated, navigate]);
 
 
@@ -202,7 +202,7 @@ export default function MiniDrawer() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={() => {setAnchorEl(null); navigate("./AdminProfile", { replace: false })}}>Profile</MenuItem>
+              <MenuItem onClick={() => { setAnchorEl(null); navigate("./AdminProfile", { replace: false }) }}>Profile</MenuItem>
               <MenuItem onClick={handleLogout}>Logout</MenuItem>
             </Menu>
           </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,memo } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -102,7 +102,7 @@ const IOSSwitch = styled((props) => (
     },
 }));
 
-export default function UpdateTrainer(props) {
+export default memo(function UpdateTrainer(props) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -422,4 +422,4 @@ export default function UpdateTrainer(props) {
             </Modal>
         </div>
     );
-}
+});

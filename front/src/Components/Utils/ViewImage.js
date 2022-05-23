@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { memo } from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Avatar from '@mui/material/Avatar';
@@ -13,7 +13,7 @@ const style = {
     boxShadow: 24,
 };
 
-export default function ViewImage(props) {
+export default memo(function ViewImage(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -33,4 +33,4 @@ export default function ViewImage(props) {
             </Modal>
         </div>
     );
-}
+});

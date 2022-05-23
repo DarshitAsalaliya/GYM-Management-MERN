@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,memo } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 // Action
 import { deleteLead } from '../../../Redux/actions/leadAction';
 
-export default function DeleteLead(props) {
+export default memo(function DeleteLead(props) {
 
     const [open, setOpen] = useState(false);
     const [loader, setLoader] = useState(false);
@@ -51,6 +51,8 @@ export default function DeleteLead(props) {
         setOpen(false);
     };
 
+    console.log('Deleted....');
+
     return (
         <div>
 
@@ -80,4 +82,4 @@ export default function DeleteLead(props) {
             </Dialog>
         </div>
     );
-}
+});

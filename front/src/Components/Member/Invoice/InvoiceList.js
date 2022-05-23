@@ -13,34 +13,53 @@ import { getInvoiceList } from '../../../Redux/actions/invoiceAction';
 
 export default function InvoiceList() {
 
+    // State
     const [invoiceList, setInvoiceList] = useState([]);
+    const [totalRecord, setTotalRecord] = useState(0);
+
+    const [page, setPage] = useState(1);
+    const [size, setSize] = useState(5);
     const [loader, setLoader] = useState(true);
 
     const dispatch = useDispatch();
 
     const { data, getlistsuccess } = useSelector(state => state.getinvoicelist);
-    const { userdata, getdatasuccess } = useSelector(state => state.loggeduserdata);
+
+    // Load Data
 
     useEffect(() => {
 
-        loadInvoiceList();
+        dispatch(getInvoiceList(page, size, 'MemberId'));
 
-    }, [getlistsuccess]);
+    }, [page]);
 
-    const loadInvoiceList = async () => {
+    useEffect(() => {
 
-        await dispatch(getInvoiceList('MemberId'));
-        const filterData = data?.map(function (obj) {
-            obj['editid'] = obj['_id'];
-            obj['membershipexpirydate'] = obj['expirydate'];
-            obj['paymentstatus'] = obj['status'] === true ? true : obj['totalamount'] - obj['paidamount']
-            return obj;
-        });
+        if (data?.invoiceList !== undefined) {
+            const filterData = data?.invoiceList;
 
-        data && setInvoiceList(filterData);
-        data && setLoader(false);
-    };
+            const tempData = filterData?.map(function (obj) {
 
+                return {
+                    ...obj,
+                    editid: obj['_id'],
+                    invoiceid: obj['_id'],
+                    membershipexpirydate: obj['expirydate'],
+                    membername: obj['member'][0]?.name,
+                    paymentstatus: obj['status'] === true ? true : obj['totalamount'] - obj['paidamount']
+                }
+            });
+
+            data && setInvoiceList(tempData);
+            data && setTotalRecord(data.totalRecord);
+            data && setLoader(false);
+        }
+        else {
+            data && setInvoiceList([]);
+            data && setLoader(false);
+        }
+        
+    }, [getlistsuccess, page, data])
 
     return (
         <div style={{ height: '75vh', width: '100%', marginTop: '1%' }}>
@@ -106,6 +125,11 @@ export default function InvoiceList() {
                 ]}
                 rows={invoiceList}
                 loading={loader}
+                pageSize={size}
+                rowCount={totalRecord}
+                rowsPerPageOptions={[size]}
+                paginationMode="server"
+                onPageChange={(newPage) => { setLoader(true); setPage(newPage + 1) }}
             />
         </div>
     );

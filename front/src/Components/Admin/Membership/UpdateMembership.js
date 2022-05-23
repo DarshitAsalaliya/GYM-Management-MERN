@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,memo } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -96,7 +96,7 @@ const IOSSwitch = styled((props) => (
     },
 }));
 
-export default function UpdateMembership(props) {
+export default memo(function UpdateMembership(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -272,4 +272,4 @@ export default function UpdateMembership(props) {
             </Modal>
         </div>
     );
-}
+});

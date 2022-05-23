@@ -96,6 +96,17 @@ exports.Login = async (req, res) => {
 exports.GetAllMember = async (req, res) => {
     try {
 
+        // Pagination
+        let { page, size } = req.query;
+
+        if (!page)
+            page = 1;
+        if (!size)
+            size = 5;
+
+        const limit = parseInt(size);
+        const skip = (page - 1) * size;
+
         const memberList = await MemberModel.aggregate([
             {
                 $lookup: {
@@ -114,14 +125,16 @@ exports.GetAllMember = async (req, res) => {
                     as: "invoices",
                 },
             }
-        ])
+        ]).skip(skip).limit(limit);
 
         // Check Topic Length
         if (memberList.length === 0) {
             return res.status(404).send({ error: "Member not found.." });
         }
 
-        return res.status(200).send(memberList);
+        const totalRecord = await MemberModel.find().count();
+
+        return res.status(200).send({ memberList, totalRecord });
     } catch (e) {
         return res.status(400).send({ error: e.message });
     }
@@ -130,6 +143,17 @@ exports.GetAllMember = async (req, res) => {
 // Get Members By Trainer
 exports.GetMemberListByTrainer = async (req, res) => {
     try {
+
+        // Pagination
+        let { page, size } = req.query;
+
+        if (!page)
+            page = 1;
+        if (!size)
+            size = 5;
+
+        const limit = parseInt(size);
+        const skip = (page - 1) * size;
 
         if (req.params.trainerprofileid) {
             id = req.params.trainerprofileid
@@ -162,14 +186,15 @@ exports.GetMemberListByTrainer = async (req, res) => {
                     as: "invoices",
                 },
             }
-        ])
+        ]).skip(skip).limit(limit);
 
         // Check Topic Length
         if (memberList.length === 0) {
             return res.status(404).send({ error: "Member not found.." });
         }
+        const totalRecord = await MemberModel.find({ trainerprofileid: id }).count();
 
-        return res.status(200).send(memberList);
+        return res.status(200).send({ memberList, totalRecord });
     } catch (e) {
         return res.status(400).send({ error: e.message });
     }

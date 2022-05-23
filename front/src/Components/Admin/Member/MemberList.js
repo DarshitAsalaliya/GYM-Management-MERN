@@ -30,7 +30,11 @@ const { REACT_APP_BASE_URL } = process.env;
 export default function MemberList() {
 
     const [memberList, setMemberList] = useState([]);
-    const [loader,setLoader] = useState(true);
+    const [totalRecord, setTotalRecord] = useState(0);
+
+    const [page, setPage] = useState(1);
+    const [size, setSize] = useState(10);
+    const [loader, setLoader] = useState(true);
 
     const dispatch = useDispatch();
 
@@ -39,26 +43,34 @@ export default function MemberList() {
     // Load Data
     useEffect(() => {
 
-        loadMemberList();
+        dispatch(getMemberList(page, size));
 
-    }, [getlistsuccess]);
+    }, [getlistsuccess, page]);
 
-    const loadMemberList = async () => {
+    useEffect(() => {
 
-        await dispatch(getMemberList());
+        if (data?.memberList === undefined) {
+            page !== 1 && setPage(page - 1);
+            return;
+        }
 
-        const filterData = data?.map(function (obj) {
-            obj['invoiceid'] = obj['_id'];
-            obj['editid'] = obj['_id'];
-            obj['expirydate'] = obj['invoices'][obj['invoices']?.length - 1]?.expirydate;
-            obj['membershipstatus'] = obj['invoices']?.length > 0 ? new Date(obj['invoices'][obj['invoices']?.length - 1]?.expirydate.slice(0, 10)) < new Date(new Date().toISOString().slice(0, 10)) ? 'expired' : 'valid' : 'invoice not found';
-            return obj;
+        const filterData = data?.memberList;
+
+        const tempData = filterData?.map(function (obj) {
+            return {
+                ...obj,
+                editid: obj['_id'],
+                invoiceid: obj['_id'],
+                expirydate: obj['invoices'][obj['invoices']?.length - 1]?.expirydate,
+                membershipstatus: obj['invoices']?.length > 0 ? new Date(obj['invoices'][obj['invoices']?.length - 1]?.expirydate.slice(0, 10)) < new Date(new Date().toISOString().slice(0, 10)) ? 'expired' : 'valid' : 'invoice not found',
+            }
         });
 
-        data && setMemberList(filterData);
-
+        data && setMemberList(tempData);
+        data && setTotalRecord(data.totalRecord);
         data && setLoader(false);
-    };
+     
+    }, [getlistsuccess, page, data])
 
     // Get Membership Status Function
     const getMembershipStatus = (type) => {
@@ -199,6 +211,11 @@ export default function MemberList() {
                 ]}
                 rows={memberList}
                 loading={loader}
+                pageSize={size}
+                rowCount={totalRecord}
+                rowsPerPageOptions={[size]}
+                paginationMode="server"
+                onPageChange={(newPage) => { setLoader(true); setPage(newPage + 1) }}
             />
         </div>
     );

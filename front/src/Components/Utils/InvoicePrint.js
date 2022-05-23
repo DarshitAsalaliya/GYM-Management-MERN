@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 import jsPDF from 'jspdf';
 import Button from '@mui/material/Button';
 import PrintIcon from '@mui/icons-material/Print';
 
 
-export default function InvoicePrint(props) {
+export default memo(function InvoicePrint(props) {
 
     const pdfGenerate = () => {
         const doc = new jsPDF('landscape', 'px', 'a6', false);
@@ -52,4 +52,4 @@ export default function InvoicePrint(props) {
             </Button>
         </div>
     );
-}
+});

@@ -17,6 +17,16 @@ exports.CreateInvoice = async (req, res) => {
 // Get All Invoice
 exports.GetInvoiceList = async (req, res) => {
     try {
+        // Pagination
+        let { page, size } = req.query;
+
+        if (!page)
+            page = 1;
+        if (!size)
+            size = 5;
+
+        const limit = parseInt(size);
+        const skip = (page - 1) * size;
 
         const invoiceList = await InvoiceModel.aggregate([
             {
@@ -27,14 +37,16 @@ exports.GetInvoiceList = async (req, res) => {
                     as: "member",
                 },
             }
-        ]).sort({ createdAt: -1 })
+        ]).sort({ createdAt: -1 }).skip(skip).limit(limit);
+
+        const totalRecord = await InvoiceModel.find().count();
 
         // Check Invoice Length
         if (invoiceList.length === 0) {
             return res.status(404).send({ error: "Invoice not found.." });
         }
 
-        return res.status(200).send(invoiceList);
+        return res.status(200).send({ invoiceList, totalRecord });
     } catch (e) {
         return res.status(400).send({ error: e.message });
     }
@@ -43,6 +55,17 @@ exports.GetInvoiceList = async (req, res) => {
 // Get Invoice By Member
 exports.GetInvoiceListByMember = async (req, res) => {
     try {
+
+        // Pagination
+        let { page, size } = req.query;
+
+        if (!page)
+            page = 1;
+        if (!size)
+            size = 5;
+
+        const limit = parseInt(size);
+        const skip = (page - 1) * size;
 
         if (req.params.memberprofileid) {
             id = req.params.memberprofileid
@@ -66,14 +89,16 @@ exports.GetInvoiceListByMember = async (req, res) => {
                     as: "member",
                 },
             }
-        ]).sort({ createdAt: -1 });
+        ]).sort({ createdAt: -1 }).skip(skip).limit(limit);
+
+        const totalRecord = await InvoiceModel.find({ memberprofileid: id }).count();
 
         // Check Invoice Length
         if (invoiceList.length === 0) {
             return res.status(404).send({ error: "Invoice not found.." });
         }
 
-        return res.status(200).send(invoiceList);
+        return res.status(200).send({ invoiceList, totalRecord });
     } catch (e) {
         return res.status(400).send({ error: e.message });
     }

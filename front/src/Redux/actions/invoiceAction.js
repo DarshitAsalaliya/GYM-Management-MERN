@@ -27,9 +27,9 @@ export const createInvoice = (formData) => async (dispatch) => {
     }
 }
 
-export const getInvoiceList = (memberprofileid = null) => async (dispatch) => {
+export const getInvoiceList = (page = 1, size = 10, memberprofileid = null) => async (dispatch) => {
     try {
-
+        
         dispatch({
             type: constants.INVOICE_LIST_REQUEST
         })
@@ -37,9 +37,9 @@ export const getInvoiceList = (memberprofileid = null) => async (dispatch) => {
         let requestURL = null;
 
         if (memberprofileid)
-            requestURL = REACT_APP_BASE_URL + 'api/Invoice/GetInvoiceListByMember/';
+            requestURL = REACT_APP_BASE_URL + 'api/Invoice/GetInvoiceListByMember?page=' + page + '&size=' + size;
         else
-            requestURL = REACT_APP_BASE_URL + 'api/Invoice/GetInvoiceList/';
+            requestURL = REACT_APP_BASE_URL + 'api/Invoice/GetInvoiceList?page=' + page + '&size=' + size;
 
         // Request
         const { data } = await axios.get(requestURL);
@@ -50,7 +50,8 @@ export const getInvoiceList = (memberprofileid = null) => async (dispatch) => {
         })
 
     } catch (error) {
-        if (error.response.status === 404) {
+        
+        if (error?.response?.status === 404) {
             dispatch({
                 type: constants.INVOICE_LIST_SUCCESS,
                 payload: []
@@ -59,7 +60,7 @@ export const getInvoiceList = (memberprofileid = null) => async (dispatch) => {
         else {
             dispatch({
                 type: constants.INVOICE_LIST_FAIL,
-                payload: error.response.data
+                payload: error?.response?.data
             })
         }
     }

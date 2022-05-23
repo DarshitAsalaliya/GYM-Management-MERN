@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -23,7 +23,7 @@ import { deleteTrainer, getTrainerList } from '../../../Redux/actions/trainerAct
 import axios from 'axios';
 const { REACT_APP_BASE_URL } = process.env;
 
-export default function DeleteTrainer(props) {
+export default memo(function DeleteTrainer(props) {
 
     const [open, setOpen] = useState(false);
     const [loader, setLoader] = useState(false);
@@ -86,4 +86,4 @@ export default function DeleteTrainer(props) {
             </Dialog>
         </div>
     );
-}
+});

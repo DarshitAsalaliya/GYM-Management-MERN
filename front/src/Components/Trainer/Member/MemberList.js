@@ -23,35 +23,47 @@ import UpdateMemberDietPlan from './UpdateMemberDietPlan';
 export default function MemberList() {
 
     const [memberList, setMemberList] = useState([]);
+    const [totalRecord, setTotalRecord] = useState(0);
+
+    const [page, setPage] = useState(1);
+    const [size, setSize] = useState(10);
     const [loader,setLoader] = useState(true);
 
     const dispatch = useDispatch();
 
     const { data, getlistloading, getlisterror, getlistsuccess } = useSelector(state => state.getmemberlist);
 
-    // Load Data
+     // Load Data
+     useEffect(() => {
+
+        dispatch(getMemberList(page, size,'TrainerId'));
+
+    }, [getlistsuccess, page]);
+
     useEffect(() => {
 
-        loadMemberList();
+        if (data?.memberList === undefined) {
+            page !== 1 && setPage(page - 1);
+            return;
+        }
 
-    }, [getlistsuccess]);
+        const filterData = data?.memberList;
 
-    const loadMemberList = async () => {
-
-        await dispatch(getMemberList('TrainerId'));
-
-        const filterData = data?.map(function (obj) {
-            obj['invoiceid'] = obj['_id'];
-            obj['editid'] = obj['_id'];
-            obj['expirydate'] = obj['invoices'][obj['invoices']?.length - 1]?.expirydate;
-            obj['dietplansetornot'] = (obj['dietplan'] && obj['dietplan'] !== '{}') ? 'Set' : 'Not Set';
-            obj['membershipstatus'] = obj['invoices']?.length > 0 ? new Date(obj['invoices'][obj['invoices']?.length - 1]?.expirydate.slice(0, 10)) < new Date(new Date().toISOString().slice(0, 10)) ? 'expired' : 'valid' : 'invoice not found';
-            return obj;
+        const tempData = filterData?.map(function (obj) {
+            return {
+                ...obj,
+                editid: obj['_id'],
+                invoiceid: obj['_id'],
+                expirydate: obj['invoices'][obj['invoices']?.length - 1]?.expirydate,
+                membershipstatus: obj['invoices']?.length > 0 ? new Date(obj['invoices'][obj['invoices']?.length - 1]?.expirydate.slice(0, 10)) < new Date(new Date().toISOString().slice(0, 10)) ? 'expired' : 'valid' : 'invoice not found',
+            }
         });
 
-        data && setMemberList(filterData);
+        data && setMemberList(tempData);
+        data && setTotalRecord(data.totalRecord);
         data && setLoader(false);
-    };
+     
+    }, [getlistsuccess, page, data])
 
     const getMembershipStatus = (type) => {
         if (type === 'expired')
@@ -166,6 +178,11 @@ export default function MemberList() {
                 ]}
                 rows={memberList}
                 loading={loader}
+                pageSize={size}
+                rowCount={totalRecord}
+                rowsPerPageOptions={[size]}
+                paginationMode="server"
+                onPageChange={(newPage) => { setLoader(true); setPage(newPage + 1) }}
             />
         </div>
     );

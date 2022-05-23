@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,memo } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 // Action
 import { updateLead } from '../../../Redux/actions/leadAction';
 
-export default function DeleteLead(props) {
+export default memo(function UpdateLead(props) {
 
     const [open, setOpen] = useState(false);
     const [loader, setLoader] = useState(false);
@@ -52,6 +52,8 @@ export default function DeleteLead(props) {
         setOpen(false);
     };
 
+    console.log('Updated....');
+
     return (
         <div>
             {props?.currentstatus === 'Pending' ?
@@ -85,4 +87,4 @@ export default function DeleteLead(props) {
             </Dialog>
         </div>
     );
-}
+});

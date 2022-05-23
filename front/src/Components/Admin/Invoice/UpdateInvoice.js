@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -41,8 +41,8 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: {md:'55%',xs:'90%'},
-    height: {md:'70%',xs:'80%'},
+    width: { md: '55%', xs: '90%' },
+    height: { md: '70%', xs: '80%' },
     bgcolor: 'background.paper',
     boxShadow: 24,
     overflow: 'scroll',
@@ -100,7 +100,7 @@ const IOSSwitch = styled((props) => (
     },
 }));
 
-export default function UpdateMembership(props) {
+export default memo(function UpdateMembership(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -125,27 +125,7 @@ export default function UpdateMembership(props) {
         }
     }, [updateinvoicesuccess]);
 
-    // State
-    const [membershipList, setMembershipList] = useState([]);
-
-    const fetchData = async () => {
-
-        const { data } = await axios.get(REACT_APP_BASE_URL + 'api/Membership/GetActiveMembershipList');
-
-        const filterData = data.map(function (obj) {
-            obj['id'] = obj['_id'];
-            delete obj['_id'];
-            return obj;
-        });
-
-        setMembershipList(filterData);
-    }
-
-    // Fetch Membership List
-    useEffect(() => {
-        fetchData();
-    }, []);
-
+  
     return (
         <div>
             {updateinvoiceerror && <SnackbarMsg open="true" vertical="bottom" horizontal="right" message={updateinvoiceerror} severity="error" />}
@@ -225,7 +205,7 @@ export default function UpdateMembership(props) {
                                                 defaultValue=""
                                                 disabled
                                             >
-                                                {membershipList.map((obj) => {
+                                                {props?.membershipList?.map((obj) => {
                                                     return <MenuItem value={obj.id} key={obj.id}>{obj.membershipname}</MenuItem>
                                                 })}
 
@@ -346,4 +326,4 @@ export default function UpdateMembership(props) {
             </Modal>
         </div>
     );
-}
+});

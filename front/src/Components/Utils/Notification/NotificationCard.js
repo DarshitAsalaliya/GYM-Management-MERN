@@ -11,7 +11,6 @@ export default function NotificationCard(props) {
     return (
         <Card sx={{ maxWidth: '100%', border: '1px solid #e9e6e6', textAlign: 'center' }} elevation={0} key={props?.data?._id} >
             <CardHeader
-
                 avatar={
                     <Avatar sx={{ bgcolor: '#4885ED' }} aria-label="recipe">
                         {props?.data?.notificationcontent.includes('joined') ? <PersonAddAlt1Icon /> : <PersonRemoveAlt1Icon />}
